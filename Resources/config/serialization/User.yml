@@ -1,0 +1,24 @@
+ProjetNormandie\UserBundle\Entity\User:
+  attributes:
+    id:
+      groups:
+        - 'user.profile'
+        - 'user.autocomplete'
+    email:
+      groups:
+        - 'user.profile'
+    username:
+      groups:
+        - 'user.profile'
+        - 'user.autocomplete'
+    groups:
+      groups:
+    firstName:
+      groups:
+        - 'user.profile'
+    lastName:
+      groups:
+        - 'user.profile'
+    nbConnexion:
+      groups:
+        - 'user.profile'

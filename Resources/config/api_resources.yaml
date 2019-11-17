@@ -1,0 +1,63 @@
+resources:
+    ProjetNormandie\UserBundle\Entity\User:
+        collectionOperations:
+            get:
+                normalization_context: {'groups': [user.profile]}
+            profile:
+                method: 'GET'
+                access_control: 'is_granted("IS_AUTHENTICATED_FULLY")'
+                normalization_context: {'groups': [user.profile]}
+                path: '/users/profile'
+                controller: 'ProjetNormandie\UserBundle\Controller\AuthController::profile'
+            autocomplete:
+                method: 'GET'
+                normalization_context: {'groups': [user.autocomplete]}
+                path: '/users/autocomplete'
+                swagger_context:
+                    parameters:
+                        - name: query
+                          in: query
+                          required: true
+                          type: string
+                controller: 'App\Controller\UserController::autocomplete'
+            roles:
+                method: 'GET'
+                path: '/users/roles'
+                controller: 'ProjetNormandie\UserBundle\Controller\AuthController::roles'
+            resetting-send-email:
+                method: 'POST'
+                path: '/users/resetting/send-email'
+                swagger_context:
+                    parameters:
+                        - in: body
+                          name: user
+                          schema:
+                              type: object
+                              required:
+                                  - username
+                              properties:
+                                  username:
+                                      type: string
+                controller: 'ProjetNormandie\UserBundle\Controller\ResettingController::sendEmail'
+            resetting-reset:
+                method: 'POST'
+                path: '/users/resetting/reset'
+                description: tata
+                swagger_context:
+                    parameters:
+                      - in: body
+                        name: user
+                        schema:
+                            type: object
+                            required:
+                              - token
+                              - paswword
+                            properties:
+                                token:
+                                    type: string
+                                password:
+                                    type: string
+                controller: 'ProjetNormandie\UserBundle\Controller\ResettingController::reset'
+        itemOperations:
+            get:
+                normalization_context: {'groups': [user.profile]}
