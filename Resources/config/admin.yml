@@ -1,0 +1,25 @@
+services:
+    sonata.admin.user.country:
+        class: ProjetNormandie\UserBundle\Admin\CountryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "UserBundle", label: "Country" }
+        arguments:
+            - ~
+            - ProjetNormandie\UserBundle\Entity\Country
+            - ~
+    sonata.admin.user.user:
+        class: ProjetNormandie\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "UserBundle", label: "User" }
+        arguments:
+            - ~
+            - ProjetNormandie\UserBundle\Entity\User
+            - ~
+    sonata.admin.user.group:
+        class: ProjetNormandie\UserBundle\Admin\GroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "UserBundle", label: "Group" }
+        arguments:
+            - ~
+            - ProjetNormandie\UserBundle\Entity\Group
+            - ~
