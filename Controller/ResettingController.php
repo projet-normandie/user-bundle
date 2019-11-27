@@ -65,7 +65,7 @@ class ResettingController extends Controller
         }
 
         $rendered = $this->renderView(
-            'Resetting/email.txt.twig',
+            '@ProjetNormandieUser/Resetting/email.txt.twig',
             [
                 'user' => $user,
                 'confirmationUrl' => $_ENV['FRONT_URL'] . '/#/auth/reset?token=' . $user->getConfirmationToken(),
