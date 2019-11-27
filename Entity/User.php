@@ -12,7 +12,7 @@ use videoGamesRecords\CoreBundle\Entity\Player;
  * User
  *
  * @ORM\Entity
- * @ORM\Table(name="member")
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
@@ -44,7 +44,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
 
     /**
      * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="member_group",
+     * @ORM\JoinTable(name="user_group",
      *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="groupId", referencedColumnName="id")}
      * )
