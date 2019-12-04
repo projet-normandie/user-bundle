@@ -22,3 +22,6 @@ ProjetNormandie\UserBundle\Entity\User:
     nbConnexion:
       groups:
         - 'user.profile'
+    badges:
+      groups:
+        - 'user.profile'

@@ -53,6 +53,16 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $groups;
 
     /**
+     * @ORM\ManyToMany(targetEntity="ProjetNormandie\BadgeBundle\Entity\Badge")
+     * @ORM\JoinTable(name="user_badge",
+     *      joinColumns={@ORM\JoinColumn(name="idUser", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="idBadge", referencedColumnName="id")}
+     * )
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $badges;
+
+    /**
      * @var string
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
      */
@@ -128,6 +138,13 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
         return $this;
     }
 
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBadges()
+    {
+        return $this->badges;
+    }
 
     /**
      * @inheritDoc
@@ -136,4 +153,6 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     {
         return sprintf('%s [%d]', $this->getUsername(), $this->getId());
     }
+
+
 }

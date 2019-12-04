@@ -2,7 +2,7 @@ resources:
     ProjetNormandie\UserBundle\Entity\User:
         collectionOperations:
             get:
-                normalization_context: {'groups': [user.profile]}
+                normalization_context: {'groups': [user.profile, ]}
             profile:
                 method: 'GET'
                 access_control: 'is_granted("IS_AUTHENTICATED_FULLY")'
@@ -60,4 +60,4 @@ resources:
                 controller: 'ProjetNormandie\UserBundle\Controller\ResettingController::reset'
         itemOperations:
             get:
-                normalization_context: {'groups': [user.profile]}
+                normalization_context: {'groups': [user.profile,badge.read]}
