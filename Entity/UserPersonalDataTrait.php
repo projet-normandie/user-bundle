@@ -34,9 +34,9 @@ trait UserPersonalDataTrait
     /**
      * @var Country
      *
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Country")
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\CountryBundle\Entity\Country")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idPays", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idCountry", referencedColumnName="id")
      * })
      */
     protected $country;
