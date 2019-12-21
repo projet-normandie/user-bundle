@@ -1,7 +1,6 @@
 <?php
 namespace ProjetNormandie\UserBundle\Admin;
 
-use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use ProjetNormandie\UserBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
 
@@ -53,7 +53,11 @@ class UserAdmin extends AbstractAdmin
             ->add('address', TextType::class, [
                 'required' => false,
             ])
-            ->add('birthDate')
+            ->add('birthDate', 'date', [
+                'label' => 'Birth Date',
+                'required' => false,
+                'years' => range(1900, date('Y'))
+            ])
             ->add('timeZone')
             ->add('gender', ChoiceType::class, [
                 'expanded' => true,
@@ -183,7 +187,8 @@ class UserAdmin extends AbstractAdmin
             ->add('blogger')
             ->add('reddit')
             ->add('deviantart')
-            ->end();
+            ->end()
+            ->add('userIp');
     }
     /**
      * @inheritDoc

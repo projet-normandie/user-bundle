@@ -63,6 +63,12 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $badges;
 
     /**
+     * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
+     */
+    private $userIp;
+
+
+    /**
      * @var string
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
      */
@@ -132,9 +138,11 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      */
     public function setLastLogin(\DateTime $time = null)
     {
+        $lastLogin = $this->getLastLogin();
+        if (($lastLogin == null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
+            ++$this->nbConnexion;
+        }
         $this->lastLogin = $time;
-        ++$this->nbConnexion;
-
         return $this;
     }
 
@@ -147,12 +155,18 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     }
 
     /**
+     * @return mixed
+     */
+    public function getUserIp()
+    {
+        return $this->userIp;
+    }
+
+    /**
      * @inheritDoc
      */
     public function __toString()
     {
         return sprintf('%s [%d]', $this->getUsername(), $this->getId());
     }
-
-
 }
