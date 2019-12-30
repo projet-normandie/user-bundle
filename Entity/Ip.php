@@ -18,9 +18,9 @@ class Ip
 {
     use Timestampable;
 
-    const STATUS_NORMAL = 'NORMAL';
-    const STATUS_SUSPICIOUS = 'SUSPICIOUS';
-    const STATUS_BANNED = 'BANNED';
+    public const STATUS_NORMAL = 'NORMAL';
+    public const STATUS_SUSPICIOUS = 'SUSPICIOUS';
+    public const STATUS_BANNED = 'BANNED';
 
     /**
      * @ORM\Id
@@ -34,7 +34,7 @@ class Ip
      * @var string
      * @ORM\Column(name="status", type="string", length=30, nullable=false)
      */
-    protected $status =  self::STATUS_NORMAL;
+    protected $status = self::STATUS_NORMAL;
 
     /**
      * @var string
@@ -101,7 +101,7 @@ class Ip
     /**
      * Get label
      *
-     * @return $this
+     * @return string
      */
     public function getLabel()
     {

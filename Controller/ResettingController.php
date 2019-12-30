@@ -2,12 +2,11 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
-use FOS\UserBundle\FOSUserEvents;
+use DateTime;
 use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjetNormandie\EmailBundle\Entity\Email;
@@ -42,7 +41,7 @@ class ResettingController extends Controller
 
     /**
      * @param Request $request
-     * @return RedirectResponse
+     * @return Response
      * @throws \Exception
      */
     public function sendEmail(Request $request)
@@ -83,10 +82,11 @@ class ResettingController extends Controller
             ->setBodyHtml($body)
             ->setBodyText($body);
 
+        // todo replace by PN mailer injection
         $mailer = $this->get('projet_normandie_email.mailer');
         $mailer->send($mail);
 
-        $user->setPasswordRequestedAt(new \DateTime());
+        $user->setPasswordRequestedAt(new DateTime());
         $this->userManager->updateUser($user);
 
         return $this->getResponse(true, 'PASSWORD_REQUEST_SEND');

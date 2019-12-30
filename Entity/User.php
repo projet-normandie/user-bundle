@@ -2,11 +2,11 @@
 
 namespace ProjetNormandie\UserBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-use videoGamesRecords\CoreBundle\Entity\Player;
 
 /**
  * User
@@ -23,9 +23,9 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     use UserCommunicationDataTrait;
     use Timestampable;
 
-    const GENDER_FEMALE = 'F';
-    const GENDER_MALE = 'M';
-    const GENDER_UNDEFINED = 'I';
+    public const GENDER_FEMALE = 'F';
+    public const GENDER_MALE = 'M';
+    public const GENDER_UNDEFINED = 'I';
 
     /**
      * @ORM\Id
@@ -136,10 +136,10 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     /**
      * {@inheritdoc}
      */
-    public function setLastLogin(\DateTime $time = null)
+    public function setLastLogin(DateTime $time = null)
     {
         $lastLogin = $this->getLastLogin();
-        if (($lastLogin == null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
+        if (($lastLogin === null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
             ++$this->nbConnexion;
         }
         $this->lastLogin = $time;
