@@ -5,7 +5,6 @@ namespace ProjetNormandie\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\Group as BaseGroup;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="groupRole")

@@ -1,16 +1,14 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\EventListener;
 
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
 use ProjetNormandie\UserBundle\Entity\Ip;
 use ProjetNormandie\UserBundle\Entity\UserIp;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\SecurityEvents;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Doctrine\ORM\EntityManagerInterface;
-
 
 class LoginListener implements EventSubscriberInterface
 {

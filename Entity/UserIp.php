@@ -4,7 +4,6 @@ namespace ProjetNormandie\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * Ip
@@ -111,7 +110,7 @@ class UserIp
     /**
      * Get ip
      *
-     * @return $this
+     * @return Ip
      */
     public function getIp()
     {

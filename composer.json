@@ -16,16 +16,13 @@
     }
   ],
   "require": {
-    "php": ">=5.5.9",
-    "symfony/validator": "~3.0",
-    "symfony/framework-bundle": "~3.0",
+    "php": ">=7.2",
     "doctrine/orm": "^2.5",
-    "doctrine/doctrine-bundle": "~1.6"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "~4.8",
-    "roave/security-advisories": "dev-master",
-    "squizlabs/php_codesniffer": "~2.8"
+    "doctrine/doctrine-bundle": "~1.6",
+    "friendsofsymfony/user-bundle": "~2.0",
+    "knplabs/doctrine-behaviors": "~1.4",
+    "symfony/validator": "~3.0",
+    "symfony/framework-bundle": "~3.0"
   },
   "suggest": {
     "sonata-project/admin-bundle": "In order to use Admin interface",
@@ -33,5 +30,11 @@
   },
   "autoload": {
     "psr-4": { "ProjetNormandie\\UserBundle\\": "" }
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
   }
 }

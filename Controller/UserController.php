@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
-
     /**
      * @param Request $request
      * @return mixed
@@ -15,7 +14,7 @@ class UserController extends AbstractController
     public function autocomplete( Request $request)
     {
         $q = $request->query->get('query', null);
-        $result = $this->getDoctrine()->getRepository('App:User')->autocomplete($q);
-        return $result;
+
+        return $this->getDoctrine()->getRepository('App:User')->autocomplete($q);
     }
 }
