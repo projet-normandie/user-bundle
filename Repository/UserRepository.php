@@ -3,12 +3,9 @@
 namespace ProjetNormandie\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
-
 
 class UserRepository extends EntityRepository
 {
-
     /**
      * @param $q
      * @return mixed
@@ -31,7 +28,7 @@ class UserRepository extends EntityRepository
      */
     public function majBadge()
     {
-        $sql = " INSERT INTO user_badge (idUser, idBadge)
+        $sql = "INSERT INTO user_badge (idUser, idBadge)
         SELECT user.id,badge.id
         FROM user,badge
         WHERE type = '%s'
@@ -42,10 +39,10 @@ class UserRepository extends EntityRepository
         $this->_em->getConnection()->executeUpdate(sprintf($sql, 'Forum', 'nbForumMessage'));
 
         // Inscrition badge
-        $sql = " INSERT INTO user_badge (idUser, idBadge)
+        $sql = 'INSERT INTO user_badge (idUser, idBadge)
         SELECT user.id,1
         FROM user
-        WHERE id NOT IN (SELECT idUser FROM user_badge WHERE idBadge = 1)";
+        WHERE id NOT IN (SELECT idUser FROM user_badge WHERE idBadge = 1)';
 
         $this->_em->getConnection()->executeUpdate($sql);
     }

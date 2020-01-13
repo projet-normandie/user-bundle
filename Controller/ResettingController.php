@@ -71,10 +71,11 @@ class ResettingController extends Controller
             ->setBodyHtml($body)
             ->setBodyText($body);
 
+        // todo replace by PN mailer injection
         $mailer = $this->get('projet_normandie_email.mailer');
         $mailer->send($mail);
 
-        $user->setPasswordRequestedAt(new \DateTime());
+        $user->setPasswordRequestedAt(new DateTime());
         $this->userManager->updateUser($user);
 
         return $this->getResponse(true, sprintf($this->get('translator')->trans('resetting.check_email'), $this->retryTtl / 3600));
