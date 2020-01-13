@@ -5,12 +5,14 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.profile'
         - 'user.autocomplete'
     email:
-      groups:
-        - 'user.profile'
+      groups: []
     username:
       groups:
         - 'user.profile'
         - 'user.autocomplete'
+    locale:
+      groups:
+        - 'user.profile'
     groups:
       groups:
     firstName:
@@ -24,4 +26,4 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.profile'
     badges:
       groups:
-        - 'user.profile'
+        - 'user.badges'

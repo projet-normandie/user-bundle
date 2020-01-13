@@ -24,6 +24,36 @@ resources:
                 method: 'GET'
                 path: '/users/roles'
                 controller: 'ProjetNormandie\UserBundle\Controller\AuthController::roles'
+            registration-register:
+                method: 'POST'
+                path: '/users/registration/register'
+                swagger_context:
+                    parameters:
+                        - in: body
+                          name: user
+                          schema:
+                              type: object
+                              required:
+                                  - username
+                              properties:
+                                  username:
+                                      type: string
+                controller: 'ProjetNormandie\UserBundle\Controller\RegistrationController::register'
+            registration-confirm:
+                method: 'POST'
+                path: '/users/registration/confirm'
+                swagger_context:
+                    parameters:
+                        - in: body
+                          name: user
+                          schema:
+                              type: object
+                              required:
+                                  - token
+                              properties:
+                                  token:
+                                      type: string
+                controller: 'ProjetNormandie\UserBundle\Controller\RegistrationController::confirm'
             resetting-send-email:
                 method: 'POST'
                 path: '/users/resetting/send-email'
@@ -35,8 +65,14 @@ resources:
                               type: object
                               required:
                                   - username
+                                  - email
+                                  - password
                               properties:
                                   username:
+                                      type: string
+                                  email:
+                                      type: string
+                                  password:
                                       type: string
                 controller: 'ProjetNormandie\UserBundle\Controller\ResettingController::sendEmail'
             resetting-reset:
