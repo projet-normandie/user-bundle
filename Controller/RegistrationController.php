@@ -9,28 +9,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjetNormandie\EmailBundle\Entity\Email;
 
-class ResettingController extends Controller
+
+class RegistrationController extends Controller
 {
     private $userManager;
     private $tokenGenerator;
-    /**
-     * @var int
-     */
-    private $retryTtl;
 
     /**
-     * @param UserManagerInterface     $userManager
-     * @param TokenGeneratorInterface  $tokenGenerator
-     * @param int                      $retryTtl
+     * RegistrationController constructor.
+     * @param UserManagerInterface    $userManager
+     * @param TokenGeneratorInterface $tokenGenerator
      */
-    public function __construct(
-        UserManagerInterface $userManager,
-        TokenGeneratorInterface $tokenGenerator, $retryTtl = 7200
-    )
+    public function __construct(UserManagerInterface $userManager, TokenGeneratorInterface $tokenGenerator)
     {
         $this->userManager = $userManager;
         $this->tokenGenerator = $tokenGenerator;
-        $this->retryTtl = $retryTtl;
     }
 
 
@@ -39,58 +32,65 @@ class ResettingController extends Controller
      * @return Response
      * @throws \Exception
      */
-    public function sendEmail(Request $request)
+    public function register(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+        $email = $data['email'];
         $username = $data['username'];
+        $password = $data['password'];
 
-        $user = $this->userManager->findUserByUsernameOrEmail($username);
-
-        if (null === $user) {
-            return $this->getResponse(false, $this->get('translator')->trans('resetting.user_not_found'));
+        // Check username
+        $user = $this->userManager->findUserByUsername($username);
+        if ($user !== null) {
+            return $this->getResponse(false, $this->get('translator')->trans('registration.username_exists'));
         }
 
-        if ($user->isPasswordRequestNonExpired($this->retryTtl)) {
-            return $this->getResponse(false, $this->get('translator')->trans('resetting.request_not_expired'));
+        // Check email
+        $user = $this->userManager->findUserByEmail($email);
+        if ($user !== null) {
+            return $this->getResponse(false, $this->get('translator')->trans('registration.email_exists'));
         }
 
-        if (null === $user->getConfirmationToken()) {
-            $user->setConfirmationToken($this->tokenGenerator->generateToken());
-        }
+        $user = $this->userManager->createUser();
+        $user->setEnabled(false);
+        $user->setEmail($email);
+        $user->setUsername($username);
+        $user->setPlainPassword($password);
+        $user->setConfirmationToken($this->tokenGenerator->generateToken());
 
+
+        $this->userManager->updateUser($user);
+
+        // Send email to activate account
         $body = sprintf(
-            $this->get('translator')->trans('resetting.email.message'),
+            $this->get('translator')->trans('registration.email.message'),
             $user->getUsername(),
-            $_ENV['FRONT_URL'] . '/#/auth/reset?token=' . $user->getConfirmationToken()
+            $_ENV['FRONT_URL'] . '/#/registration/confirm?token=' . $user->getConfirmationToken()
         );
 
         $mail = new Email();
         $mail
             ->setTargetMail($user->getEmail())
-            ->setSubject($this->get('translator')->trans('resetting.email.subject'))
+            ->setSubject(sprintf($this->get('translator')->trans('registration.email.subject'),$user->getUsername()))
             ->setBodyHtml($body)
             ->setBodyText($body);
 
         $mailer = $this->get('projet_normandie_email.mailer');
         $mailer->send($mail);
 
-        $user->setPasswordRequestedAt(new \DateTime());
-        $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, sprintf($this->get('translator')->trans('resetting.check_email'), $this->retryTtl / 3600));
+        return $this->getResponse(true, $this->get('translator')->trans('registration.check_email'));
     }
 
 
     /**
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
-    public function reset(Request $request)
+    public function confirm(Request $request)
     {
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];
-        $password = $data['password'];
 
         $user = $this->userManager->findUserByConfirmationToken($token);
 
@@ -98,11 +98,11 @@ class ResettingController extends Controller
             return $this->getResponse(false, 'INVALID_TOKEN');
         }
 
-        $user->setPlainPassword($password);
+        $user->setEnabled(true);
         $user->setConfirmationToken(null);
         $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, $this->get('translator')->trans('resetting.success'));
+        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.success'),$user->getUsername()));
     }
 
     /**
@@ -120,3 +120,4 @@ class ResettingController extends Controller
         return $response;
     }
 }
+

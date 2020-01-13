@@ -1,0 +1,37 @@
+registration:
+    email_exists: 'An account with this email already exists'
+    username_exists: 'An account with this username already exists'
+    check_email: |
+        An email has been sent to %email%. It contains an activation link you must click to activate your account.
+    success: 'Congrats %s, your account is now activated.'
+    token_invalid: 'Your account cant be confirmed, please check your token.'
+    failure: 'Technic Error'
+    email:
+        subject: 'Welcome %s!'
+        message: |
+            Hello %s!
+
+            To finish activating your account - please visit %s
+
+            This link can only be used once to validate your account.
+
+            Regards,
+            the Team.
+resetting:
+    user_not_found: 'USER NOT FOUND'
+    request_not_expired: 'request_not_expired'
+    check_email: |
+        An email has been sent. It contains a link you must click to reset your password.
+        Note: You can only request a new password once within %s hours.
+
+        If you don't get an email check your spam folder or try again.
+    success: 'The password has been reset successfully.'
+    email:
+        subject: 'Reset Password'
+        message: |
+            Hello %s!
+
+            To reset your password - please visit %s
+
+            Regards,
+            the Team.
