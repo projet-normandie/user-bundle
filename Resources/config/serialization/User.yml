@@ -4,23 +4,42 @@ ProjetNormandie\UserBundle\Entity\User:
       groups:
         - 'user.profile'
         - 'user.autocomplete'
+        - 'user.get'
+        - 'user.put'
     email:
       groups: []
     username:
       groups:
         - 'user.profile'
         - 'user.autocomplete'
+        - 'user.get'
     locale:
       groups:
         - 'user.profile'
+        - 'user.get'
+        - 'user.put'
     groups:
       groups:
     firstName:
       groups:
         - 'user.profile'
+        - 'user.get'
+        - 'user.put'
     lastName:
       groups:
         - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    birthDate:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    country:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
     nbConnexion:
       groups:
         - 'user.profile'
