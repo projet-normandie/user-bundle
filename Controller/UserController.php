@@ -2,10 +2,10 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserController extends AbstractController
+class UserController extends Controller
 {
     /**
      * @param Request $request

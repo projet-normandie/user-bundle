@@ -70,6 +70,13 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
 
     /**
      * @var string
+     * @ORM\Column(name="avatar", type="string", length=100, nullable=false)
+     */
+    protected $avatar;
+
+
+    /**
+     * @var string
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
      */
     protected $locale = 'en';
@@ -130,6 +137,24 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function setNbConnexion($nbConnexion)
     {
         $this->nbConnexion = $nbConnexion;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
         return $this;
     }
 
