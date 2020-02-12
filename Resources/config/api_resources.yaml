@@ -94,6 +94,25 @@ resources:
                                 password:
                                     type: string
                 controller: 'ProjetNormandie\UserBundle\Controller\ResettingController::reset'
+            upload-avatar:
+                access_control: 'is_granted("ROLE_USER")'
+                method: 'POST'
+                path: '/users/upload-avatar'
+                consumes:
+                    - application/json
+                swagger_context:
+                    parameters:
+                        - in: body
+                          name: file
+                          description: Picture encoded in base64
+                          schema:
+                              type: object
+                              required:
+                                  - base64
+                              properties:
+                                  base64:
+                                      type: string
+                controller: 'ProjetNormandie\UserBundle\Controller\AvatarController::upload'
         itemOperations:
             get:
                 normalization_context: {'groups': [user.profile,badge.read]}

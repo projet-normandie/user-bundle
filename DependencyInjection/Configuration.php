@@ -19,7 +19,16 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('projet_normandie_user');
+        $rootNode = $treeBuilder->root('projet_normandie_user');
+        $rootNode
+            ->children()
+            ->arrayNode('directory')
+            ->children()
+            ->scalarNode('avatar')->defaultValue(null)->end()
+            ->end()
+            ->end()
+            ->end();
+
         return $treeBuilder;
     }
 }

@@ -35,3 +35,8 @@ resetting:
 
           Cordialement,
           L'équipe
+
+avatar:
+    extension_not_allowed: 'Les format autorisés sont png et jpg'
+    success: "L\'avatar a bien été chargé"
+
