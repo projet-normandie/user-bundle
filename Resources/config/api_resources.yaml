@@ -115,7 +115,7 @@ resources:
                 controller: 'ProjetNormandie\UserBundle\Controller\AvatarController::upload'
         itemOperations:
             get:
-                normalization_context: {'groups': [user.profile,badge.read]}
+                normalization_context: {'groups': [user.get]}
             put:
                 access_control: 'is_granted("ROLE_USER") and object == user'
                 denormalization_context: {'groups': [user.put]}

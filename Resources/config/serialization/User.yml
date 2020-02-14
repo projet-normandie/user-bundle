@@ -40,6 +40,23 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.profile'
         - 'user.get'
         - 'user.put'
+    gender:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    personalWebSite:
+      groups:
+        - 'user.get'
+        - 'user.put'
+    youtube:
+      groups:
+        - 'user.get'
+        - 'user.put'
+    twitch:
+      groups:
+        - 'user.get'
+        - 'user.put'
     nbConnexion:
       groups:
         - 'user.profile'
