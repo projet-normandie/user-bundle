@@ -27,6 +27,8 @@ class AvatarController extends Controller
         $fp1 = fopen($file, 'r');
         $meta = stream_get_meta_data($fp1);
 
+        $data = explode( ',', $file);
+
         if (!array_key_exists($meta['mediatype'], $this->extensions)) {
             return $this->getResponse(false, $this->get('translator')->trans('avatar.extension_not_allowed'));
         }
@@ -35,7 +37,7 @@ class AvatarController extends Controller
         $filename = $user->getId() . '#' . uniqid() . $this->extensions[$meta['mediatype']];
 
         $fp2 = fopen($directory . $filename, 'w');
-        fwrite($fp2, $file);
+        fwrite($fp2, base64_decode($data[1]));
         fclose($fp2);
         // Save avatar
 
