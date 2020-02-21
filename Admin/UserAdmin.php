@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use ProjetNormandie\UserBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
@@ -40,6 +41,9 @@ class UserAdmin extends AbstractAdmin
                 'btn_add' => false,
             ])
             ->add('enabled', CheckboxType::class, [
+                'required' => false,
+            ])
+            ->add('comment', TextareaType::class, [
                 'required' => false,
             ])
             ->end()

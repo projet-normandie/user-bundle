@@ -74,6 +74,12 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      */
     protected $avatar;
 
+    /**
+     * @var string
+     * @ORM\Column(name="comment", type="text", length=100, nullable=false)
+     */
+    protected $comment;
+
 
     /**
      * @var string
@@ -155,6 +161,24 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     * @return User
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
         return $this;
     }
 
