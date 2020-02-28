@@ -29,9 +29,9 @@ resetting:
     email:
         subject: 'Réinitialisation de votre mot de passe'
         message: |
-          Bonjour %username% !
+          Bonjour %s !
 
-          Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+          Pour réinitialiser votre mot de passe, merci de vous rendre sur %s
 
           Cordialement,
           L'équipe
