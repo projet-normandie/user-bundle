@@ -30,6 +30,10 @@ class LoginListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param $event
+     * @throws \Exception
+     */
     public function onLogin($event)
     {
         $user = null;
@@ -38,9 +42,11 @@ class LoginListener implements EventSubscriberInterface
         } elseif ($event instanceof InteractiveLoginEvent) {
             $user = $event->getAuthenticationToken()->getUser();
         }
+
         if ($user !== null) {
             $label = $_SERVER['REMOTE_ADDR'];
-            $ip = $this->em->getRepository('ProjetNormandieUserBundle:Ip')->findOneBy(array('label' => $label));
+            $ip = $this->em->getRepository('ProjetNormandieUserBundle:Ip')
+                ->findOneBy(array('label' => $label));
             if ($ip === null) {
                 $ip = new Ip();
                 $ip->setlabel($label);
@@ -48,7 +54,8 @@ class LoginListener implements EventSubscriberInterface
                 $this->em->flush();
             }
 
-            $userIp = $this->em->getRepository('ProjetNormandieUserBundle:UserIp')->findOneBy(array('ip' => $ip, 'user' => $user));
+            $userIp = $this->em->getRepository('ProjetNormandieUserBundle:UserIp')
+                ->findOneBy(array('ip' => $ip, 'user' => $user));
             if ($userIp == null) {
                 $userIp = new UserIp();
                 $userIp->setUser($user);

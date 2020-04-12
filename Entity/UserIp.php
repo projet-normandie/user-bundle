@@ -44,7 +44,7 @@ class UserIp
     /**
      * @var Ip
      *
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Ip")
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Ip", inversedBy="userIp")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIp", referencedColumnName="id", nullable=false)
      * })
