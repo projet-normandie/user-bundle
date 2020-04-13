@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use ProjetNormandie\UserBundle\Entity\User;
 
@@ -57,7 +58,7 @@ class UserAdmin extends AbstractAdmin
             ->add('address', TextType::class, [
                 'required' => false,
             ])
-            ->add('birthDate', 'date', [
+            ->add('birthDate', DateType::class, [
                 'label' => 'Birth Date',
                 'required' => false,
                 'years' => range(1900, date('Y'))

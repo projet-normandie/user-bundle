@@ -40,3 +40,8 @@ avatar:
     extension_not_allowed: 'Les format autorisés sont png et jpg'
     success: "L'avatar a bien été chargé"
 
+label:
+    user: 'User'
+    group: 'Group'
+    ip : 'IP'
+
