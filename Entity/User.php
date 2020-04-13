@@ -5,7 +5,8 @@ namespace ProjetNormandie\UserBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -17,11 +18,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
  */
-class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface
+class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface
 {
     use UserPersonalDataTrait;
     use UserCommunicationDataTrait;
-    use Timestampable;
+    use TimestampableTrait;
 
     public const GENDER_FEMALE = 'F';
     public const GENDER_MALE = 'M';

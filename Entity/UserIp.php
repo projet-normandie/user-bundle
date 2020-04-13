@@ -3,7 +3,8 @@
 namespace ProjetNormandie\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * Ip
@@ -12,9 +13,9 @@ use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
  * @ORM\Table(name="user_ip")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserIpRepository")
  */
-class UserIp
+class UserIp implements TimestampableInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id

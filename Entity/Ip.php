@@ -3,7 +3,8 @@
 namespace ProjetNormandie\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -14,9 +15,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\IpRepository")
  * @DoctrineAssert\UniqueEntity(fields={"label"})
  */
-class Ip
+class Ip implements TimestampableInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
 
     public const STATUS_NORMAL = 'NORMAL';
     public const STATUS_SUSPICIOUS = 'SUSPICIOUS';
