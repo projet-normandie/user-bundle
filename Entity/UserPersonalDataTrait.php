@@ -32,9 +32,9 @@ trait UserPersonalDataTrait
      */
     protected $gender;
     /**
-     * @var Country
+     * @var CountryInterface
      *
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\CountryBundle\Entity\Country")
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\CountryInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idCountry", referencedColumnName="id")
      * })

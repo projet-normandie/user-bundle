@@ -65,7 +65,7 @@ interface UserPersonalDataInterface
     public function getCountry();
 
     /**
-     * @param Country $country
+     * @param CountryInterface $country
      * @return UserPersonalDataTrait
      */
     public function setCountry($country);
