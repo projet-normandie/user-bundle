@@ -44,6 +44,13 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $nbConnexion = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbForumMessage", type="integer", nullable=false)
+     */
+    protected $nbForumMessage = 0;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
      * @ORM\JoinTable(name="user_group",
      *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
@@ -144,6 +151,24 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function setNbConnexion($nbConnexion)
     {
         $this->nbConnexion = $nbConnexion;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbForumMessage()
+    {
+        return $this->nbForumMessage;
+    }
+
+    /**
+     * @param int $nbForumMessage
+     * @return User
+     */
+    public function setNbForumMessage($nbForumMessage)
+    {
+        $this->nbForumMessage = $nbForumMessage;
         return $this;
     }
 
