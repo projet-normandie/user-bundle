@@ -96,6 +96,12 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $locale = 'en';
 
     /**
+     * Use to link user to one to one relation
+     */
+    protected $relation;
+
+
+    /**
      * {@inheritdoc}
      */
     public function __construct()
@@ -235,6 +241,14 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function getUserIp()
     {
         return $this->userIp;
+    }
+
+    /**
+     * Get one to one relation
+     */
+    public function getRelation()
+    {
+        return $this->relation;
     }
 
     /**

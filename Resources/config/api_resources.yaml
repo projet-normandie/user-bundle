@@ -19,7 +19,7 @@ resources:
                           in: query
                           required: true
                           type: string
-                controller: 'App\Controller\UserController::autocomplete'
+                controller: 'ProjetNormandie\UserBundle\Controller\UserController::autocomplete'
             roles:
                 method: 'GET'
                 path: '/users/roles'

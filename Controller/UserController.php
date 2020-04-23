@@ -15,6 +15,6 @@ class UserController extends Controller
     {
         $q = $request->query->get('query', null);
 
-        return $this->getDoctrine()->getRepository('App:User')->autocomplete($q);
+        return $this->getDoctrine()->getRepository('ProjetNormandieUserBundle:User')->autocomplete($q);
     }
 }
