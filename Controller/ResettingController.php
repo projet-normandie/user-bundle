@@ -96,7 +96,7 @@ class ResettingController extends Controller
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->getResponse(false, 'INVALID_TOKEN');
+            return $this->getResponse(false, $this->get('translator')->trans('resetting.invalid_token'));
         }
 
         $user->setPlainPassword($password);

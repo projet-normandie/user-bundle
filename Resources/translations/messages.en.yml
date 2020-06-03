@@ -2,9 +2,9 @@ registration:
     email_exists: 'An account with this email already exists'
     username_exists: 'An account with this username already exists'
     check_email: |
-        An email has been sent to %email%. It contains an activation link you must click to activate your account.
-    success: 'Congrats %s, your account is now activated.'
-    token_invalid: 'Your account cant be confirmed, please check your token.'
+        An email has been sent to %s. It contains an activation link you must click to activate your account.
+    confirmed: 'Congrats %s, your account is now activated.'
+    token_invalid: 'Invalid token.'
     failure: 'Technic Error'
     email:
         subject: 'Welcome %s!'
@@ -18,8 +18,10 @@ registration:
             Regards,
             the Team.
 resetting:
-    user_not_found: 'USER NOT FOUND'
-    request_not_expired: 'request_not_expired'
+    user_not_found: 'There is no accoutn with this email'
+    request_not_expired: 'A request has already be sent'
+    global_message: 'If the account exists, a password reset email has been sent to you.'
+    invalid_token: 'Invalid Token'
     check_email: |
         An email has been sent. It contains a link you must click to reset your password.
         Note: You can only request a new password once within %s hours.

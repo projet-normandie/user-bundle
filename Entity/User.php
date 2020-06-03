@@ -80,7 +80,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @var string
      * @ORM\Column(name="avatar", type="string", length=100, nullable=false)
      */
-    protected $avatar;
+    protected $avatar = 'default.png';
 
     /**
      * @var string

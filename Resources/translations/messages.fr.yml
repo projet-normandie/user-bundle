@@ -2,9 +2,9 @@ registration:
     email_exists: 'Un compte avec cette adresse email existe déjà'
     username_exists: 'Un compte avec ce pseudo existe déjà'
     check_email: |
-        Un e-mail a été envoyé à l''adresse %email%. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d''activer votre compte.
+        Un e-mail a été envoyé à l'adresse %s. Il contient un lien d'activation sur lequel il vous faudra cliquer afin d''activer votre compte.
     confirmed: 'Félicitations %s votre compte est maintenant activé.'
-    success: 'L''utilisateur a été créé avec succès.'
+    token_invalid: 'Erreur de token'
     failure: 'Erreur technique'
     email:
         subject: 'Bienvenue %s !'
@@ -19,6 +19,10 @@ registration:
             L'équipe
 
 resetting:
+    user_not_found: 'Aucun compte avec cette adresse email'
+    request_not_expired: 'Une demande est déjà en cours'
+    global_message: 'Si le compte existe, un e-mail de réinitialisation du mot de passe vous a été envoyé'
+    invalid_token: 'Token invalide'
     check_email: |
         Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
         Remarque : Vous ne pouvez demander un nouveau mot de passe que toutes les %s heures.

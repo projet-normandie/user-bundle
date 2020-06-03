@@ -79,7 +79,7 @@ class RegistrationController extends Controller
         $mailer->send($mail);
 
 
-        return $this->getResponse(true, $this->get('translator')->trans('registration.check_email'));
+        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.check_email'), $email));
     }
 
 
@@ -95,14 +95,14 @@ class RegistrationController extends Controller
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->getResponse(false, 'INVALID_TOKEN');
+            return $this->getResponse(false, $this->get('translator')->trans('registration.token_invalid'));
         }
 
         $user->setEnabled(true);
         $user->setConfirmationToken(null);
         $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.success'),$user->getUsername()));
+        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.confirmed'), $user->getUsername()));
     }
 
     /**
