@@ -61,16 +61,6 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $groups;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ProjetNormandie\BadgeBundle\Entity\Badge")
-     * @ORM\JoinTable(name="user_badge",
-     *      joinColumns={@ORM\JoinColumn(name="idUser", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="idBadge", referencedColumnName="id")}
-     * )
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $badges;
-
-    /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
      */
     private $userIp;
@@ -225,14 +215,6 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
         }
         $this->lastLogin = $time;
         return $this;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBadges()
-    {
-        return $this->badges;
     }
 
     /**
