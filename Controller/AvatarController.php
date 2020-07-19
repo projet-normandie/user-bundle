@@ -2,11 +2,11 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AvatarController extends Controller
+class AvatarController extends AbstractController
 {
     private $extensions = array(
         'image/png' => '.png',

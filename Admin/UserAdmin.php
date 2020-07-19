@@ -134,7 +134,8 @@ class UserAdmin extends AbstractAdmin
         $filter
             ->add('username')
             ->add('email')
-            ->add('enabled');
+            ->add('enabled')
+            ->add('groups');
     }
     /**
      * @inheritDoc

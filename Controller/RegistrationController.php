@@ -4,13 +4,13 @@ namespace ProjetNormandie\UserBundle\Controller;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjetNormandie\EmailBundle\Entity\Email;
 
 
-class RegistrationController extends Controller
+class RegistrationController extends AbstractController
 {
     private $userManager;
     private $tokenGenerator;
