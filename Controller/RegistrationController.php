@@ -8,22 +8,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjetNormandie\EmailBundle\Entity\Email;
-
+use ProjetNormandie\EmailBundle\Service\Mailer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
     private $userManager;
     private $tokenGenerator;
+    private $translator;
+    private $mailer;
 
     /**
      * RegistrationController constructor.
      * @param UserManagerInterface    $userManager
      * @param TokenGeneratorInterface $tokenGenerator
+     * @param TranslatorInterface     $translator
+     * @param Mailer                  $mailer
      */
-    public function __construct(UserManagerInterface $userManager, TokenGeneratorInterface $tokenGenerator)
+    public function __construct(
+        UserManagerInterface $userManager,
+        TokenGeneratorInterface $tokenGenerator,
+        TranslatorInterface $translator,
+        Mailer $mailer
+    )
     {
         $this->userManager = $userManager;
         $this->tokenGenerator = $tokenGenerator;
+        $this->translator = $translator;
+        $this->mailer = $mailer;
     }
 
 
@@ -42,13 +54,13 @@ class RegistrationController extends AbstractController
         // Check username
         $user = $this->userManager->findUserByUsername($username);
         if ($user !== null) {
-            return $this->getResponse(false, $this->get('translator')->trans('registration.username_exists'));
+            return $this->getResponse(false, $this->translator->trans('registration.username_exists'));
         }
 
         // Check email
         $user = $this->userManager->findUserByEmail($email);
         if ($user !== null) {
-            return $this->getResponse(false, $this->get('translator')->trans('registration.email_exists'));
+            return $this->getResponse(false, $this->translator->trans('registration.email_exists'));
         }
 
         $user = $this->userManager->createUser();
@@ -63,7 +75,7 @@ class RegistrationController extends AbstractController
 
         // Send email to activate account
         $body = sprintf(
-            $this->get('translator')->trans('registration.email.message'),
+            $this->translator->trans('registration.email.message'),
             $user->getUsername(),
             $_ENV['FRONT_URL'] . '/#/registration/confirm?token=' . $user->getConfirmationToken()
         );
@@ -71,15 +83,14 @@ class RegistrationController extends AbstractController
         $mail = new Email();
         $mail
             ->setTargetMail($user->getEmail())
-            ->setSubject(sprintf($this->get('translator')->trans('registration.email.subject'),$user->getUsername()))
+            ->setSubject(sprintf($this->translator->trans('registration.email.subject'),$user->getUsername()))
             ->setBodyHtml($body)
             ->setBodyText($body);
 
-        $mailer = $this->get('projet_normandie_email.mailer');
-        $mailer->send($mail);
+        $this->mailer->send($mail);
 
 
-        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.check_email'), $email));
+        return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $email));
     }
 
 
@@ -95,14 +106,14 @@ class RegistrationController extends AbstractController
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->getResponse(false, $this->get('translator')->trans('registration.token_invalid'));
+            return $this->getResponse(false, $this->translator->trans('registration.token_invalid'));
         }
 
         $user->setEnabled(true);
         $user->setConfirmationToken(null);
         $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, sprintf($this->get('translator')->trans('registration.confirmed'), $user->getUsername()));
+        return $this->getResponse(true, sprintf($this->translator->trans('registration.confirmed'), $user->getUsername()));
     }
 
     /**

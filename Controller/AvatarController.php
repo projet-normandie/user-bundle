@@ -5,14 +5,21 @@ namespace ProjetNormandie\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AvatarController extends AbstractController
 {
+    private $translator;
+
     private $extensions = array(
         'image/png' => '.png',
         'image/jpeg' => '.jpg',
     );
 
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * @param Request     $request
@@ -30,7 +37,7 @@ class AvatarController extends AbstractController
         $data = explode( ',', $file);
 
         if (!array_key_exists($meta['mediatype'], $this->extensions)) {
-            return $this->getResponse(false, $this->get('translator')->trans('avatar.extension_not_allowed'));
+            return $this->getResponse(false, $this->translator->trans('avatar.extension_not_allowed'));
         }
 
         $directory = $this->getParameter('projetnormandie_user.directory.avatar');
@@ -46,7 +53,7 @@ class AvatarController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->getResponse(true, $this->get('translator')->trans('avatar.success'));
+        return $this->getResponse(true, $this->translator->trans('avatar.success'));
     }
 
     /**
