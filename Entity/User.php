@@ -86,12 +86,6 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $locale = 'en';
 
     /**
-     * Use to link user to one to one relation
-     */
-    protected $relation;
-
-
-    /**
      * {@inheritdoc}
      */
     public function __construct()
