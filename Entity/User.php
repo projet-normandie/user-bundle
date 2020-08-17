@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -18,11 +20,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
  */
-class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface
+class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface, SluggableInterface
 {
     use UserPersonalDataTrait;
     use UserCommunicationDataTrait;
     use TimestampableTrait;
+    use SluggableTrait;
 
     public const GENDER_FEMALE = 'F';
     public const GENDER_MALE = 'M';
@@ -220,18 +223,20 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     }
 
     /**
-     * Get one to one relation
-     */
-    public function getRelation()
-    {
-        return $this->relation;
-    }
-
-    /**
      * @inheritDoc
      */
     public function __toString()
     {
         return sprintf('%s [%d]', $this->getUsername(), $this->getId());
+    }
+
+    /**
+     * Returns an array of the fields used to generate the slug.
+     *
+     * @return string[]
+     */
+    public function getSluggableFields(): array
+    {
+        return ['username'];
     }
 }
