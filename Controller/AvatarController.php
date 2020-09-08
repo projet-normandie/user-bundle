@@ -41,7 +41,7 @@ class AvatarController extends AbstractController
         }
 
         $directory = $this->getParameter('projetnormandie_user.directory.avatar');
-        $filename = $user->getId() . '#' . uniqid() . $this->extensions[$meta['mediatype']];
+        $filename = $user->getId() . '_' . uniqid() . $this->extensions[$meta['mediatype']];
 
         $fp2 = fopen($directory . $filename, 'w');
         fwrite($fp2, base64_decode($data[1]));
