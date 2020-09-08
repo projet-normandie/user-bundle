@@ -11,7 +11,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return mixed
      */
-    public function autocomplete( Request $request)
+    public function autocomplete(Request $request)
     {
         $q = $request->query->get('query', null);
 

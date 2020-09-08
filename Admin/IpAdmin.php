@@ -15,7 +15,7 @@ use ProjetNormandie\UserBundle\Entity\Ip;
 class IpAdmin extends AbstractAdmin
 {
     /**
-     * @inheritDoc
+     * @param FormMapper $form
      */
     protected function configureFormFields(FormMapper $form)
     {
@@ -33,16 +33,18 @@ class IpAdmin extends AbstractAdmin
                 ]
             );
     }
+
     /**
-     * @inheritDoc
+     * @param DatagridMapper $filter
      */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
             ->add('label');
     }
+
     /**
-     * @inheritDoc
+     * @param ListMapper $list
      */
     protected function configureListFields(ListMapper $list)
     {
@@ -57,8 +59,9 @@ class IpAdmin extends AbstractAdmin
                 ]
             ]);
     }
+
     /**
-     * @inheritDoc
+     * @param ShowMapper $show
      */
     protected function configureShowFields(ShowMapper $show)
     {

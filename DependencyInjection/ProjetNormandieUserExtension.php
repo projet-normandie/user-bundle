@@ -23,7 +23,7 @@ class ProjetNormandieUserExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('projetnormandie_user.directory.avatar', $config['directory']['avatar']);
+        $container->setParameter('projetnormandie_user.directory.picture', $config['directory']['picture']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

@@ -60,7 +60,7 @@ interface UserPersonalDataInterface
     public function setGender($gender);
 
     /**
-     * @return Country
+     * @return CountryInterface
      */
     public function getCountry();
 

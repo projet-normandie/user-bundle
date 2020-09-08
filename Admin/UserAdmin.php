@@ -18,10 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use ProjetNormandie\UserBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
-
 {
     /**
-     * @inheritDoc
+     * @param FormMapper $form
      */
     protected function configureFormFields(FormMapper $form)
     {
@@ -126,8 +125,9 @@ class UserAdmin extends AbstractAdmin
             ])
             ->end();
     }
+
     /**
-     * @inheritDoc
+     * @param DatagridMapper $filter
      */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
@@ -137,8 +137,9 @@ class UserAdmin extends AbstractAdmin
             ->add('enabled')
             ->add('groups');
     }
+
     /**
-     * @inheritDoc
+     * @param ListMapper $list
      */
     protected function configureListFields(ListMapper $list)
     {
@@ -154,8 +155,9 @@ class UserAdmin extends AbstractAdmin
                 ]
             ]);
     }
+
     /**
-     * @inheritDoc
+     * @param ShowMapper $show
      */
     protected function configureShowFields(ShowMapper $show)
     {
@@ -196,8 +198,9 @@ class UserAdmin extends AbstractAdmin
             ->end()
             ->add('userIp');
     }
+
     /**
-     * @inheritDoc
+     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {

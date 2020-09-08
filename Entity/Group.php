@@ -20,7 +20,7 @@ class Group extends BaseGroup
     protected $id;
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function __toString()
     {

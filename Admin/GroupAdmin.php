@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class GroupAdmin extends AbstractAdmin
 {
     /**
-     * @inheritDoc
+     * @param FormMapper $form
      */
     protected function configureFormFields(FormMapper $form)
     {
@@ -27,16 +27,18 @@ class GroupAdmin extends AbstractAdmin
                 'allow_delete' => true,
             ]);
     }
+
     /**
-     * @inheritDoc
+     * @param DatagridMapper $filter
      */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
             ->add('name');
     }
+
     /**
-     * @inheritDoc
+     * @param ListMapper $list
      */
     protected function configureListFields(ListMapper $list)
     {
@@ -51,8 +53,9 @@ class GroupAdmin extends AbstractAdmin
                 ]
             ]);
     }
+
     /**
-     * @inheritDoc
+     * @param ShowMapper $show
      */
     protected function configureShowFields(ShowMapper $show)
     {

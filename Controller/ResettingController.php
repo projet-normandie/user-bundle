@@ -36,8 +36,7 @@ class ResettingController extends AbstractController
         TranslatorInterface $translator,
         Mailer $mailer,
         $retryTtl = 7200
-    )
-    {
+    ) {
         $this->userManager = $userManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->translator = $translator;
@@ -88,7 +87,10 @@ class ResettingController extends AbstractController
         $user->setPasswordRequestedAt(new \DateTime());
         $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, sprintf($this->translator->trans('resetting.check_email'), $this->retryTtl / 3600));
+        return $this->getResponse(
+            true,
+            sprintf($this->translator->trans('resetting.check_email'), $this->retryTtl / 3600)
+        );
     }
 
 
@@ -121,7 +123,8 @@ class ResettingController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null) {
+    private function getResponse(bool $success, $message = null)
+    {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent(json_encode([

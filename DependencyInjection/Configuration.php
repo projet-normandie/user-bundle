@@ -18,14 +18,15 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('projet_normandie_user');
+        $treeBuilder = new TreeBuilder('projet_normandie_user');
+        $rootNode = $treeBuilder->getRootNode();
+
         $rootNode
             ->children()
-            ->arrayNode('directory')
-            ->children()
-            ->scalarNode('avatar')->defaultValue(null)->end()
-            ->end()
+                ->arrayNode('directory')
+                ->children()
+                    ->scalarNode('picture')->defaultValue(null)->end()
+                ->end()
             ->end()
             ->end();
 

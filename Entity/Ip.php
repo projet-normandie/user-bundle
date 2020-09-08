@@ -88,8 +88,7 @@ class Ip implements TimestampableInterface
 
     /**
      * Set ip
-     *
-     * @param String $label
+     * @param null $label
      * @return $this
      */
     public function setlabel($label = null)
@@ -117,9 +116,8 @@ class Ip implements TimestampableInterface
         return $this->userIp;
     }
 
-
     /**
-     * @inheritDoc
+     * @return string
      */
     public function __toString()
     {
@@ -138,5 +136,3 @@ class Ip implements TimestampableInterface
         ];
     }
 }
-
-

@@ -30,8 +30,7 @@ class RegistrationController extends AbstractController
         TokenGeneratorInterface $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer
-    )
-    {
+    ) {
         $this->userManager = $userManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->translator = $translator;
@@ -83,7 +82,7 @@ class RegistrationController extends AbstractController
         $mail = new Email();
         $mail
             ->setTargetMail($user->getEmail())
-            ->setSubject(sprintf($this->translator->trans('registration.email.subject'),$user->getUsername()))
+            ->setSubject(sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()))
             ->setBodyHtml($body)
             ->setBodyText($body);
 
@@ -113,7 +112,10 @@ class RegistrationController extends AbstractController
         $user->setConfirmationToken(null);
         $this->userManager->updateUser($user);
 
-        return $this->getResponse(true, sprintf($this->translator->trans('registration.confirmed'), $user->getUsername()));
+        return $this->getResponse(
+            true,
+            sprintf($this->translator->trans('registration.confirmed'), $user->getUsername())
+        );
     }
 
     /**
@@ -121,7 +123,8 @@ class RegistrationController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null) {
+    private function getResponse(bool $success, $message = null)
+    {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent(json_encode([
@@ -131,4 +134,3 @@ class RegistrationController extends AbstractController
         return $response;
     }
 }
-

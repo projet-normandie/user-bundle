@@ -74,8 +74,7 @@ class UserIp implements TimestampableInterface
 
     /**
      * Set user
-     *
-     * @param User $user
+     * @param User|null $user
      * @return $this
      */
     public function setUser(User $user = null)
@@ -97,8 +96,7 @@ class UserIp implements TimestampableInterface
 
     /**
      * Set ip
-     *
-     * @param Ip $ip
+     * @param Ip|null $ip
      * @return $this
      */
     public function setIp(Ip $ip = null)
@@ -137,10 +135,16 @@ class UserIp implements TimestampableInterface
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function __toString()
     {
-        return sprintf('%s # %s # [%d] # %s', $this->getUser()->getUserName(), $this->getIp()->getLabel(), $this->getNbConnexion() , $this->getUpdatedAt()->format('Y-m-d'));
+        return sprintf(
+            '%s # %s # [%d] # %s',
+            $this->getUser()->getUserName(),
+            $this->getIp()->getLabel(),
+            $this->getNbConnexion(),
+            $this->getUpdatedAt()->format('Y-m-d')
+        );
     }
 }

@@ -34,16 +34,16 @@ class AvatarController extends AbstractController
         $fp1 = fopen($file, 'r');
         $meta = stream_get_meta_data($fp1);
 
-        $data = explode( ',', $file);
+        $data = explode(',', $file);
 
         if (!array_key_exists($meta['mediatype'], $this->extensions)) {
             return $this->getResponse(false, $this->translator->trans('avatar.extension_not_allowed'));
         }
 
-        $directory = $this->getParameter('projetnormandie_user.directory.avatar');
+        $directory = $this->getParameter('projetnormandie_user.directory.picture') . '/user';
         $filename = $user->getId() . '_' . uniqid() . $this->extensions[$meta['mediatype']];
 
-        $fp2 = fopen($directory . $filename, 'w');
+        $fp2 = fopen($directory . '/' . $filename, 'w');
         fwrite($fp2, base64_decode($data[1]));
         fclose($fp2);
         // Save avatar
@@ -61,7 +61,8 @@ class AvatarController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null) {
+    private function getResponse(bool $success, $message = null)
+    {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent(json_encode([
