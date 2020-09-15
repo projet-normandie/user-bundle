@@ -5,156 +5,156 @@ namespace ProjetNormandie\UserBundle\Entity;
 interface UserCommunicationDataInterface
 {
     /**
-     * @return mixed
+     * @return string
      */
     public function getPersonalWebSite();
 
     /**
-     * @param mixed $personalWebSite
+     * @param string $personalWebSite
      * @return UserCommunicationDataTrait
      */
-    public function setPersonalWebSite($personalWebSite);
+    public function setPersonalWebSite(string $personalWebSite);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFacebook();
 
     /**
-     * @param mixed $facebook
+     * @param string $facebook
      * @return UserCommunicationDataTrait
      */
-    public function setFacebook($facebook);
+    public function setFacebook(string $facebook);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTwitter();
 
     /**
-     * @param mixed $twitter
+     * @param string $twitter
      * @return UserCommunicationDataTrait
      */
-    public function setTwitter($twitter);
+    public function setTwitter(string $twitter);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getGooglePlus();
 
     /**
-     * @param mixed $googlePlus
+     * @param string $googlePlus
      * @return UserCommunicationDataTrait
      */
-    public function setGooglePlus($googlePlus);
+    public function setGooglePlus(string $googlePlus);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getYoutube();
 
     /**
-     * @param mixed $youtube
+     * @param string $youtube
      * @return UserCommunicationDataTrait
      */
-    public function setYoutube($youtube);
+    public function setYoutube(string $youtube);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDailymotion();
 
     /**
-     * @param mixed $dailymotion
+     * @param string $dailymotion
      * @return UserCommunicationDataTrait
      */
-    public function setDailymotion($dailymotion);
+    public function setDailymotion(string $dailymotion);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTwitch();
 
     /**
-     * @param mixed $twitch
+     * @param string $twitch
      * @return UserCommunicationDataTrait
      */
-    public function setTwitch($twitch);
+    public function setTwitch(string $twitch);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSkype();
 
     /**
-     * @param mixed $skype
+     * @param string $skype
      * @return UserCommunicationDataTrait
      */
-    public function setSkype($skype);
+    public function setSkype(string $skype);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSnapChat();
 
     /**
-     * @param mixed $snapChat
+     * @param string $snapChat
      * @return UserCommunicationDataTrait
      */
-    public function setSnapChat($snapChat);
+    public function setSnapChat(string $snapChat);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPinterest();
 
     /**
-     * @param mixed $pinterest
+     * @param string $pinterest
      * @return UserCommunicationDataTrait
      */
-    public function setPinterest($pinterest);
+    public function setPinterest(string $pinterest);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTrumblr();
 
     /**
-     * @param mixed $trumblr
+     * @param string $trumblr
      * @return UserCommunicationDataTrait
      */
-    public function setTrumblr($trumblr);
+    public function setTrumblr(string $trumblr);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBlogger();
 
     /**
-     * @param mixed $blogger
+     * @param string $blogger
      * @return UserCommunicationDataTrait
      */
-    public function setBlogger($blogger);
+    public function setBlogger(string $blogger);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReddit();
 
     /**
-     * @param mixed $reddit
+     * @param string $reddit
      * @return UserCommunicationDataTrait
      */
-    public function setReddit($reddit);
+    public function setReddit(string $reddit);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDeviantArt();
 
     /**
-     * @param mixed $deviantArt
+     * @param string $deviantArt
      * @return UserCommunicationDataTrait
      */
-    public function setDeviantArt($deviantArt);
+    public function setDeviantArt(string $deviantArt);
 }
