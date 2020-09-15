@@ -9,7 +9,6 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 /**
  * Ip
  *
- * @ORM\Entity
  * @ORM\Table(name="user_ip")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserIpRepository")
  */
@@ -53,11 +52,11 @@ class UserIp implements TimestampableInterface
     private $ip;
 
     /**
-     * Set idGroup
+     * Set id
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
         return $this;
@@ -128,7 +127,7 @@ class UserIp implements TimestampableInterface
      * @param int $nbConnexion
      * @return $this
      */
-    public function setNbConnexion($nbConnexion)
+    public function setNbConnexion(int $nbConnexion)
     {
         $this->nbConnexion = $nbConnexion;
         return $this;

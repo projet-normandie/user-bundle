@@ -2,6 +2,7 @@
 
 namespace ProjetNormandie\UserBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UserPersonalDataTrait
@@ -22,7 +23,7 @@ trait UserPersonalDataTrait
      */
     protected $address;
     /**
-     * @var \DateTime
+     * @var DateTime
      * @ORM\Column(name="birthDate", type="date", nullable=true)
      */
     protected $birthDate;
@@ -58,7 +59,7 @@ trait UserPersonalDataTrait
      * @param string $firstName
      * @return UserPersonalDataTrait
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
         return $this;
@@ -76,7 +77,7 @@ trait UserPersonalDataTrait
      * @param string $lastName
      * @return UserPersonalDataTrait
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
         return $this;
@@ -94,14 +95,14 @@ trait UserPersonalDataTrait
      * @param string $address
      * @return UserPersonalDataTrait
      */
-    public function setAddress($address)
+    public function setAddress(string $address)
     {
         $this->address = $address;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBirthDate()
     {
@@ -109,10 +110,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param \DateTime $birthDate
+     * @param DateTime $birthDate
      * @return UserPersonalDataTrait
      */
-    public function setBirthDate($birthDate)
+    public function setBirthDate(DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
         return $this;
@@ -130,7 +131,7 @@ trait UserPersonalDataTrait
      * @param string $gender
      * @return UserPersonalDataTrait
      */
-    public function setGender($gender)
+    public function setGender(string $gender)
     {
         $this->gender = $gender;
         return $this;
@@ -145,7 +146,7 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param CountryInterface $country
+     * @param $country
      * @return UserPersonalDataTrait
      */
     public function setCountry($country)
@@ -166,7 +167,7 @@ trait UserPersonalDataTrait
      * @param int $timeZone
      * @return UserPersonalDataTrait
      */
-    public function setTimeZone($timeZone)
+    public function setTimeZone(int $timeZone)
     {
         $this->timeZone = $timeZone;
         return $this;

@@ -2,6 +2,8 @@
 
 namespace ProjetNormandie\UserBundle\Entity;
 
+use DateTime;
+
 interface UserPersonalDataInterface
 {
     /**
@@ -13,7 +15,7 @@ interface UserPersonalDataInterface
      * @param string $firstName
      * @return UserPersonalDataTrait
      */
-    public function setFirstName($firstName);
+    public function setFirstName(string $firstName);
 
     /**
      * @return string
@@ -24,7 +26,7 @@ interface UserPersonalDataInterface
      * @param string $lastName
      * @return UserPersonalDataTrait
      */
-    public function setLastName($lastName);
+    public function setLastName(string $lastName);
 
     /**
      * @return string
@@ -35,18 +37,18 @@ interface UserPersonalDataInterface
      * @param string $address
      * @return UserPersonalDataTrait
      */
-    public function setAddress($address);
+    public function setAddress(string $address);
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBirthDate();
 
     /**
-     * @param \DateTime $birthDate
+     * @param DateTime $birthDate
      * @return UserPersonalDataTrait
      */
-    public function setBirthDate($birthDate);
+    public function setBirthDate(DateTime $birthDate);
 
     /**
      * @return string
@@ -57,7 +59,7 @@ interface UserPersonalDataInterface
      * @param string $gender
      * @return UserPersonalDataTrait
      */
-    public function setGender($gender);
+    public function setGender(string $gender);
 
     /**
      * @return CountryInterface
@@ -65,7 +67,7 @@ interface UserPersonalDataInterface
     public function getCountry();
 
     /**
-     * @param CountryInterface $country
+     * @param $country
      * @return UserPersonalDataTrait
      */
     public function setCountry($country);
@@ -79,5 +81,5 @@ interface UserPersonalDataInterface
      * @param int $timeZone
      * @return UserPersonalDataTrait
      */
-    public function setTimeZone($timeZone);
+    public function setTimeZone(int $timeZone);
 }

@@ -14,7 +14,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 /**
  * User
  *
- * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
  * @DoctrineAssert\UniqueEntity(fields={"email"})
@@ -123,7 +122,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @param string $locale
      * @return User
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         $this->locale = $locale;
         return $this;
@@ -141,7 +140,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @param int $nbConnexion
      * @return User
      */
-    public function setNbConnexion($nbConnexion)
+    public function setNbConnexion(int $nbConnexion)
     {
         $this->nbConnexion = $nbConnexion;
         return $this;
@@ -159,7 +158,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @param int $nbForumMessage
      * @return User
      */
-    public function setNbForumMessage($nbForumMessage)
+    public function setNbForumMessage(int $nbForumMessage)
     {
         $this->nbForumMessage = $nbForumMessage;
         return $this;
@@ -177,7 +176,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @param string $avatar
      * @return User
      */
-    public function setAvatar($avatar)
+    public function setAvatar(string $avatar)
     {
         $this->avatar = $avatar;
         return $this;
@@ -195,7 +194,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
      * @param string $comment
      * @return User
      */
-    public function setComment($comment)
+    public function setComment(string $comment)
     {
         $this->comment = $comment;
         return $this;

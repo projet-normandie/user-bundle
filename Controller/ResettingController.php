@@ -2,6 +2,8 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
+use DateTime;
+use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,7 +50,7 @@ class ResettingController extends AbstractController
     /**
      * @param Request $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function sendEmail(Request $request)
     {
@@ -84,7 +86,7 @@ class ResettingController extends AbstractController
 
         $this->mailer->send($mail);
 
-        $user->setPasswordRequestedAt(new \DateTime());
+        $user->setPasswordRequestedAt(new DateTime());
         $this->userManager->updateUser($user);
 
         return $this->getResponse(
@@ -97,7 +99,7 @@ class ResettingController extends AbstractController
     /**
      * @param Request $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function reset(Request $request)
     {

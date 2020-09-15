@@ -10,7 +10,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 /**
  * Ip
  *
- * @ORM\Entity
  * @ORM\Table(name="ip")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\IpRepository")
  * @DoctrineAssert\UniqueEntity(fields={"label"})
@@ -53,7 +52,7 @@ class Ip implements TimestampableInterface
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
         return $this;
@@ -80,7 +79,7 @@ class Ip implements TimestampableInterface
      * @param string $status
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
         return $this;

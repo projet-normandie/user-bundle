@@ -89,7 +89,7 @@ trait UserCommunicationDataTrait
      * @param string $personalWebSite
      * @return UserCommunicationDataTrait
      */
-    public function setPersonalWebSite($personalWebSite)
+    public function setPersonalWebSite(string $personalWebSite)
     {
         $this->personalWebSite = $personalWebSite;
         return $this;
@@ -107,7 +107,7 @@ trait UserCommunicationDataTrait
      * @param string $facebook
      * @return UserCommunicationDataTrait
      */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook)
     {
         $this->facebook = $facebook;
         return $this;
@@ -125,7 +125,7 @@ trait UserCommunicationDataTrait
      * @param string $twitter
      * @return UserCommunicationDataTrait
      */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter)
     {
         $this->twitter = $twitter;
         return $this;
@@ -143,7 +143,7 @@ trait UserCommunicationDataTrait
      * @param string $googlePlus
      * @return UserCommunicationDataTrait
      */
-    public function setGooglePlus($googlePlus)
+    public function setGooglePlus(string $googlePlus)
     {
         $this->googlePlus = $googlePlus;
         return $this;
@@ -161,7 +161,7 @@ trait UserCommunicationDataTrait
      * @param string $youtube
      * @return UserCommunicationDataTrait
      */
-    public function setYoutube($youtube)
+    public function setYoutube(string $youtube)
     {
         $this->youtube = $youtube;
         return $this;
@@ -179,7 +179,7 @@ trait UserCommunicationDataTrait
      * @param string $dailymotion
      * @return UserCommunicationDataTrait
      */
-    public function setDailymotion($dailymotion)
+    public function setDailymotion(string $dailymotion)
     {
         $this->dailymotion = $dailymotion;
         return $this;
@@ -197,7 +197,7 @@ trait UserCommunicationDataTrait
      * @param string $twitch
      * @return UserCommunicationDataTrait
      */
-    public function setTwitch($twitch)
+    public function setTwitch(string $twitch)
     {
         $this->twitch = $twitch;
         return $this;
@@ -215,7 +215,7 @@ trait UserCommunicationDataTrait
      * @param string $skype
      * @return UserCommunicationDataTrait
      */
-    public function setSkype($skype)
+    public function setSkype(string $skype)
     {
         $this->skype = $skype;
         return $this;
@@ -233,7 +233,7 @@ trait UserCommunicationDataTrait
      * @param string $snapChat
      * @return UserCommunicationDataTrait
      */
-    public function setSnapChat($snapChat)
+    public function setSnapChat(string $snapChat)
     {
         $this->snapChat = $snapChat;
         return $this;
@@ -251,7 +251,7 @@ trait UserCommunicationDataTrait
      * @param string $pinterest
      * @return UserCommunicationDataTrait
      */
-    public function setPinterest($pinterest)
+    public function setPinterest(string $pinterest)
     {
         $this->pinterest = $pinterest;
         return $this;
@@ -269,7 +269,7 @@ trait UserCommunicationDataTrait
      * @param string $trumblr
      * @return UserCommunicationDataTrait
      */
-    public function setTrumblr($trumblr)
+    public function setTrumblr(string $trumblr)
     {
         $this->trumblr = $trumblr;
         return $this;
@@ -287,7 +287,7 @@ trait UserCommunicationDataTrait
      * @param string $blogger
      * @return UserCommunicationDataTrait
      */
-    public function setBlogger($blogger)
+    public function setBlogger(string $blogger)
     {
         $this->blogger = $blogger;
         return $this;
@@ -305,7 +305,7 @@ trait UserCommunicationDataTrait
      * @param string $reddit
      * @return UserCommunicationDataTrait
      */
-    public function setReddit($reddit)
+    public function setReddit(string $reddit)
     {
         $this->reddit = $reddit;
         return $this;
@@ -323,7 +323,7 @@ trait UserCommunicationDataTrait
      * @param string $deviantArt
      * @return UserCommunicationDataTrait
      */
-    public function setDeviantArt($deviantArt)
+    public function setDeviantArt(string $deviantArt)
     {
         $this->deviantArt = $deviantArt;
         return $this;
