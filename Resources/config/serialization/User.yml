@@ -1,0 +1,66 @@
+ProjetNormandie\UserBundle\Entity\User:
+  attributes:
+    id:
+      groups:
+        - 'user.profile'
+        - 'user.autocomplete'
+        - 'user.get'
+        - 'user.put'
+    email:
+      groups: []
+    username:
+      groups:
+        - 'user.profile'
+        - 'user.autocomplete'
+        - 'user.get'
+    slug:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+    locale:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    groups:
+      groups:
+    firstName:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    lastName:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    birthDate:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    country:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    gender:
+      groups:
+        - 'user.profile'
+        - 'user.get'
+        - 'user.put'
+    personalWebSite:
+      groups:
+        - 'user.get'
+        - 'user.put'
+    youtube:
+      groups:
+        - 'user.get'
+        - 'user.put'
+    twitch:
+      groups:
+        - 'user.get'
+        - 'user.put'
+    nbConnexion:
+      groups:
+        - 'user.profile'

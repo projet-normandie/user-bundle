@@ -1,0 +1,11 @@
+ProjetNormandie\UserBundle\Entity\Group:
+  attributes:
+    id:
+      groups:
+        - 'user.profile'
+    name:
+      groups:
+        - 'user.profile'
+    roles:
+      groups:
+        - 'user.profile'
