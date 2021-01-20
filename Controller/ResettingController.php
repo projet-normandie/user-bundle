@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use ProjetNormandie\EmailBundle\Entity\Email;
 use ProjetNormandie\EmailBundle\Service\Mailer;
 
 class ResettingController extends AbstractController
@@ -74,17 +73,14 @@ class ResettingController extends AbstractController
         $body = sprintf(
             $this->translator->trans('resetting.email.message'),
             $user->getUsername(),
-            $_ENV['FRONT_URL'] . '/#/auth/reset?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/#/auth/reset?token=' . $user->getConfirmationToken()
         );
 
-        $mail = new Email();
-        $mail
-            ->setTargetMail($user->getEmail())
-            ->setSubject($this->translator->trans('resetting.email.subject'))
-            ->setBodyHtml($body)
-            ->setBodyText($body);
-
-        $this->mailer->send($mail);
+        $this->mailer->send(
+            $user->getEmail(),
+            $this->translator->trans('resetting.email.subject'),
+            $body
+        );
 
         $user->setPasswordRequestedAt(new DateTime());
         $this->userManager->updateUser($user);

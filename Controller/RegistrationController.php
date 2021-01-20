@@ -7,7 +7,6 @@ use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ProjetNormandie\EmailBundle\Entity\Email;
 use ProjetNormandie\EmailBundle\Service\Mailer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -76,18 +75,14 @@ class RegistrationController extends AbstractController
         $body = sprintf(
             $this->translator->trans('registration.email.message'),
             $user->getUsername(),
-            $_ENV['FRONT_URL'] . '/#/registration/confirm?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/#/registration/confirm?token=' . $user->getConfirmationToken()
         );
 
-        $mail = new Email();
-        $mail
-            ->setTargetMail($user->getEmail())
-            ->setSubject(sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()))
-            ->setBodyHtml($body)
-            ->setBodyText($body);
-
-        $this->mailer->send($mail);
-
+        $this->mailer->send(
+            $user->getEmail(),
+            sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()),
+            $body
+        );
 
         return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $email));
     }
