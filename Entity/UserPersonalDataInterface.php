@@ -13,7 +13,7 @@ interface UserPersonalDataInterface
 
     /**
      * @param string $firstName
-     * @return UserPersonalDataTrait
+     * @return mixed
      */
     public function setFirstName(string $firstName);
 
@@ -24,7 +24,7 @@ interface UserPersonalDataInterface
 
     /**
      * @param string $lastName
-     * @return UserPersonalDataTrait
+     * @return mixed
      */
     public function setLastName(string $lastName);
 
@@ -35,7 +35,7 @@ interface UserPersonalDataInterface
 
     /**
      * @param string $address
-     * @return UserPersonalDataTrait
+     * @return mixed
      */
     public function setAddress(string $address);
 
@@ -45,10 +45,10 @@ interface UserPersonalDataInterface
     public function getBirthDate();
 
     /**
-     * @param DateTime $birthDate
-     * @return UserPersonalDataTrait
+     * @param DateTime|null $birthDate
+     * @return mixed
      */
-    public function setBirthDate(DateTime $birthDate);
+    public function setBirthDate(DateTime $birthDate = null);
 
     /**
      * @return string
@@ -57,7 +57,7 @@ interface UserPersonalDataInterface
 
     /**
      * @param string $gender
-     * @return UserPersonalDataTrait
+     * @return mixed
      */
     public function setGender(string $gender);
 

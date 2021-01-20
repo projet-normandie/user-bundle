@@ -57,7 +57,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param string $firstName
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setFirstName(string $firstName)
     {
@@ -75,7 +75,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param string $lastName
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setLastName(string $lastName)
     {
@@ -93,7 +93,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param string $address
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setAddress(string $address)
     {
@@ -110,10 +110,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param DateTime $birthDate
-     * @return UserPersonalDataTrait
+     * @param DateTime|null $birthDate
+     * @return $this
      */
-    public function setBirthDate(DateTime $birthDate)
+    public function setBirthDate(DateTime $birthDate = null)
     {
         $this->birthDate = $birthDate;
         return $this;
@@ -129,7 +129,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param string $gender
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setGender(string $gender)
     {
@@ -147,7 +147,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param $country
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -165,7 +165,7 @@ trait UserPersonalDataTrait
 
     /**
      * @param int $timeZone
-     * @return UserPersonalDataTrait
+     * @return $this
      */
     public function setTimeZone(int $timeZone)
     {
