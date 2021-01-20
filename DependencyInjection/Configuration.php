@@ -24,10 +24,15 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('directory')
-                ->children()
-                    ->scalarNode('picture')->defaultValue(null)->end()
+                    ->children()
+                        ->scalarNode('picture')->defaultValue(null)->end()
+                    ->end()
                 ->end()
-            ->end()
+                ->arrayNode('url')
+                    ->children()
+                        ->scalarNode('front')->defaultValue(null)->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
