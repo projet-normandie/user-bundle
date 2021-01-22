@@ -86,10 +86,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $personalWebSite
-     * @return UserCommunicationDataTrait
+     * @param string|null $personalWebSite
+     * @return $this
      */
-    public function setPersonalWebSite(string $personalWebSite)
+    public function setPersonalWebSite(string $personalWebSite = null)
     {
         $this->personalWebSite = $personalWebSite;
         return $this;
@@ -104,10 +104,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $facebook
-     * @return UserCommunicationDataTrait
+     * @param string|null $facebook
+     * @return $this
      */
-    public function setFacebook(string $facebook)
+    public function setFacebook(string $facebook = null)
     {
         $this->facebook = $facebook;
         return $this;
@@ -122,10 +122,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $twitter
-     * @return UserCommunicationDataTrait
+     * @param string|null $twitter
+     * @return $this
      */
-    public function setTwitter(string $twitter)
+    public function setTwitter(string $twitter = null)
     {
         $this->twitter = $twitter;
         return $this;
@@ -140,10 +140,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $googlePlus
-     * @return UserCommunicationDataTrait
+     * @param string|null $googlePlus
+     * @return $this
      */
-    public function setGooglePlus(string $googlePlus)
+    public function setGooglePlus(string $googlePlus = null)
     {
         $this->googlePlus = $googlePlus;
         return $this;
@@ -158,10 +158,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $youtube
-     * @return UserCommunicationDataTrait
+     * @param string|null $youtube
+     * @return $this
      */
-    public function setYoutube(string $youtube)
+    public function setYoutube(string $youtube = null)
     {
         $this->youtube = $youtube;
         return $this;
@@ -176,10 +176,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $dailymotion
-     * @return UserCommunicationDataTrait
+     * @param string|null $dailymotion
+     * @return $this
      */
-    public function setDailymotion(string $dailymotion)
+    public function setDailymotion(string $dailymotion = null)
     {
         $this->dailymotion = $dailymotion;
         return $this;
@@ -194,10 +194,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $twitch
-     * @return UserCommunicationDataTrait
+     * @param string|null $twitch
+     * @return $this
      */
-    public function setTwitch(string $twitch)
+    public function setTwitch(string $twitch = null)
     {
         $this->twitch = $twitch;
         return $this;
@@ -212,10 +212,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $skype
-     * @return UserCommunicationDataTrait
+     * @param string|null $skype
+     * @return $this
      */
-    public function setSkype(string $skype)
+    public function setSkype(string $skype = null)
     {
         $this->skype = $skype;
         return $this;
@@ -230,10 +230,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $snapChat
-     * @return UserCommunicationDataTrait
+     * @param string|null $snapChat
+     * @return $this
      */
-    public function setSnapChat(string $snapChat)
+    public function setSnapChat(string $snapChat = null)
     {
         $this->snapChat = $snapChat;
         return $this;
@@ -248,10 +248,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $pinterest
-     * @return UserCommunicationDataTrait
+     * @param string|null $pinterest
+     * @return $this
      */
-    public function setPinterest(string $pinterest)
+    public function setPinterest(string $pinterest = null)
     {
         $this->pinterest = $pinterest;
         return $this;
@@ -266,10 +266,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $trumblr
-     * @return UserCommunicationDataTrait
+     * @param string|null $trumblr
+     * @return $this
      */
-    public function setTrumblr(string $trumblr)
+    public function setTrumblr(string $trumblr = null)
     {
         $this->trumblr = $trumblr;
         return $this;
@@ -284,10 +284,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $blogger
-     * @return UserCommunicationDataTrait
+     * @param string|null $blogger
+     * @return $this
      */
-    public function setBlogger(string $blogger)
+    public function setBlogger(string $blogger = null)
     {
         $this->blogger = $blogger;
         return $this;
@@ -302,10 +302,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $reddit
-     * @return UserCommunicationDataTrait
+     * @param string|null $reddit
+     * @return $this
      */
-    public function setReddit(string $reddit)
+    public function setReddit(string $reddit = null)
     {
         $this->reddit = $reddit;
         return $this;
@@ -320,10 +320,10 @@ trait UserCommunicationDataTrait
     }
 
     /**
-     * @param string $deviantArt
-     * @return UserCommunicationDataTrait
+     * @param string|null $deviantArt
+     * @return $this
      */
-    public function setDeviantArt(string $deviantArt)
+    public function setDeviantArt(string $deviantArt = null)
     {
         $this->deviantArt = $deviantArt;
         return $this;

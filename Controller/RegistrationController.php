@@ -75,7 +75,7 @@ class RegistrationController extends AbstractController
         $body = sprintf(
             $this->translator->trans('registration.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . '/#/en/registration/confirm?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/#/en/registration?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(

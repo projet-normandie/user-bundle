@@ -56,10 +56,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param string $firstName
+     * @param string|null $firstName
      * @return $this
      */
-    public function setFirstName(string $firstName)
+    public function setFirstName(string $firstName= null)
     {
         $this->firstName = $firstName;
         return $this;
@@ -74,10 +74,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param string $lastName
+     * @param string|null $lastName
      * @return $this
      */
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName = null)
     {
         $this->lastName = $lastName;
         return $this;
@@ -92,10 +92,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param string $address
+     * @param string|null $address
      * @return $this
      */
-    public function setAddress(string $address)
+    public function setAddress(string $address = null)
     {
         $this->address = $address;
         return $this;
@@ -164,10 +164,10 @@ trait UserPersonalDataTrait
     }
 
     /**
-     * @param int $timeZone
+     * @param int|null $timeZone
      * @return $this
      */
-    public function setTimeZone(int $timeZone)
+    public function setTimeZone(int $timeZone = null)
     {
         $this->timeZone = $timeZone;
         return $this;
