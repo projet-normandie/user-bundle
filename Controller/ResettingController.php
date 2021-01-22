@@ -73,7 +73,7 @@ class ResettingController extends AbstractController
         $body = sprintf(
             $this->translator->trans('resetting.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . '/#/auth/reset?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/#/en/auth/reset?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(
