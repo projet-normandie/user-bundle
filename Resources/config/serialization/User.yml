@@ -6,6 +6,7 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.autocomplete'
         - 'user.get'
         - 'user.put'
+        - 'user.read.mini'
     email:
       groups: []
     username:
@@ -13,30 +14,28 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.profile'
         - 'user.autocomplete'
         - 'user.get'
+        - 'user.read.mini'
     slug:
       groups:
         - 'user.profile'
         - 'user.get'
+        - 'user.read.mini'
     locale:
       groups:
-        - 'user.profile'
         - 'user.get'
         - 'user.put'
     groups:
       groups:
     firstName:
       groups:
-        - 'user.profile'
         - 'user.get'
         - 'user.put'
     lastName:
       groups:
-        - 'user.profile'
         - 'user.get'
         - 'user.put'
     birthDate:
       groups:
-        - 'user.profile'
         - 'user.get'
         - 'user.put'
     country:

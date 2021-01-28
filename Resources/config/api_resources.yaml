@@ -2,7 +2,7 @@ resources:
     ProjetNormandie\UserBundle\Entity\User:
         collectionOperations:
             get:
-                normalization_context: {'groups': [user.profile]}
+                normalization_context: {'groups': [user.get]}
             profile:
                 method: 'GET'
                 access_control: 'is_granted("IS_AUTHENTICATED_FULLY")'

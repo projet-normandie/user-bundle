@@ -11,8 +11,6 @@ class AuthController extends AbstractController
         return array(
             $this->getUser()->getRoles(),
             $this->getUser(),
-            /*$this->getDoctrine()->getRepository('VideoGamesRecordsCoreBundle:Player')
-                ->getPlayerFromUser($this->getUser())*/
         );
     }
 }
