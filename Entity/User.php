@@ -10,6 +10,9 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 
 /**
  * User
@@ -18,6 +21,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "lastLogin" : "partial"
+ *      }
+ * )
+ * @ApiFilter(
+ *     GroupFilter::class,
+ *     arguments={
+ *          "parameterName": "groups",
+ *          "overrideDefaultGroups": true,
+ *          "whitelist": {"user.read.mini"}
+ *     }
+ * )
  */
 class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface, SluggableInterface
 {
