@@ -105,6 +105,16 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     protected $locale = 'en';
 
     /**
+     * @var Status
+     *
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idStatus", referencedColumnName="id", nullable=false)
+     * })
+     */
+    private $status;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct()
@@ -236,6 +246,28 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function getUserIp()
     {
         return $this->userIp;
+    }
+
+    /**
+     * Set status
+     * @param Status|object|null $status
+     * @return $this
+     */
+    public function setStatus(Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
