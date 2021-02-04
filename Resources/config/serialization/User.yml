@@ -9,6 +9,9 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.read.mini'
     email:
       groups: []
+    status:
+      groups:
+        - 'user.status'
     username:
       groups:
         - 'user.profile'

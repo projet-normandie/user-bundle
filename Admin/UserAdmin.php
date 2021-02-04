@@ -34,6 +34,7 @@ class UserAdmin extends AbstractAdmin
                 'label' => 'Email',
                 'required' => true,
             ])
+            ->add('status')
             ->add('groups', ModelAutocompleteType::class, [
                 'property' => 'name',
                 'required' => false,
@@ -134,6 +135,7 @@ class UserAdmin extends AbstractAdmin
         $filter
             ->add('username')
             ->add('email')
+            ->add('status')
             ->add('enabled')
             ->add('groups');
     }
@@ -147,6 +149,7 @@ class UserAdmin extends AbstractAdmin
             ->addIdentifier('id')
             ->add('username')
             ->add('email')
+            ->add('status')
             ->add('enabled', null, ['editable' => true])
             ->add('_action', 'actions', [
                 'actions' => [
