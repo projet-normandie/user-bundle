@@ -94,7 +94,7 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
 
     /**
      * @var string
-     * @ORM\Column(name="comment", type="text", length=100, nullable=false)
+     * @ORM\Column(name="comment", type="text", length=100, nullable=true)
      */
     protected $comment;
 
@@ -219,10 +219,10 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     }
 
     /**
-     * @param string $comment
-     * @return User
+     * @param string|null $comment
+     * @return $this
      */
-    public function setComment(string $comment)
+    public function setComment(string $comment = null)
     {
         $this->comment = $comment;
         return $this;
