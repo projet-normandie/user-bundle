@@ -10,6 +10,7 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
@@ -22,6 +23,7 @@ use ApiPlatform\Core\Serializer\Filter\GroupFilter;
  * @ORM\EntityListeners({"ProjetNormandie\UserBundle\EventListener\Entity\UserListener"})
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
+ * @ApiResource(attributes={"order"={"username": "ASC"}})
  * @ApiFilter(
  *     SearchFilter::class,
  *     properties={
