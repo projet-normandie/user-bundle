@@ -29,14 +29,6 @@ ProjetNormandie\UserBundle\Entity\User:
         - 'user.put'
     groups:
       groups:
-    firstName:
-      groups:
-        - 'user.get'
-        - 'user.put'
-    lastName:
-      groups:
-        - 'user.get'
-        - 'user.put'
     birthDate:
       groups:
         - 'user.get'

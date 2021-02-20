@@ -9,6 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\SecurityEvents;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginListener implements EventSubscriberInterface
 {
@@ -36,6 +37,8 @@ class LoginListener implements EventSubscriberInterface
      */
     public function onLogin($event)
     {
+        $request = Request::createFromGlobals();
+
         $user = null;
         if ($event instanceof UserEvent) {
             $user = $event->getUser();
@@ -44,12 +47,12 @@ class LoginListener implements EventSubscriberInterface
         }
 
         if ($user !== null) {
-            $label = $_SERVER['REMOTE_ADDR'];
+            $clientIp = $request->getClientIp();
             $ip = $this->em->getRepository('ProjetNormandieUserBundle:Ip')
-                ->findOneBy(array('label' => $label));
+                ->findOneBy(array('label' => $clientIp));
             if ($ip === null) {
                 $ip = new Ip();
-                $ip->setlabel($label);
+                $ip->setlabel($clientIp);
                 $this->em->persist($ip);
                 $this->em->flush();
             }
