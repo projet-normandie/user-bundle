@@ -1,17 +1,12 @@
 <?php
+namespace ProjetNormandie\UserBundle\Service;
 
-namespace ProjetNormandie\UserBundle\EventListener;
-
-use FOS\UserBundle\FOSUserEvents;
+use Doctrine\ORM\EntityManagerInterface;
 use ProjetNormandie\UserBundle\Entity\Ip;
 use ProjetNormandie\UserBundle\Entity\UserIp;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\SecurityEvents;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class LoginListener implements EventSubscriberInterface
+class IpManager
 {
     private $em;
 
@@ -21,31 +16,11 @@ class LoginListener implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param $user
      */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            FOSUserEvents::SECURITY_IMPLICIT_LOGIN => 'onLogin',
-            SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
-        );
-    }
-
-    /**
-     * @param $event
-     * @throws \Exception
-     */
-    public function onLogin($event)
+    public function majUserIp($user)
     {
         $request = Request::createFromGlobals();
-
-        $user = null;
-        if ($event instanceof UserEvent) {
-            $user = $event->getUser();
-        } elseif ($event instanceof InteractiveLoginEvent) {
-            $user = $event->getAuthenticationToken()->getUser();
-        }
-
         if ($user !== null) {
             $clientIp = $request->getClientIp();
             $ip = $this->em->getRepository('ProjetNormandieUserBundle:Ip')
