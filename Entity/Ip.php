@@ -124,6 +124,16 @@ class Ip implements TimestampableInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isBanned()
+    {
+        if ($this->getStatus() == self::STATUS_BANNED) {
+            return true;
+        }
+        return false;
+    }
+    /**
      * @return array
      */
     public static function getStatusChoices()

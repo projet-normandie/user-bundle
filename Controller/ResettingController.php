@@ -77,9 +77,9 @@ class ResettingController extends AbstractController
         );
 
         $this->mailer->send(
-            $user->getEmail(),
             $this->translator->trans('resetting.email.subject'),
-            $body
+            $body,
+            $user->getEmail()
         );
 
         $user->setPasswordRequestedAt(new DateTime());

@@ -1,4 +1,5 @@
 registration:
+    error: 'Error'
     email_exists: 'An account with this email already exists'
     username_exists: 'An account with this username already exists'
     check_email: |
@@ -45,3 +46,9 @@ label:
     user: 'User'
     group: 'Group'
     ip : 'IP'
+
+ip:
+    email:
+        subject: Alert ban IP
+        message: |
+            %s attemped to create an account with IP : %s

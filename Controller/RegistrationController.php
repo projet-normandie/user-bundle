@@ -49,6 +49,24 @@ class RegistrationController extends AbstractController
         $username = $data['username'];
         $password = $data['password'];
 
+        // check IP
+        $remotAddr = $request->getClientIp();
+        $ip = $this->getDoctrine()->getRepository('ProjetNormandieUserBundle:Ip')
+            ->findOneBy(array('label' => $remotAddr));
+        if ($ip && $ip->isBanned()) {
+            // Send alert email
+            $body = sprintf(
+                $this->translator->trans('ip.email.message'),
+                $username,
+                $remotAddr
+            );
+            $this->mailer->send(
+                $this->translator->trans('ip.email.subject'),
+                $body
+            );
+            return $this->getResponse(false, $this->translator->trans('registration.error'));
+        }
+
         // Check username
         $user = $this->userManager->findUserByUsername($username);
         if ($user !== null) {
@@ -79,9 +97,9 @@ class RegistrationController extends AbstractController
         );
 
         $this->mailer->send(
-            $user->getEmail(),
             sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()),
-            $body
+            $body,
+            $user->getEmail()
         );
 
         return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $email));
