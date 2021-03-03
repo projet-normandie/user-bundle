@@ -33,11 +33,6 @@ ProjetNormandie\UserBundle\Entity\User:
       groups:
         - 'user.get'
         - 'user.put'
-    country:
-      groups:
-        - 'user.profile'
-        - 'user.get'
-        - 'user.put'
     gender:
       groups:
         - 'user.profile'
