@@ -73,13 +73,6 @@ class UserAdmin extends AbstractAdmin
                     'Female' => User::GENDER_FEMALE,
                 ]
             ])
-            ->add('country', ModelListType::class, [
-                'btn_add' => false,
-                'btn_list' => true,
-                'btn_delete' => false,
-                'btn_catalogue' => true,
-                'label' => 'Country',
-            ])
             ->end()
             ->with('Communication')
             ->add('personalWebsite', TextType::class, [
@@ -180,7 +173,6 @@ class UserAdmin extends AbstractAdmin
             ->add('address')
             ->add('birthDate')
             ->add('gender')
-            ->add('country')
             ->add('timeZone')
             ->end()
             ->with('Communication')

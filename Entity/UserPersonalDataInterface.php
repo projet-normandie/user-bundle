@@ -62,17 +62,6 @@ interface UserPersonalDataInterface
     public function setGender(string $gender);
 
     /**
-     * @return CountryInterface
-     */
-    public function getCountry();
-
-    /**
-     * @param $country
-     * @return UserPersonalDataTrait
-     */
-    public function setCountry($country);
-
-    /**
      * @return int
      */
     public function getTimeZone();

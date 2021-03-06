@@ -33,15 +33,6 @@ trait UserPersonalDataTrait
      */
     protected $gender;
     /**
-     * @var CountryInterface
-     *
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\CountryInterface")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idCountry", referencedColumnName="id")
-     * })
-     */
-    protected $country;
-    /**
      * @var int
      * @ORM\Column(name="timeZone", type="integer", nullable=true)
      */
@@ -134,24 +125,6 @@ trait UserPersonalDataTrait
     public function setGender(string $gender)
     {
         $this->gender = $gender;
-        return $this;
-    }
-
-    /**
-     * @return CountryInterface
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param $country
-     * @return $this
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
         return $this;
     }
 
