@@ -22,4 +22,18 @@ class UserRepository extends EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * @param $date
+     * @return int|mixed|string
+     */
+    public function getLoggedToday($date)
+    {
+        $query = $this->createQueryBuilder('u');
+        $query
+            ->where('u.lastLogin LIKE :today')
+            ->setParameter('today', $date->format('Y-m-d') . '%');
+
+        return $query->getQuery()->getResult();
+    }
 }
