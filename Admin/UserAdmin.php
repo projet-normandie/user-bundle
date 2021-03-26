@@ -5,10 +5,9 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -19,10 +18,22 @@ use ProjetNormandie\UserBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
 {
+
+    /**
+     * @param RouteCollectionInterface $collection
+     */
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        $collection
+            ->remove('create')
+            ->remove('export')
+            ->remove('delete');
+    }
+
     /**
      * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $form)
+    protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->with('User', ['class' => 'col-md-6'])
@@ -123,7 +134,7 @@ class UserAdmin extends AbstractAdmin
     /**
      * @param DatagridMapper $filter
      */
-    protected function configureDatagridFilters(DatagridMapper $filter)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add('username')
@@ -136,7 +147,7 @@ class UserAdmin extends AbstractAdmin
     /**
      * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $list)
+    protected function configureListFields(ListMapper $list): void
     {
         $list
             ->addIdentifier('id')
@@ -155,7 +166,7 @@ class UserAdmin extends AbstractAdmin
     /**
      * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $show)
+    protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->with('User')
@@ -192,16 +203,5 @@ class UserAdmin extends AbstractAdmin
             ->add('deviantart')
             ->end()
             ->add('userIp');
-    }
-
-    /**
-     * @param RouteCollection $collection
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection
-            ->remove('create')
-            ->remove('export')
-            ->remove('delete');
     }
 }

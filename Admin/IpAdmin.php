@@ -16,7 +16,7 @@ class IpAdmin extends AbstractAdmin
     /**
      * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $form)
+    protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->add('label', TextType::class, [
@@ -36,7 +36,7 @@ class IpAdmin extends AbstractAdmin
     /**
      * @param DatagridMapper $filter
      */
-    protected function configureDatagridFilters(DatagridMapper $filter)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add('label');
@@ -45,7 +45,7 @@ class IpAdmin extends AbstractAdmin
     /**
      * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $list)
+    protected function configureListFields(ListMapper $list): void
     {
         $list
             ->addIdentifier('id')
@@ -62,7 +62,7 @@ class IpAdmin extends AbstractAdmin
     /**
      * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $show)
+    protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('id')
