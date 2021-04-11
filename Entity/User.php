@@ -12,8 +12,8 @@ use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 
 /**
  * User
@@ -24,12 +24,7 @@ use ApiPlatform\Core\Serializer\Filter\GroupFilter;
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
  * @ApiResource(attributes={"order"={"username": "ASC"}})
- * @ApiFilter(
- *     SearchFilter::class,
- *     properties={
- *          "lastLogin" : "partial"
- *      }
- * )
+ * @ApiFilter(DateFilter::class, properties={"lastLogin": DateFilter::EXCLUDE_NULL})
  * @ApiFilter(
  *     GroupFilter::class,
  *     arguments={
