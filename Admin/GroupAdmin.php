@@ -13,7 +13,7 @@ class GroupAdmin extends AbstractAdmin
     /**
      * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $form)
+    protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->add('name', TextType::class, [
@@ -31,7 +31,7 @@ class GroupAdmin extends AbstractAdmin
     /**
      * @param DatagridMapper $filter
      */
-    protected function configureDatagridFilters(DatagridMapper $filter)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add('name');
@@ -40,7 +40,7 @@ class GroupAdmin extends AbstractAdmin
     /**
      * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $list)
+    protected function configureListFields(ListMapper $list): void
     {
         $list
             ->addIdentifier('id')
@@ -57,7 +57,7 @@ class GroupAdmin extends AbstractAdmin
     /**
      * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $show)
+    protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('id')
