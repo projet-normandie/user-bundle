@@ -269,6 +269,23 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     }
 
     /**
+     * @return bool
+     */
+    public function getIsOnline()
+    {
+        if ($this->getLastLogin() != null) {
+            $now = new DateTime();
+            if (($now->format('U') - $this->getLastLogin()->format('U')) < 300) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * @inheritDoc
      */
     public function __toString()
