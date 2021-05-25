@@ -2,6 +2,7 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +25,9 @@ class AvatarController extends AbstractController
     /**
      * @param Request     $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
-    public function upload(Request $request)
+    public function upload(Request $request): Response
     {
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
@@ -61,7 +62,7 @@ class AvatarController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null)
+    private function getResponse(bool $success, $message = null): Response
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');

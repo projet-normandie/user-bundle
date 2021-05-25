@@ -9,12 +9,9 @@ use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use ProjetNormandie\UserBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -36,7 +33,6 @@ class UserAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('User', ['class' => 'col-md-6'])
             ->add('username', TextType::class, [
                 'label' => 'Username',
                 'required' => true,
@@ -57,78 +53,7 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('comment', TextareaType::class, [
                 'required' => false,
-            ])
-            ->end()
-            ->with('Personal', ['class' => 'col-md-6'])
-            ->add('firstName', TextType::class, [
-                'required' => false,
-            ])
-            ->add('lastName', TextType::class, [
-                'required' => false,
-            ])
-            ->add('address', TextType::class, [
-                'required' => false,
-            ])
-            ->add('birthDate', DateType::class, [
-                'label' => 'Birth Date',
-                'required' => false,
-                'years' => range(1900, date('Y'))
-            ])
-            ->add('timeZone')
-            ->add('gender', ChoiceType::class, [
-                'expanded' => true,
-                'multiple' => false,
-                'choices' => [
-                    'Undefined' => User::GENDER_UNDEFINED,
-                    'Male' => User::GENDER_MALE,
-                    'Female' => User::GENDER_FEMALE,
-                ]
-            ])
-            ->end()
-            ->with('Communication')
-            ->add('personalWebsite', TextType::class, [
-                'required' => false,
-            ])
-            ->add('facebook', TextType::class, [
-                'required' => false,
-            ])
-            ->add('twitter', TextType::class, [
-                'required' => false,
-            ])
-            ->add('googleplus', TextType::class, [
-                'required' => false,
-            ])
-            ->add('youtube', TextType::class, [
-                'required' => false,
-            ])
-            ->add('dailymotion', TextType::class, [
-                'required' => false,
-            ])
-            ->add('twitch', TextType::class, [
-                'required' => false,
-            ])
-            ->add('skype', TextType::class, [
-                'required' => false,
-            ])
-            ->add('snapchat', TextType::class, [
-                'required' => false,
-            ])
-            ->add('pinterest', TextType::class, [
-                'required' => false,
-            ])
-            ->add('trumblr', TextType::class, [
-                'required' => false,
-            ])
-            ->add('blogger', TextType::class, [
-                'required' => false,
-            ])
-            ->add('reddit', TextType::class, [
-                'required' => false,
-            ])
-            ->add('deviantart', TextType::class, [
-                'required' => false,
-            ])
-            ->end();
+            ]);
     }
 
     /**
@@ -169,39 +94,31 @@ class UserAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->with('User')
+            ->with('User', ['class' => 'col-md-6'])
             ->add('id')
             ->add('username')
             ->add('email')
             ->add('enabled')
-            ->add('locale')
-            ->add('nbConnexion')
             ->add('lastLogin')
+            ->add('status')
+            ->add('locale')
+            ->add('avatar')
+            ->add('nbConnexion')
+            ->add('nbForumMessage')
+            ->add('comment')
             ->end()
-            ->with('Personal')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('address')
-            ->add('birthDate')
-            ->add('gender')
-            ->add('timeZone')
+            ->with('Connexion', ['class' => 'col-md-6'])
+            ->add('locked', 'boolean')
+            ->add('salt')
+            ->add('password')
+            ->add('expired', 'boolean')
+            ->add('expires_at', 'datetime')
+            ->add('confirmation_token')
+            ->add('password_requested_at', 'datetime')
+            ->add('credentials_expired', 'boolean')
+            ->add('credentials_expired_at', 'datetime')
             ->end()
-            ->with('Communication')
-            ->add('personalWebsite')
-            ->add('facebook')
-            ->add('twitter')
-            ->add('googleplus')
-            ->add('youtube')
-            ->add('dailymotion')
-            ->add('twitch')
-            ->add('skype')
-            ->add('snapchat')
-            ->add('pinterest')
-            ->add('trumblr')
-            ->add('blogger')
-            ->add('reddit')
-            ->add('deviantart')
-            ->end()
+            ->with('IP')
             ->add('userIp');
     }
 }

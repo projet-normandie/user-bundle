@@ -25,18 +25,18 @@ class ResettingController extends AbstractController
     private $retryTtl;
 
     /**
-     * @param UserManagerInterface     $userManager
-     * @param TokenGeneratorInterface  $tokenGenerator
-     * @param TranslatorInterface      $translator
-     * @param Mailer                   $mailer
-     * @param int                      $retryTtl
+     * @param UserManagerInterface    $userManager
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param TranslatorInterface     $translator
+     * @param Mailer                  $mailer
+     * @param int                     $retryTtl
      */
     public function __construct(
         UserManagerInterface $userManager,
         TokenGeneratorInterface $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer,
-        $retryTtl = 7200
+        int $retryTtl = 7200
     ) {
         $this->userManager = $userManager;
         $this->tokenGenerator = $tokenGenerator;
@@ -73,7 +73,7 @@ class ResettingController extends AbstractController
         $body = sprintf(
             $this->translator->trans('resetting.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . 'en/auth/reset?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/en/auth/reset?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(
@@ -97,7 +97,7 @@ class ResettingController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function reset(Request $request)
+    public function reset(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];
@@ -121,7 +121,7 @@ class ResettingController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null)
+    private function getResponse(bool $success, $message = null): Response
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
