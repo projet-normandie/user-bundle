@@ -34,10 +34,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *     }
  * )
  */
-class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface, SluggableInterface
+class User extends BaseUser implements TimestampableInterface, SluggableInterface
 {
-    use UserPersonalDataTrait;
-    use UserCommunicationDataTrait;
     use TimestampableTrait;
     use SluggableTrait;
 
