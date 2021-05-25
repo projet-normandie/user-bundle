@@ -39,10 +39,6 @@ class User extends BaseUser implements TimestampableInterface, SluggableInterfac
     use TimestampableTrait;
     use SluggableTrait;
 
-    public const GENDER_FEMALE = 'F';
-    public const GENDER_MALE = 'M';
-    public const GENDER_UNDEFINED = 'I';
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -116,7 +112,6 @@ class User extends BaseUser implements TimestampableInterface, SluggableInterfac
     public function __construct()
     {
         parent::__construct();
-        $this->gender = self::GENDER_UNDEFINED;
     }
 
 
