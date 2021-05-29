@@ -34,16 +34,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *     }
  * )
  */
-class User extends BaseUser implements UserPersonalDataInterface, UserCommunicationDataInterface, TimestampableInterface, SluggableInterface
+class User extends BaseUser implements TimestampableInterface, SluggableInterface
 {
-    use UserPersonalDataTrait;
-    use UserCommunicationDataTrait;
     use TimestampableTrait;
     use SluggableTrait;
-
-    public const GENDER_FEMALE = 'F';
-    public const GENDER_MALE = 'M';
-    public const GENDER_UNDEFINED = 'I';
 
     /**
      * @ORM\Id
@@ -118,7 +112,6 @@ class User extends BaseUser implements UserPersonalDataInterface, UserCommunicat
     public function __construct()
     {
         parent::__construct();
-        $this->gender = self::GENDER_UNDEFINED;
     }
 
 

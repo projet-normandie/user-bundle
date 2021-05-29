@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function register(Request $request)
+    public function register(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $email = $data['email'];
@@ -93,7 +93,7 @@ class RegistrationController extends AbstractController
         $body = sprintf(
             $this->translator->trans('registration.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . 'en/register?token=' . $user->getConfirmationToken()
+            $this->getParameter('projetnormandie_user.url.front') . '/en/register?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(
@@ -110,7 +110,7 @@ class RegistrationController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function confirm(Request $request)
+    public function confirm(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];
@@ -136,7 +136,7 @@ class RegistrationController extends AbstractController
      * @param null    $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null)
+    private function getResponse(bool $success, $message = null): Response
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
