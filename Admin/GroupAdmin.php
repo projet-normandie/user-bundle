@@ -1,14 +1,14 @@
 <?php
 namespace ProjetNormandie\UserBundle\Admin;
 
-use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\UserBundle\Admin\Model\GroupAdmin as SonataGroupAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class GroupAdmin extends AbstractAdmin
+class GroupAdmin extends SonataGroupAdmin
 {
     /**
      * @param FormMapper $form
