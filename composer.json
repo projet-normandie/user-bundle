@@ -22,8 +22,7 @@
     "doctrine/doctrine-bundle": "~2.0",
     "symfony/validator": "~4.4",
     "symfony/framework-bundle": "~4.4",
-    "knplabs/doctrine-behaviors": "~2.0",
-    "sonata-project/user-bundle": "*"
+    "knplabs/doctrine-behaviors": "~2.0"
   },
   "suggest": {
     "sonata-project/admin-bundle": "In order to use Admin interface",
