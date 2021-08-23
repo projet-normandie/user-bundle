@@ -2,8 +2,9 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Exception;
+use ProjetNormandie\UserBundle\Doctrine\UserManager;
+use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +20,14 @@ class RegistrationController extends AbstractController
 
     /**
      * RegistrationController constructor.
-     * @param UserManagerInterface    $userManager
-     * @param TokenGeneratorInterface $tokenGenerator
+     * @param UserManager             $userManager
+     * @param TokenGenerator          $tokenGenerator
      * @param TranslatorInterface     $translator
      * @param Mailer                  $mailer
      */
     public function __construct(
-        UserManagerInterface $userManager,
-        TokenGeneratorInterface $tokenGenerator,
+        UserManager $userManager,
+        TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer
     ) {
@@ -40,7 +41,7 @@ class RegistrationController extends AbstractController
     /**
      * @param Request $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function register(Request $request): Response
     {

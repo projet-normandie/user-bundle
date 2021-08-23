@@ -3,12 +3,14 @@
 namespace ProjetNormandie\UserBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -47,17 +49,20 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      */
     protected $id;
 
-     /**
+    /**
+     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      */
     protected $username;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
@@ -80,55 +85,41 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      */
     protected $plainPassword;
 
-     /**
+    /**
+     * @var boolean
      * @ORM\Column(name="salt", type="string")
      */
     private $salt;
 
     /**
+     * @var datetime
      * @ORM\Column(name="last_login",type="datetime", nullable=true)
      */
     protected $lastLogin;
 
     /**
+     * @var string
      * @ORM\Column(name="confirmation_token",type="string", length=180, nullable=true, unique=true)
      */
     protected $confirmationToken;
 
     /**
+     * @var datetime
      * @ORM\Column(name="password_requested_at",type="datetime", nullable=true)
      */
     protected $passwordRequestedAt;
 
-      /**
+    /**
      * @var integer
-     *
      * @ORM\Column(name="nbConnexion", type="integer", nullable=false)
      */
     protected $nbConnexion = 0;
 
     /**
      * @var integer
-     *
      * @ORM\Column(name="nbForumMessage", type="integer", nullable=false)
      */
     protected $nbForumMessage = 0;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="user_group",
-     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="groupId", referencedColumnName="id")}
-     * )
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $groups;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
-     */
-    private $userIp;
-
 
     /**
      * @var string
@@ -142,12 +133,26 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      */
     protected $comment;
 
-
     /**
      * @var string
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
      */
     protected $locale = 'en';
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
+     * @ORM\JoinTable(name="user_group",
+     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="groupId", referencedColumnName="id")}
+     * )
+     * @var Collection
+     */
+    protected $groups;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
+     */
+    private $userIp;
 
     /**
      * @var Status
@@ -223,10 +228,10 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
         return $this->enabled;
     }
 
- /**
-     * {@inheritdoc}
+    /**
+     * @return array|string[]|Role[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -239,6 +244,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
 
         return array_values(array_unique($roles));
     }
+
     /**
      * @param array $roles
      * @return $this
@@ -251,7 +257,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
-     * @see UserInterface
+     * @return string
      */
     public function getPassword(): string
     {
@@ -272,7 +278,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
@@ -280,8 +286,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
      */
     public function getSalt(): ?string
     {
@@ -289,7 +293,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
-     * @see UserInterface
+     *
      */
     public function eraseCredentials()
     {
@@ -330,10 +334,18 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
+     * @return string
+     */
+    public function getConfirmationToken(): string
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
      * @param DateTime|null $date
      * @return $this
      */
-    public function setPasswordRequestedAt(\DateTime $date = null): self
+    public function setPasswordRequestedAt(DateTime $date = null): self
     {
         $this->passwordRequestedAt = $date;
         return $this;
@@ -341,7 +353,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
 
     /**
      * Gets the timestamp that the user requested a password reset.
-     * @return null|\DateTime
+     * @return null|DateTime
      */
     public function getPasswordRequestedAt(): ?DateTime
     {
@@ -354,7 +366,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      */
     public function isPasswordRequestNonExpired($ttl): bool
     {
-        return $this->getPasswordRequestedAt() instanceof \DateTime &&
+        return $this->getPasswordRequestedAt() instanceof DateTime &&
                $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
 
@@ -465,13 +477,11 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     public function setStatus(Status $status = null): self
     {
         $this->status = $status;
-
         return $this;
     }
 
     /**
      * Get status
-     *
      * @return Status
      */
     public function getStatus(): Status
@@ -496,17 +506,22 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
         }
     }
 
-    public function getGroups()
+    /**
+     * @return Collection
+     */
+    public function getGroups(): Collection
     {
         return $this->groups;
     }
 
     /**
-     *
+     * @param $password
+     * @return $this
      */
-    public function __construct()
+    public function setPlainPassword($password): self
     {
-        parent::__construct();
+        $this->plainPassword = $password;
+        return $this;
     }
 
 
@@ -520,7 +535,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
 
     /**
      * Returns an array of the fields used to generate the slug.
-     *
      * @return string[]
      */
     public function getSluggableFields(): array

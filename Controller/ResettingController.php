@@ -4,8 +4,8 @@ namespace ProjetNormandie\UserBundle\Controller;
 
 use DateTime;
 use Exception;
-use FOS\UserBundle\Model\UserManagerInterface;
-use FOS\UserBundle\Util\TokenGeneratorInterface;
+use ProjetNormandie\UserBundle\Doctrine\UserManager;
+use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,15 +25,15 @@ class ResettingController extends AbstractController
     private $retryTtl;
 
     /**
-     * @param UserManagerInterface    $userManager
-     * @param TokenGeneratorInterface $tokenGenerator
+     * @param UserManager   $userManager
+     * @param TokenGenerator          $tokenGenerator
      * @param TranslatorInterface     $translator
      * @param Mailer                  $mailer
      * @param int                     $retryTtl
      */
     public function __construct(
-        UserManagerInterface $userManager,
-        TokenGeneratorInterface $tokenGenerator,
+        UserManager $userManager,
+        TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer,
         int $retryTtl = 7200
