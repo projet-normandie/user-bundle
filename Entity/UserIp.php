@@ -20,53 +20,46 @@ class UserIp implements TimestampableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="nbConnexion", type="integer", nullable=false)
      */
-    protected $nbConnexion = 0;
+    protected int $nbConnexion = 0;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\User", inversedBy="userIp")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idUser", referencedColumnName="id", nullable=false)
      * })
      */
-    private $user;
+    private User $user;
 
     /**
-     * @var Ip
-     *
      * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Ip", inversedBy="userIp")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIp", referencedColumnName="id", nullable=false)
      * })
      */
-    private $ip;
+    private Ip $ip;
 
     /**
      * Set id
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): self
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * Get idGroup
+     * Get id
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -76,19 +69,17 @@ class UserIp implements TimestampableInterface
      * @param User|null $user
      * @return $this
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
-
         return $this;
     }
 
     /**
      * Get user
-     *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -98,7 +89,7 @@ class UserIp implements TimestampableInterface
      * @param Ip|null $ip
      * @return $this
      */
-    public function setIp(Ip $ip = null)
+    public function setIp(Ip $ip = null): self
     {
         $this->ip = $ip;
 
@@ -107,10 +98,9 @@ class UserIp implements TimestampableInterface
 
     /**
      * Get ip
-     *
      * @return Ip
      */
-    public function getIp()
+    public function getIp(): Ip
     {
         return $this->ip;
     }
@@ -118,7 +108,7 @@ class UserIp implements TimestampableInterface
     /**
      * @return int
      */
-    public function getNbConnexion()
+    public function getNbConnexion(): int
     {
         return $this->nbConnexion;
     }
@@ -127,7 +117,7 @@ class UserIp implements TimestampableInterface
      * @param int $nbConnexion
      * @return $this
      */
-    public function setNbConnexion(int $nbConnexion)
+    public function setNbConnexion(int $nbConnexion): self
     {
         $this->nbConnexion = $nbConnexion;
         return $this;

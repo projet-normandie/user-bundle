@@ -14,19 +14,18 @@ class Group
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @ORM\Column(type="array")
      */
-    protected $roles;
+    protected array $roles;
 
     /**
      * @return string
@@ -40,7 +39,7 @@ class Group
      * @param       $name
      * @param array $roles
      */
-    public function __construct($name, $roles = [])
+    public function __construct($name, array $roles = [])
     {
         $this->name = $name;
         $this->roles = $roles;

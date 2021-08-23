@@ -45,99 +45,83 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      */
-    protected $username;
+    protected string $username;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private string $email;
 
     /**
-     * @var boolean
      * @ORM\Column(type="boolean")
      */
-    protected $enabled;
+    protected bool $enabled;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(name="password", type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @var string
      */
-    protected $plainPassword;
+    protected ?string $plainPassword;
 
     /**
-     * @var boolean
      * @ORM\Column(name="salt", type="string")
      */
-    private $salt;
+    private ?string $salt;
 
     /**
-     * @var datetime
      * @ORM\Column(name="last_login",type="datetime", nullable=true)
      */
-    protected $lastLogin;
+    protected ?DateTime $lastLogin;
 
     /**
-     * @var string
      * @ORM\Column(name="confirmation_token",type="string", length=180, nullable=true, unique=true)
      */
-    protected $confirmationToken;
+    protected ?string $confirmationToken;
 
     /**
-     * @var datetime
      * @ORM\Column(name="password_requested_at",type="datetime", nullable=true)
      */
-    protected $passwordRequestedAt;
+    protected ?DateTime $passwordRequestedAt;
 
     /**
-     * @var integer
      * @ORM\Column(name="nbConnexion", type="integer", nullable=false)
      */
-    protected $nbConnexion = 0;
+    protected int $nbConnexion = 0;
 
     /**
-     * @var integer
      * @ORM\Column(name="nbForumMessage", type="integer", nullable=false)
      */
-    protected $nbForumMessage = 0;
+    protected int $nbForumMessage = 0;
 
     /**
-     * @var string
      * @ORM\Column(name="avatar", type="string", length=100, nullable=false)
      */
-    protected $avatar = 'default.png';
+    protected string $avatar = 'default.png';
 
     /**
-     * @var string
      * @ORM\Column(name="comment", type="text", length=100, nullable=true)
      */
-    protected $comment;
+    protected ?string $comment;
 
     /**
-     * @var string
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
      */
-    protected $locale = 'en';
+    protected string $locale = 'en';
 
     /**
      * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
@@ -147,7 +131,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      * )
      * @var Collection
      */
-    protected $groups;
+    protected Collection $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
@@ -155,14 +139,12 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     private $userIp;
 
     /**
-     * @var Status
-     *
      * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Status")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idStatus", referencedColumnName="id", nullable=false)
      * })
      */
-    private $status;
+    private ?Status $status;
 
     /**
      * @return int|null

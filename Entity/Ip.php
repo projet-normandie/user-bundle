@@ -26,21 +26,18 @@ class Ip implements TimestampableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var string
      * @ORM\Column(name="status", type="string", length=30, nullable=false)
      */
-    protected $status = self::STATUS_NORMAL;
+    protected string $status = self::STATUS_NORMAL;
 
     /**
-     * @var string
      * @ORM\Column(name="label", type="string", length=30, nullable=false)
      */
-    protected $label;
+    protected string $label;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="ip")
@@ -48,21 +45,21 @@ class Ip implements TimestampableInterface
     private $userIp;
 
     /**
-     * Set idGroup
+     * Set id
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): self
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * Get idGroup
+     * Get id
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -70,7 +67,7 @@ class Ip implements TimestampableInterface
     /**
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -79,7 +76,7 @@ class Ip implements TimestampableInterface
      * @param string $status
      * @return $this
      */
-    public function setStatus(string $status)
+    public function setStatus(string $status): self
     {
         $this->status = $status;
         return $this;
@@ -90,7 +87,7 @@ class Ip implements TimestampableInterface
      * @param null $label
      * @return $this
      */
-    public function setlabel($label = null)
+    public function setlabel($label = null): self
     {
         $this->label = $label;
 
@@ -102,7 +99,7 @@ class Ip implements TimestampableInterface
      *
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -126,7 +123,7 @@ class Ip implements TimestampableInterface
     /**
      * @return bool
      */
-    public function isBanned()
+    public function isBanned(): bool
     {
         if ($this->getStatus() == self::STATUS_BANNED) {
             return true;
@@ -136,7 +133,7 @@ class Ip implements TimestampableInterface
     /**
      * @return array
      */
-    public static function getStatusChoices()
+    public static function getStatusChoices(): array
     {
         return [
             self::STATUS_NORMAL => self::STATUS_NORMAL,
