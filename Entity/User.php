@@ -76,7 +76,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * Plain password. Used for model validation. Must not be persisted.
      */
-    protected ?string $plainPassword;
+    protected string $plainPassword = '';
 
     /**
      * @ORM\Column(name="salt", type="string")
@@ -318,7 +318,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @return string
      */
-    public function getConfirmationToken(): string
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }

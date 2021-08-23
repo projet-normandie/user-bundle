@@ -14,15 +14,15 @@ use ProjetNormandie\EmailBundle\Service\Mailer;
 
 class ResettingController extends AbstractController
 {
-    private $userManager;
-    private $tokenGenerator;
-    private $translator;
-    private $mailer;
+    private UserManager $userManager;
+    private TokenGenerator $tokenGenerator;
+    private TranslatorInterface $translator;
+    private Mailer $mailer;
 
     /**
      * @var int
      */
-    private $retryTtl;
+    private int $retryTtl;
 
     /**
      * @param UserManager   $userManager
@@ -51,7 +51,7 @@ class ResettingController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function sendEmail(Request $request)
+    public function sendEmail(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $username = $data['username'];

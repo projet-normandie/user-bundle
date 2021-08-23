@@ -61,7 +61,9 @@ class UserManager extends BaseUserManager
      */
     public function updateUser(User $user, bool $andFlush = true)
     {
-        $this->updatePassword($user);
+        if ($user->getPlainPassword() != null) {
+            $this->updatePassword($user);
+        }
 
         $this->em->persist($user);
         if ($andFlush) {

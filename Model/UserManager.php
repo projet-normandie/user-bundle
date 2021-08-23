@@ -6,7 +6,7 @@ use ProjetNormandie\UserBundle\Entity\User;
 
 abstract class UserManager
 {
-    private $passwordEncoder;
+    private UserPasswordEncoderInterface $passwordEncoder;
 
     /**
      * @param UserPasswordEncoderInterface $passwordEncoder
