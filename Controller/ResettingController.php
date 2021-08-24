@@ -4,8 +4,8 @@ namespace ProjetNormandie\UserBundle\Controller;
 
 use DateTime;
 use Exception;
-use FOS\UserBundle\Model\UserManagerInterface;
-use FOS\UserBundle\Util\TokenGeneratorInterface;
+use ProjetNormandie\UserBundle\Doctrine\UserManager;
+use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,26 +14,26 @@ use ProjetNormandie\EmailBundle\Service\Mailer;
 
 class ResettingController extends AbstractController
 {
-    private $userManager;
-    private $tokenGenerator;
-    private $translator;
-    private $mailer;
+    private UserManager $userManager;
+    private TokenGenerator $tokenGenerator;
+    private TranslatorInterface $translator;
+    private Mailer $mailer;
 
     /**
      * @var int
      */
-    private $retryTtl;
+    private int $retryTtl;
 
     /**
-     * @param UserManagerInterface    $userManager
-     * @param TokenGeneratorInterface $tokenGenerator
+     * @param UserManager   $userManager
+     * @param TokenGenerator          $tokenGenerator
      * @param TranslatorInterface     $translator
      * @param Mailer                  $mailer
      * @param int                     $retryTtl
      */
     public function __construct(
-        UserManagerInterface $userManager,
-        TokenGeneratorInterface $tokenGenerator,
+        UserManager $userManager,
+        TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer,
         int $retryTtl = 7200
@@ -51,7 +51,7 @@ class ResettingController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function sendEmail(Request $request)
+    public function sendEmail(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $username = $data['username'];

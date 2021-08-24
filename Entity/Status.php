@@ -44,7 +44,7 @@ class Status implements TranslatableInterface
     /**
      * @return string
      */
-    public function getDefaultName()
+    public function getDefaultName(): string
     {
         return $this->translate('en', false)->getName();
     }
@@ -54,7 +54,7 @@ class Status implements TranslatableInterface
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): self
     {
         $this->id = $id;
         return $this;
@@ -62,10 +62,9 @@ class Status implements TranslatableInterface
 
     /**
      * Get id
-     *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -98,7 +97,7 @@ class Status implements TranslatableInterface
      * @param string $name
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->translate(null, false)->setName($name);
 
@@ -108,7 +107,7 @@ class Status implements TranslatableInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->translate(null, false)->getName();
     }

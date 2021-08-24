@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IpManager
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {

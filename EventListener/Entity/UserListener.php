@@ -8,8 +8,6 @@ use ProjetNormandie\UserBundle\Entity\User;
 
 class UserListener
 {
-    private $lostPosition;
-
     /**
      * @param User        $user
      * @param LifecycleEventArgs $event
