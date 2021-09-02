@@ -15,17 +15,17 @@ class Group
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    protected string $name;
+    protected string $name = '';
 
     /**
      * @ORM\Column(type="array")
      */
-    protected array $roles;
+    protected array $roles = [];
 
     /**
      * @return string

@@ -22,15 +22,13 @@ class Status implements TranslatableInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * @var string
-     *
      * @Assert\Length(max="30")
      * @ORM\Column(name="class", type="string", length=30, nullable=false)
      */
-    private $class;
+    private $class = null;
 
 
     /**
@@ -75,7 +73,7 @@ class Status implements TranslatableInterface
      * @param string $class
      * @return $this
      */
-    public function setClass(string $class)
+    public function setClass(string $class): self
     {
         $this->class = $class;
 
@@ -87,7 +85,7 @@ class Status implements TranslatableInterface
      *
      * @return string
      */
-    public function getClass()
+    public function getClass(): ?string
     {
         return $this->class;
     }
