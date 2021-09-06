@@ -27,7 +27,7 @@ class Ip implements TimestampableInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(name="status", type="string", length=30, nullable=false)
@@ -37,7 +37,7 @@ class Ip implements TimestampableInterface
     /**
      * @ORM\Column(name="label", type="string", length=30, nullable=false)
      */
-    protected string $label;
+    protected string $label = '';
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="ip")

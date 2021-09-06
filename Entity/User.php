@@ -41,27 +41,31 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     use TimestampableTrait;
     use SluggableTrait;
 
+    const ROLE_DEFAULT = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      */
-    protected string $username;
+    protected string $username = '';
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private string $email;
+    private string $email = '';
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected bool $enabled;
+    protected bool $enabled = false;
 
     /**
      * @ORM\Column(type="array")
@@ -71,7 +75,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @ORM\Column(name="password", type="string")
      */
-    private string $password;
+    private string $password = '';
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
@@ -81,22 +85,22 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @ORM\Column(name="salt", type="string")
      */
-    private ?string $salt;
+    private ?string $salt = null;
 
     /**
      * @ORM\Column(name="last_login",type="datetime", nullable=true)
      */
-    protected ?DateTime $lastLogin;
+    protected ?DateTime $lastLogin = null;
 
     /**
      * @ORM\Column(name="confirmation_token",type="string", length=180, nullable=true, unique=true)
      */
-    protected ?string $confirmationToken;
+    protected ?string $confirmationToken = null;
 
     /**
      * @ORM\Column(name="password_requested_at",type="datetime", nullable=true)
      */
-    protected ?DateTime $passwordRequestedAt;
+    protected ?DateTime $passwordRequestedAt = null;
 
     /**
      * @ORM\Column(name="nbConnexion", type="integer", nullable=false)
@@ -116,7 +120,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @ORM\Column(name="comment", type="text", length=100, nullable=true)
      */
-    protected ?string $comment;
+    protected ?string $comment = null;
 
     /**
      * @ORM\Column(name="locale", type="string", length=2, nullable=true)
@@ -131,7 +135,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      * )
      * @var Collection
      */
-    protected Collection $groups;
+    protected $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
@@ -144,7 +148,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
      *   @ORM\JoinColumn(name="idStatus", referencedColumnName="id", nullable=false)
      * })
      */
-    private ?Status $status;
+    private $status;
 
     /**
      * @return int|null
@@ -263,6 +267,16 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
+    }
+
+
+    /**
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role): bool
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     /**
@@ -489,6 +503,16 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
+     * @param $groups
+     * @return $this
+     */
+    public function setGroups($groups): self
+    {
+        $this->groups = $groups;
+        return $this;
+    }
+
+    /**
      * @return Collection
      */
     public function getGroups(): Collection
@@ -506,6 +530,16 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
         return $this;
     }
 
+    /**
+     * @param $group
+     * @return $this
+     */
+    public function addGroup($group): self
+    {
+        $this->groups[] = $group;
+        return $this;
+    }
+
 
     /**
      * @return string
@@ -516,11 +550,55 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
+     * @param $role
+     * @return $this
+     */
+    public function addRole($role): self
+    {
+        $role = strtoupper($role);
+        if ($role === static::ROLE_DEFAULT) {
+            return $this;
+        }
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+        return $this;
+    }
+
+    /**
+     * @param $role
+     * @return $this
+     */
+    public function removeRole($role): self
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+        return $this;
+    }
+
+
+    /**
      * Returns an array of the fields used to generate the slug.
      * @return string[]
      */
     public function getSluggableFields(): array
     {
         return ['username'];
+    }
+
+    /**
+     * @param $boolean
+     * @return $this
+     */
+    public function setSuperAdmin($boolean): self
+    {
+        if (true === $boolean) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
+        return $this;
     }
 }
