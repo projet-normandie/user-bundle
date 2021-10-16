@@ -100,6 +100,7 @@ class RegistrationController extends AbstractController
         $this->mailer->send(
             sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()),
             $body,
+            null,
             $user->getEmail()
         );
 
