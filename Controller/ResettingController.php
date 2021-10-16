@@ -79,6 +79,7 @@ class ResettingController extends AbstractController
         $this->mailer->send(
             $this->translator->trans('resetting.email.subject'),
             $body,
+            null,
             $user->getEmail()
         );
 
