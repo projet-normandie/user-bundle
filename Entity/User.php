@@ -540,6 +540,14 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
         return $this;
     }
 
+     /**
+     * @param Group $group
+     */
+    public function removeGroup(Group $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
 
     /**
      * @return string
