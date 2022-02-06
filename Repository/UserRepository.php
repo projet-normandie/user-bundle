@@ -2,10 +2,16 @@
 
 namespace ProjetNormandie\UserBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use ProjetNormandie\UserBundle\Entity\User;
 
-class UserRepository extends EntityRepository
+class UserRepository extends DefaultRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     /**
      * @param $q
      * @return mixed
