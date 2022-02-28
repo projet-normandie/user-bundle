@@ -12,7 +12,7 @@ final class AdminLoginController extends AbstractController
     /**
      * @var AuthenticationUtils
      */
-    private $authenticationUtils;
+    private AuthenticationUtils $authenticationUtils;
 
     public function __construct(AuthenticationUtils $authenticationUtils)
     {
@@ -28,7 +28,7 @@ final class AdminLoginController extends AbstractController
             'email' => $this->authenticationUtils->getLastUsername()
         ]);
 
-        return $this->render('ProjetNormandieUserBundle:security:login.html.twig', [
+        return $this->render('@ProjetNormandieUser/security/login.html.twig', [
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'form' => $form->createView(),
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
