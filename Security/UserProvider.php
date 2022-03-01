@@ -12,7 +12,7 @@ final class UserProvider implements UserProviderInterface
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     /**
      * @param EntityManagerInterface $entityManager
@@ -46,7 +46,7 @@ final class UserProvider implements UserProviderInterface
      * @param $usernameOrEmail
      * @return User|null
      */
-    public function findUserByUsernameOrEmail($usernameOrEmail)
+    public function findUserByUsernameOrEmail($usernameOrEmail): ?User
     {
         if (preg_match('/^.+\@\S+\.\S+$/', $usernameOrEmail)) {
             $user = $this->findOneUserBy(['email' => $usernameOrEmail]);

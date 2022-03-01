@@ -2,11 +2,9 @@
 namespace ProjetNormandie\UserBundle\Security;
 
 use ProjetNormandie\UserBundle\Form\AdminLoginForm;
-use ProjetNormandie\UserBundle\Entity\User;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,20 +17,9 @@ use Symfony\Component\Security\Guard\AuthenticatorInterface;
 
 final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements AuthenticatorInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private FormFactoryInterface $formFactory;
+    private RouterInterface $router;
+    private UserPasswordEncoderInterface $passwordEncoder;
 
     public function __construct(
         FormFactoryInterface $formFactory,
