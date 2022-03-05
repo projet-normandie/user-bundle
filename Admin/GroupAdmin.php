@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class GroupAdmin extends AbstractAdmin
 {
@@ -20,7 +21,7 @@ class GroupAdmin extends AbstractAdmin
                 'label' => 'Name',
                 'required' => false,
             ])
-            ->add('roles', 'collection', [
+            ->add('roles', CollectionType::class, [
                 'label' => 'Roles',
                 'required' => false,
                 'allow_add' => true,
