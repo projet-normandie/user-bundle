@@ -9,14 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjetNormandie\EmailBundle\Service\Mailer;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    private $userManager;
-    private $tokenGenerator;
-    private $translator;
-    private $mailer;
+    private UserManager $userManager;
+    private TokenGenerator $tokenGenerator;
+    private TranslatorInterface $translator;
+    private Mailer $mailer;
 
     /**
      * RegistrationController constructor.
@@ -42,6 +43,7 @@ class RegistrationController extends AbstractController
      * @param Request $request
      * @return Response
      * @throws Exception
+     * @throws TransportExceptionInterface
      */
     public function register(Request $request): Response
     {
@@ -94,7 +96,7 @@ class RegistrationController extends AbstractController
         $body = sprintf(
             $this->translator->trans('registration.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . '/en/register?token=' . $user->getConfirmationToken()
+            ($request->server->get('HTTP_ORIGIN') ?? null)  . '/en/register?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(

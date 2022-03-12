@@ -9,6 +9,7 @@ use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use ProjetNormandie\EmailBundle\Service\Mailer;
 
@@ -50,6 +51,7 @@ class ResettingController extends AbstractController
      * @param Request $request
      * @return Response
      * @throws Exception
+     * @throws TransportExceptionInterface
      */
     public function sendEmail(Request $request): Response
     {
@@ -73,7 +75,7 @@ class ResettingController extends AbstractController
         $body = sprintf(
             $this->translator->trans('resetting.email.message'),
             $user->getUsername(),
-            $this->getParameter('projetnormandie_user.url.front') . '/en/auth/reset?token=' . $user->getConfirmationToken()
+            ($request->server->get('HTTP_ORIGIN') ?? null) . '/en/auth/reset?token=' . $user->getConfirmationToken()
         );
 
         $this->mailer->send(
@@ -129,6 +131,7 @@ class ResettingController extends AbstractController
         $response->setContent(json_encode([
             'success' => $success,
             'message' => $message,
+            'server' => $_SERVER
         ]));
         return $response;
     }
