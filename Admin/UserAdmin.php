@@ -114,7 +114,7 @@ class UserAdmin extends AbstractAdmin
             //->add('expired', 'boolean')
             //->add('expires_at', 'datetime')
             ->add('confirmation_token')
-            //->add('password_requested_at', 'datetime')
+            ->add('password_requested_at', 'datetime')
             //->add('credentials_expired', 'boolean')
             //->add('credentials_expired_at', 'datetime')
             ->end()
