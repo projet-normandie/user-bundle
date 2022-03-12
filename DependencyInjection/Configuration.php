@@ -13,24 +13,18 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritdoc}
-     * @throws \RuntimeException When the node type is not supported.
+     * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('projet_normandie_user');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
-                ->arrayNode('directory')
+                ->arrayNode('avatar')
                     ->children()
-                        ->scalarNode('picture')->defaultValue(null)->end()
-                    ->end()
-                ->end()
-                ->arrayNode('url')
-                    ->children()
-                        ->scalarNode('front')->defaultValue(null)->end()
+                        ->scalarNode('directory')->defaultValue(null)->end()
                     ->end()
                 ->end()
             ->end();

@@ -23,4 +23,13 @@ class UserService
     {
         return $this->userRepository->getLoggedToday($date);
     }
+
+    /**
+     * @param $q
+     * @return mixed
+     */
+    public function autocomplete($q)
+    {
+        return $this->userRepository->autocomplete($q);
+    }
 }

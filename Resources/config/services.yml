@@ -5,6 +5,8 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
         # fetching services directly from the container via $container->get() won't work.
         # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $pnUserAvatarDirectory: '%projet_normandie_user.avatar.directory%'
     ProjetNormandie\UserBundle\:
         resource: '../../*'
         exclude: '../../{Admin,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'

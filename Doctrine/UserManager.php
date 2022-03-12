@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserManager extends BaseUserManager
 {
 
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * Constructor.

@@ -3,6 +3,7 @@
 namespace ProjetNormandie\UserBundle\Controller;
 
 use Exception;
+use ProjetNormandie\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,16 +11,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AvatarController extends AbstractController
 {
-    private $translator;
+    private TranslatorInterface $translator;
+    private string $pnUserAvatarDirectory;
 
-    private $extensions = array(
+    private array $extensions = array(
         'image/png' => '.png',
         'image/jpeg' => '.jpg',
     );
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, string $pnUserAvatarDirectory)
     {
         $this->translator = $translator;
+        $this->pnUserAvatarDirectory = $pnUserAvatarDirectory;
     }
 
     /**
@@ -29,6 +32,7 @@ class AvatarController extends AbstractController
      */
     public function upload(Request $request): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
         $file = $data['file'];
@@ -41,14 +45,13 @@ class AvatarController extends AbstractController
             return $this->getResponse(false, $this->translator->trans('avatar.extension_not_allowed'));
         }
 
-        $directory = $this->getParameter('projetnormandie_user.directory.picture') . '/user';
         $filename = $user->getId() . '_' . uniqid() . $this->extensions[$meta['mediatype']];
 
-        $fp2 = fopen($directory . '/' . $filename, 'w');
+        $fp2 = fopen($this->pnUserAvatarDirectory . '/' . $filename, 'w');
         fwrite($fp2, base64_decode($data[1]));
         fclose($fp2);
-        // Save avatar
 
+        // Save avatar
         $user->setAvatar($filename);
 
         $em = $this->getDoctrine()->getManager();
