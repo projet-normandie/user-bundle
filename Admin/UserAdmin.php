@@ -79,6 +79,7 @@ class UserAdmin extends AbstractAdmin
             ->add('username')
             ->add('email')
             ->add('status')
+            ->add('groups')
             ->add('enabled', null, ['editable' => true])
             ->add('_action', 'actions', [
                 'actions' => [
