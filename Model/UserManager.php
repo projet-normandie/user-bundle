@@ -1,19 +1,19 @@
 <?php
 namespace ProjetNormandie\UserBundle\Model;
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use ProjetNormandie\UserBundle\Entity\User;
 
 abstract class UserManager
 {
-    private UserPasswordEncoderInterface $passwordEncoder;
+    private UserPasswordHasherInterface $passwordHasher;
 
     /**
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserPasswordHasherInterface $passwordHasher
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class UserManager
      */
     public function updatePassword(User $user)
     {
-         $user->setPassword($this->passwordEncoder->encodePassword(
+         $user->setPassword($this->passwordHasher->hashPassword(
              $user,
              $user->getPlainPassword()
          ));
