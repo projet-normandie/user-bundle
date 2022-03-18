@@ -10,7 +10,7 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -36,7 +36,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *     }
  * )
  */
-class User implements UserInterface, TimestampableInterface, SluggableInterface
+class User implements UserInterface, TimestampableInterface, SluggableInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
     use SluggableTrait;
@@ -75,7 +75,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @ORM\Column(name="password", type="string")
      */
-    private string $password = '';
+    private ?string $password;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
@@ -215,7 +215,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     }
 
     /**
-     * @return array|string[]|Role[]
+     * @return array|string[]
      */
     public function getRoles(): array
     {
@@ -245,7 +245,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
