@@ -5,35 +5,40 @@ use ProjetNormandie\UserBundle\Form\AdminLoginForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
-final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements AuthenticatorInterface
+final class AdminLoginAuthenticator extends AbstractLoginFormAuthenticator
 {
     private FormFactoryInterface $formFactory;
     private RouterInterface $router;
-    private UserPasswordEncoderInterface $passwordEncoder;
+    private UserPasswordHasherInterface $passwordHasher;
+    private UserProviderInterface $userProvider;
 
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordHasherInterface $passwordHasher,
+        UserProviderInterface $userProvider
     ) {
         $this->formFactory = $formFactory;
         $this->router = $router;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
+        $this->userProvider = $userProvider;
     }
 
-    public function supports(Request $request): bool
+    protected function getLoginUrl(Request $request): string
     {
-        return $request->attributes->get('_route') === 'admin_login' && $request->isMethod('POST');
+        return $this->router->generate('admin_login');
     }
 
     public function getCredentials(Request $request): array
@@ -52,12 +57,11 @@ final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator imple
 
     /**
      * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
      * @return UserInterface
      */
-    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
+    public function getUser($credentials): UserInterface
     {
-        return $userProvider->loadUserByUsername($credentials['email']);
+        return $this->userProvider->loadUserByUsername($credentials['email']);
     }
 
     /**
@@ -67,37 +71,35 @@ final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator imple
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordHasher->isPasswordValid($user, $credentials['password']);
     }
 
-    /**
-     * @param Request                 $request
-     * @param AuthenticationException $exception
-     * @return RedirectResponse
-     */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
-    {
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-
-        return new RedirectResponse($this->router->generate('admin_login'));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getLoginUrl(): string
-    {
-        return $this->router->generate('admin_login');
-    }
 
     /**
      * @param Request        $request
      * @param TokenInterface $token
-     * @param string         $providerKey
+     * @param string         $firewallName
      * @return RedirectResponse
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
         return new RedirectResponse($this->router->generate('sonata_admin_dashboard'));
+    }
+
+
+    public function authenticate(Request $request): Passport
+    {
+        $credentials = $this->getCredentials($request);
+        $user = $this->getUser($credentials);
+        if ($this->checkCredentials($credentials, $user)) {
+            return new SelfValidatingPassport(
+                new UserBadge(
+                    $user->getId(),
+                    fn () => $user
+                )
+            );
+        } else {
+            throw new CustomUserMessageAuthenticationException('Invalid credentials.');
+        }
     }
 }

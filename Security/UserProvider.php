@@ -26,7 +26,7 @@ final class UserProvider implements UserProviderInterface
      * @param string $username
      * @return User
      */
-    public function loadUserByUsername($username): User
+    public function loadUserByUsername(string $username): User
     {
         $user = $this->findUserByUsernameOrEmail($username);
 
@@ -91,7 +91,7 @@ final class UserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
-    public function supportsClass($class): bool
+    public function supportsClass(string $class): bool
     {
         return $class === User::class;
     }
