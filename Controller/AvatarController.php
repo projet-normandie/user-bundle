@@ -2,6 +2,7 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Exception;
 use ProjetNormandie\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,16 +14,18 @@ class AvatarController extends AbstractController
 {
     private TranslatorInterface $translator;
     private string $pnUserAvatarDirectory;
+    private EntityManager $em;
 
     private array $extensions = array(
         'image/png' => '.png',
         'image/jpeg' => '.jpg',
     );
 
-    public function __construct(TranslatorInterface $translator, string $pnUserAvatarDirectory)
+    public function __construct(TranslatorInterface $translator, string $pnUserAvatarDirectory, EntityManager $em)
     {
         $this->translator = $translator;
         $this->pnUserAvatarDirectory = $pnUserAvatarDirectory;
+        $this->em = $em;
     }
 
     /**
@@ -54,8 +57,7 @@ class AvatarController extends AbstractController
         // Save avatar
         $user->setAvatar($filename);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
+        $this->em->flush();
 
         return $this->getResponse(true, $this->translator->trans('avatar.success'));
     }
