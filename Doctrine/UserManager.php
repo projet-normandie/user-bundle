@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use ProjetNormandie\UserBundle\Entity\User;
 use ProjetNormandie\UserBundle\Model\UserManager as BaseUserManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager extends BaseUserManager
 {
@@ -15,9 +15,9 @@ class UserManager extends BaseUserManager
     /**
      * Constructor.
      */
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
-        parent::__construct($passwordEncoder);
+        parent::__construct($passwordHasher);
         $this->em = $em;
     }
 
