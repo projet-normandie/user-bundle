@@ -2,24 +2,15 @@ services:
     sonata.admin.user.user:
         class: ProjetNormandie\UserBundle\Admin\UserAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.users", label: "label.user" }
-        arguments:
-            - ~
-            - ProjetNormandie\UserBundle\Entity\User
-            - ~
+            - { name: sonata.admin, model_class: 'ProjetNormandie\UserBundle\Entity\User', manager_type: orm, group: "group.users", label: "label.user" }
+        arguments: [ ~, ~, ~ ]
     sonata.admin.user.group:
         class: ProjetNormandie\UserBundle\Admin\GroupAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.users", label: "label.group" }
-        arguments:
-            - ~
-            - ProjetNormandie\UserBundle\Entity\Group
-            - ~
+            - { name: sonata.admin, model_class: 'ProjetNormandie\UserBundle\Entity\Group', manager_type: orm, group: "group.users", label: "label.group" }
+        arguments: [ ~, ~, ~ ]
     sonata.admin.user.ip:
         class: ProjetNormandie\UserBundle\Admin\IpAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.users", label: "label.ip" }
-        arguments:
-            - ~
-            - ProjetNormandie\UserBundle\Entity\Ip
-            - ~
+            - { name: sonata.admin, model_class: 'ProjetNormandie\UserBundle\Entity\Ip', manager_type: orm, group: "group.users", label: "label.ip" }
+        arguments: [ ~, ~, ~ ]
