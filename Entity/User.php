@@ -128,6 +128,11 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     protected string $locale = 'en';
 
     /**
+     * @ORM\Column(name="rules_accepted", type="boolean", nullable=false)
+     */
+    protected bool $rules_accepted = true;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
      * @ORM\JoinTable(name="user_group",
      *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
@@ -484,6 +489,27 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     {
         return $this->status;
     }
+
+    /**
+     * Set rules_accepted
+     * @param bool $rules_accepted
+     * @return $this
+     */
+    public function setRulesAccepted(bool $rules_accepted): self
+    {
+        $this->rules_accepted = $rules_accepted;
+        return $this;
+    }
+
+    /**
+     * Get rules_accepted
+     * @return bool
+     */
+    public function getRulesAccepted(): boolean
+    {
+        return $this->rules_accepted;
+    }
+
 
     /**
      * @return bool

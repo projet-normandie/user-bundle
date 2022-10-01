@@ -2,6 +2,7 @@ registration:
     error: 'Erreur'
     email_exists: 'Un compte avec cette adresse email existe déjà'
     username_exists: 'Un compte avec ce pseudo existe déjà'
+    must_accept_rules: 'Vous dever accpeter le règlement'
     check_email: |
         Un e-mail a été envoyé à l'adresse %s. Il contient un lien d'activation sur lequel il vous faudra cliquer afin d''activer votre compte.
     confirmed: 'Félicitations %s votre compte est maintenant activé.'

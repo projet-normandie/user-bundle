@@ -32,7 +32,7 @@ class IpManager
                 $this->em->flush();
             }
 
-            $userIp = $this->em->getRepository('ProjetNormandieUserBundle:UserIp')
+            $userIp = $this->em->getRepository('ProjetNormandie\UserBundle\Entity\UserIp')
                 ->findOneBy(array('ip' => $ip, 'user' => $user));
             if ($userIp == null) {
                 $userIp = new UserIp();
