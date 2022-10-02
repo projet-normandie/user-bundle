@@ -505,7 +505,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * Get rules_accepted
      * @return bool
      */
-    public function getRulesAccepted(): boolean
+    public function getRulesAccepted(): bool
     {
         return $this->rules_accepted;
     }
