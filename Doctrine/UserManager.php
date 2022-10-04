@@ -76,6 +76,6 @@ class UserManager extends BaseUserManager
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->em->getRepository('ProjetNormandieUserBundle:User');
+        return $this->em->getRepository('ProjetNormandie\UserBundle\Entity\User');
     }
 }

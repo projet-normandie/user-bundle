@@ -2,6 +2,7 @@ registration:
     error: 'Error'
     email_exists: 'An account with this email already exists'
     username_exists: 'An account with this username already exists'
+    must_accept_rules: 'You must accept the rules'
     check_email: |
         An email has been sent to %s. It contains an activation link you must click to activate your account.
     confirmed: 'Congrats %s, your account is now activated.'

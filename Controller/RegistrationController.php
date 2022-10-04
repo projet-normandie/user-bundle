@@ -3,6 +3,7 @@
 namespace ProjetNormandie\UserBundle\Controller;
 
 use Exception;
+use Doctrine\Persistence\ManagerRegistry;
 use ProjetNormandie\UserBundle\Doctrine\UserManager;
 use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     private UserManager $userManager;
+    private ManagerRegistry $doctrine;
     private TokenGenerator $tokenGenerator;
     private TranslatorInterface $translator;
     private Mailer $mailer;
@@ -28,11 +30,13 @@ class RegistrationController extends AbstractController
      */
     public function __construct(
         UserManager $userManager,
+        ManagerRegistry $doctrine,
         TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
         Mailer $mailer
     ) {
         $this->userManager = $userManager;
+        $this->doctrine = $doctrine;
         $this->tokenGenerator = $tokenGenerator;
         $this->translator = $translator;
         $this->mailer = $mailer;
@@ -51,10 +55,16 @@ class RegistrationController extends AbstractController
         $email = $data['email'];
         $username = $data['username'];
         $password = $data['password'];
+        $rules_accepted = $data['rules_accepted'] ?? false;
+
+        // Check username
+        if (!$rules_accepted) {
+            return $this->getResponse(false, $this->translator->trans('registration.must_accept_rules'));
+        }
 
         // check IP
         $remotAddr = $request->getClientIp();
-        $ip = $this->getDoctrine()->getRepository('ProjetNormandieUserBundle:Ip')
+        $ip = $this->doctrine->getRepository('ProjetNormandie\UserBundle\Entity\Ip')
             ->findOneBy(array('label' => $remotAddr));
         if ($ip && $ip->isBanned()) {
             // Send alert email
