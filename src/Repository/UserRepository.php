@@ -31,7 +31,7 @@ class UserRepository extends DefaultRepository
 
     /**
      * @param $date
-     * @return int|mixed|string
+     * @return mixed
      */
     public function getLoggedToday($date)
     {

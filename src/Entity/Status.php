@@ -28,7 +28,7 @@ class Status implements TranslatableInterface
      * @Assert\Length(max="30")
      * @ORM\Column(name="class", type="string", length=30, nullable=false)
      */
-    private $class = null;
+    private ?string $class = null;
 
 
     /**
@@ -59,10 +59,9 @@ class Status implements TranslatableInterface
     }
 
     /**
-     * Get id
-     * @return integer
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
