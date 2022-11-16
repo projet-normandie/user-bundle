@@ -63,11 +63,11 @@ class AvatarController extends AbstractController
     }
 
     /**
-     * @param bool $success
-     * @param null    $message
+     * @param bool        $success
+     * @param string|null $message
      * @return Response
      */
-    private function getResponse(bool $success, $message = null): Response
+    private function getResponse(bool $success, string $message = null): Response
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
