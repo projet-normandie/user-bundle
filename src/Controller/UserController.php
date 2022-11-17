@@ -2,17 +2,17 @@
 
 namespace ProjetNormandie\UserBundle\Controller;
 
-use ProjetNormandie\UserBundle\Service\UserService;
+use ProjetNormandie\UserBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
-    private UserService $userService;
+    private UserRepository $userRepository;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->userService = $userService;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -22,6 +22,6 @@ class UserController extends AbstractController
     public function autocomplete(Request $request)
     {
         $q = $request->query->get('query', null);
-        return $this->userService->autocomplete($q);
+        return $this->userRepository->autocomplete($q);
     }
 }
