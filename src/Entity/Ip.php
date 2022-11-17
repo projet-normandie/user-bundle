@@ -56,10 +56,9 @@ class Ip implements TimestampableInterface
     }
 
     /**
-     * Get id
-     * @return integer
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -15,7 +15,7 @@ class UserListener
      */
     public function prePersist(User $user, LifecycleEventArgs $event)
     {
-        $em = $event->getEntityManager();
+        $em = $event->getObjectManager();
         $user->setStatus($em->getReference('ProjetNormandie\UserBundle\Entity\Status', 1));
     }
 }

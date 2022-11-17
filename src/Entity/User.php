@@ -173,9 +173,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $username
-     * @return $this
+     * @return User
      */
-    public function setUsername($username): self
+    public function setUsername($username): User
     {
         $this->username = $username;
         return $this;
@@ -191,9 +191,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param string $email
-     * @return $this
+     * @return User
      */
-    public function setEmail(string $email): self
+    public function setEmail(string $email): User
     {
         $this->email = $email;
 
@@ -202,9 +202,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $boolean
-     * @return $this
+     * @return User
      */
-    public function setEnabled($boolean): self
+    public function setEnabled($boolean): User
     {
         $this->enabled = (bool) $boolean;
 
@@ -238,9 +238,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param array $roles
-     * @return $this
+     * @return User
      */
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): User
     {
         $this->roles = $roles;
 
@@ -257,9 +257,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param string $password
-     * @return $this
+     * @return User
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password): User
     {
         $this->password = $password;
 
@@ -312,9 +312,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param DateTime|null $time
-     * @return $this
+     * @return User
      */
-    public function setLastLogin(DateTime $time = null) : self
+    public function setLastLogin(DateTime $time = null) : User
     {
         $lastLogin = $this->getLastLogin();
         if (($lastLogin === null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
@@ -326,9 +326,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $confirmationToken
-     * @return $this
+     * @return User
      */
-    public function setConfirmationToken($confirmationToken): self
+    public function setConfirmationToken($confirmationToken): User
     {
         $this->confirmationToken = $confirmationToken;
         return $this;
@@ -344,9 +344,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param DateTime|null $date
-     * @return $this
+     * @return User
      */
-    public function setPasswordRequestedAt(DateTime $date = null): self
+    public function setPasswordRequestedAt(DateTime $date = null): User
     {
         $this->passwordRequestedAt = $date;
         return $this;
@@ -383,7 +383,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * @param string $locale
      * @return User
      */
-    public function setLocale(string $locale): self
+    public function setLocale(string $locale): User
     {
         $this->locale = $locale;
         return $this;
@@ -401,7 +401,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * @param int $nbConnexion
      * @return User
      */
-    public function setNbConnexion(int $nbConnexion): self
+    public function setNbConnexion(int $nbConnexion): User
     {
         $this->nbConnexion = $nbConnexion;
         return $this;
@@ -419,7 +419,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * @param int $nbForumMessage
      * @return User
      */
-    public function setNbForumMessage(int $nbForumMessage): self
+    public function setNbForumMessage(int $nbForumMessage): User
     {
         $this->nbForumMessage = $nbForumMessage;
         return $this;
@@ -437,7 +437,7 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * @param string $avatar
      * @return User
      */
-    public function setAvatar(string $avatar): self
+    public function setAvatar(string $avatar): User
     {
         $this->avatar = $avatar;
         return $this;
@@ -453,9 +453,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param string|null $comment
-     * @return $this
+     * @return User
      */
-    public function setComment(string $comment = null) : self
+    public function setComment(string $comment = null) : User
     {
         $this->comment = $comment;
         return $this;
@@ -473,9 +473,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     /**
      * Set status
      * @param Status|object|null $status
-     * @return $this
+     * @return User
      */
-    public function setStatus(Status $status = null): self
+    public function setStatus(Status $status = null): User
     {
         $this->status = $status;
         return $this;
@@ -493,9 +493,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     /**
      * Set rules_accepted
      * @param bool $rules_accepted
-     * @return $this
+     * @return User
      */
-    public function setRulesAccepted(bool $rules_accepted): self
+    public function setRulesAccepted(bool $rules_accepted): User
     {
         $this->rules_accepted = $rules_accepted;
         return $this;
@@ -516,23 +516,20 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      */
     public function getIsOnline(): bool
     {
-        if ($this->getLastLogin() != null) {
-            $now = new DateTime();
-            if (($now->format('U') - $this->getLastLogin()->format('U')) < 300) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        $lastLogin = $this->getLastLogin();
+        if (null === $lastLogin)  {
             return false;
         }
+        $now = new DateTime();
+        $diff = $now->format('U') - $lastLogin->format('U');
+        return $diff < 300;
     }
 
     /**
      * @param $groups
-     * @return $this
+     * @return User
      */
-    public function setGroups($groups): self
+    public function setGroups($groups): User
     {
         $this->groups = $groups;
         return $this;
@@ -548,9 +545,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $password
-     * @return $this
+     * @return User
      */
-    public function setPlainPassword($password): self
+    public function setPlainPassword($password): User
     {
         $this->plainPassword = $password;
         return $this;
@@ -558,9 +555,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $group
-     * @return $this
+     * @return User
      */
-    public function addGroup($group): self
+    public function addGroup($group): User
     {
         $this->groups[] = $group;
         return $this;
@@ -585,9 +582,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $role
-     * @return $this
+     * @return User
      */
-    public function addRole($role): self
+    public function addRole($role): User
     {
         $role = strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
@@ -601,9 +598,9 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
 
     /**
      * @param $role
-     * @return $this
+     * @return User
      */
-    public function removeRole($role): self
+    public function removeRole($role): User
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -620,19 +617,5 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     public function getSluggableFields(): array
     {
         return ['username'];
-    }
-
-    /**
-     * @param $boolean
-     * @return $this
-     */
-    public function setSuperAdmin($boolean): self
-    {
-        if (true === $boolean) {
-            $this->addRole(static::ROLE_SUPER_ADMIN);
-        } else {
-            $this->removeRole(static::ROLE_SUPER_ADMIN);
-        }
-        return $this;
     }
 }

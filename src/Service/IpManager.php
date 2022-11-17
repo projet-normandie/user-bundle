@@ -23,7 +23,7 @@ class IpManager
         $request = Request::createFromGlobals();
         if ($user !== null) {
             $clientIp = $request->getClientIp();
-            $ip = $this->em->getRepository('ProjetNormandieUserBundle:Ip')
+            $ip = $this->em->getRepository('ProjetNormandie\UserBundle\Entity\Ip')
                 ->findOneBy(array('label' => $clientIp));
             if ($ip === null) {
                 $ip = new Ip();

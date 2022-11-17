@@ -23,10 +23,11 @@ class RegistrationController extends AbstractController
 
     /**
      * RegistrationController constructor.
-     * @param UserManager             $userManager
-     * @param TokenGenerator          $tokenGenerator
-     * @param TranslatorInterface     $translator
-     * @param Mailer                  $mailer
+     * @param UserManager         $userManager
+     * @param ManagerRegistry     $doctrine
+     * @param TokenGenerator      $tokenGenerator
+     * @param TranslatorInterface $translator
+     * @param Mailer              $mailer
      */
     public function __construct(
         UserManager $userManager,
@@ -62,23 +63,7 @@ class RegistrationController extends AbstractController
             return $this->getResponse(false, $this->translator->trans('registration.must_accept_rules'));
         }
 
-        // check IP
-        $remotAddr = $request->getClientIp();
-        $ip = $this->doctrine->getRepository('ProjetNormandie\UserBundle\Entity\Ip')
-            ->findOneBy(array('label' => $remotAddr));
-        if ($ip && $ip->isBanned()) {
-            // Send alert email
-            $body = sprintf(
-                $this->translator->trans('ip.email.message'),
-                $username,
-                $remotAddr
-            );
-            $this->mailer->send(
-                $this->translator->trans('ip.email.subject'),
-                $body
-            );
-            return $this->getResponse(false, $this->translator->trans('registration.error'));
-        }
+        $this->checkIp($request, $username);
 
         // Check username
         $user = $this->userManager->findUserByUsername($username);
@@ -143,6 +128,33 @@ class RegistrationController extends AbstractController
             true,
             sprintf($this->translator->trans('registration.confirmed'), $user->getUsername())
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $username
+     * @return Response|void
+     * @throws TransportExceptionInterface
+     */
+    private function checkIp(Request $request, string $username)
+    {
+        // check IP
+        $remotAddr = $request->getClientIp();
+        $ip = $this->doctrine->getRepository('ProjetNormandie\UserBundle\Entity\Ip')
+            ->findOneBy(array('label' => $remotAddr));
+        if ($ip && $ip->isBanned()) {
+            // Send alert email
+            $body = sprintf(
+                $this->translator->trans('ip.email.message'),
+                $username,
+                $remotAddr
+            );
+            $this->mailer->send(
+                $this->translator->trans('ip.email.subject'),
+                $body
+            );
+            return $this->getResponse(false, $this->translator->trans('registration.error'));
+        }
     }
 
     /**

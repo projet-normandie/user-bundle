@@ -50,8 +50,7 @@ class ResettingController extends AbstractController
     /**
      * @param Request $request
      * @return Response
-     * @throws Exception
-     * @throws TransportExceptionInterface
+     * @throws Exception|TransportExceptionInterface
      */
     public function sendEmail(Request $request): Response
     {
