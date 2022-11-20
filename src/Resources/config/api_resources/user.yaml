@@ -116,6 +116,16 @@ resources:
         itemOperations:
             get:
                 normalization_context: {'groups': [user.get]}
+            get-avatar:
+                method: 'GET'
+                path: '/users/{id}/avatar'
+                swagger_context:
+                    parameters:
+                        -   name: id
+                            in: path
+                            required: true
+                            type: integer
+                controller: 'ProjetNormandie\UserBundle\Controller\AvatarController::download'
             put:
                 access_control: 'is_granted("ROLE_USER") and object == user'
                 denormalization_context: {'groups': [user.put]}
