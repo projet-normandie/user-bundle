@@ -5,8 +5,8 @@ namespace ProjetNormandie\UserBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use League\Flysystem\FilesystemException;
-use League\Flysystem\FilesystemOperator;
 use ProjetNormandie\UserBundle\Entity\User;
+use ProjetNormandie\UserBundle\Service\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -17,21 +17,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AvatarController extends AbstractController
 {
     private TranslatorInterface $translator;
-    private FilesystemOperator $pnUserStorage;
     private EntityManagerInterface $em;
+    private AvatarManager $avatarManager;
 
-    private string $prefix = 'user/';
 
-    private array $extensions = array(
-        'png' => 'image/png',
-        'jpg' => 'image/jpeg'
-    );
-
-    public function __construct(TranslatorInterface $translator, FilesystemOperator $pnUserStorage, EntityManagerInterface $em)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $em, AvatarManager $avatarManager)
     {
         $this->translator = $translator;
-        $this->pnUserStorage = $pnUserStorage;
         $this->em = $em;
+        $this->avatarManager = $avatarManager;
     }
 
     /**
@@ -48,10 +42,11 @@ class AvatarController extends AbstractController
         $file = $data['file'];
         $fp1 = fopen($file, 'r');
         $meta = stream_get_meta_data($fp1);
+        $mimeType = $meta['mediatype'];
 
         $data = explode(',', $file);
 
-        if (!in_array($meta['mediatype'], $this->extensions)) {
+        if (!in_array($mimeType, $this->avatarManager->getAllowedMimeType())) {
             return new JsonResponse([
                 'message' => $this->translator->trans('avatar.extension_not_allowed'),
             ],
@@ -59,16 +54,13 @@ class AvatarController extends AbstractController
             );
         }
 
-        // Save avatar
-        $mimeTypes = array_flip($this->extensions);
-        $filename = $user->getId() . '_' . uniqid() . '.' . $mimeTypes[$meta['mediatype']];
-        $user->setAvatar($filename);
+        // Set filename
+        $filename = $user->getId() . '_' . uniqid() . '.' . $this->avatarManager->getExtension($mimeType);
 
-        $this->pnUserStorage->write($this->prefix . $filename, base64_decode($data[1]));
+        $this->avatarManager->write($filename, base64_decode($data[1]));
 
         // Save avatar
         $user->setAvatar($filename);
-
         $this->em->flush();
 
         return new JsonResponse([
@@ -78,26 +70,11 @@ class AvatarController extends AbstractController
 
     /**
      * @param User $user
-     * @return void
+     * @return StreamedResponse
      * @throws FilesystemException
      */
-    public function download(User $user): Response
+    public function download(User $user): StreamedResponse
     {
-        $stream = $this->pnUserStorage->readStream($this->prefix . $user->getAvatar());
-        return new StreamedResponse(function () use ($stream) {
-            fpassthru($stream);
-            exit();
-        }, 200, ['Content-Type' => $this->getContentType($user->getAvatar())]);
-
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    private function getContentType(string $file): string
-    {
-        $infos = pathinfo($file);
-        return $this->extensions[$infos['extension']] ?? 'image/png';
+        return $this->avatarManager->read($user->getAvatar());
     }
 }
