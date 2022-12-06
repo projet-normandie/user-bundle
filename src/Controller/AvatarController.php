@@ -5,15 +5,21 @@ namespace ProjetNormandie\UserBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use League\Flysystem\FilesystemException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use ProjetNormandie\UserBundle\Entity\User;
 use ProjetNormandie\UserBundle\Service\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class TeamController
+ * @Route("/user")
+ */
 class AvatarController extends AbstractController
 {
     private TranslatorInterface $translator;
@@ -69,6 +75,8 @@ class AvatarController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/picture", requirements={"id": "[1-9]\d*"}, name="vgr_core_team_picture", methods={"GET"})
+     * @Cache(smaxage="1")
      * @param User $user
      * @return StreamedResponse
      * @throws FilesystemException
