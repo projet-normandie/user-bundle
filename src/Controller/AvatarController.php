@@ -4,34 +4,41 @@ namespace ProjetNormandie\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use League\Flysystem\FilesystemException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use ProjetNormandie\UserBundle\Entity\User;
+use ProjetNormandie\UserBundle\Service\AvatarManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class TeamController
+ * @Route("/user")
+ */
 class AvatarController extends AbstractController
 {
     private TranslatorInterface $translator;
-    private string $pnUserAvatarDirectory;
     private EntityManagerInterface $em;
+    private AvatarManager $avatarManager;
 
-    private array $extensions = array(
-        'image/png' => '.png',
-        'image/jpeg' => '.jpg',
-    );
 
-    public function __construct(TranslatorInterface $translator, string $pnUserAvatarDirectory, EntityManagerInterface $em)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $em, AvatarManager $avatarManager)
     {
         $this->translator = $translator;
-        $this->pnUserAvatarDirectory = $pnUserAvatarDirectory;
         $this->em = $em;
+        $this->avatarManager = $avatarManager;
     }
 
     /**
-     * @param Request     $request
+     * @param Request $request
      * @return Response
      * @throws Exception
+     * @throws FilesystemException
      */
     public function upload(Request $request): Response
     {
@@ -41,40 +48,41 @@ class AvatarController extends AbstractController
         $file = $data['file'];
         $fp1 = fopen($file, 'r');
         $meta = stream_get_meta_data($fp1);
+        $mimeType = $meta['mediatype'];
 
         $data = explode(',', $file);
 
-        if (!array_key_exists($meta['mediatype'], $this->extensions)) {
-            return $this->getResponse(false, $this->translator->trans('avatar.extension_not_allowed'));
+        if (!in_array($mimeType, $this->avatarManager->getAllowedMimeType())) {
+            return new JsonResponse([
+                'message' => $this->translator->trans('avatar.extension_not_allowed'),
+            ],
+            400
+            );
         }
 
-        $filename = $user->getId() . '_' . uniqid() . $this->extensions[$meta['mediatype']];
+        // Set filename
+        $filename = $user->getId() . '_' . uniqid() . '.' . $this->avatarManager->getExtension($mimeType);
 
-        $fp2 = fopen($this->pnUserAvatarDirectory . '/' . $filename, 'w');
-        fwrite($fp2, base64_decode($data[1]));
-        fclose($fp2);
+        $this->avatarManager->write($filename, base64_decode($data[1]));
 
         // Save avatar
         $user->setAvatar($filename);
-
         $this->em->flush();
 
-        return $this->getResponse(true, $this->translator->trans('avatar.success'));
+        return new JsonResponse([
+            'message' => $this->translator->trans('avatar.success'),
+        ], 200);
     }
 
     /**
-     * @param bool        $success
-     * @param string|null $message
-     * @return Response
+     * @Route(path="/{id}/picture", requirements={"id": "[1-9]\d*"}, name="vgr_core_team_picture", methods={"GET"})
+     * @Cache(smaxage="1")
+     * @param User $user
+     * @return StreamedResponse
+     * @throws FilesystemException
      */
-    private function getResponse(bool $success, string $message = null): Response
+    public function download(User $user): StreamedResponse
     {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent(json_encode([
-            'success' => $success,
-            'message' => $message,
-        ]));
-        return $response;
+        return $this->avatarManager->read($user->getAvatar());
     }
 }
