@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class TeamController
- * @Route("/user")
+ * @Route("/users")
  */
 class AvatarController extends AbstractController
 {
@@ -75,7 +75,7 @@ class AvatarController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/picture", requirements={"id": "[1-9]\d*"}, name="vgr_core_team_picture", methods={"GET"})
+     * @Route(path="/{id}/avatar", requirements={"id": "[1-9]\d*"}, name="vgr_core_team_picture", methods={"GET"})
      * @Cache(smaxage="1")
      * @param User $user
      * @return StreamedResponse
