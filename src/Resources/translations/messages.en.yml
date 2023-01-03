@@ -20,7 +20,7 @@ registration:
             Regards,
             the Team.
 resetting:
-    user_not_found: 'There is no accoutn with this email'
+    user_not_found: 'There is no account with this email'
     request_not_expired: 'A request has already be sent'
     global_message: 'If the account exists, a password reset email has been sent to you.'
     invalid_token: 'Invalid Token'
