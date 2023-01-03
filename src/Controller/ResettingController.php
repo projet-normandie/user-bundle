@@ -129,8 +129,7 @@ class ResettingController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent(json_encode([
             'success' => $success,
-            'message' => $message,
-            'server' => $_SERVER
+            'message' => $message
         ]));
         return $response;
     }
