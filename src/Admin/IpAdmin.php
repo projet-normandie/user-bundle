@@ -20,14 +20,14 @@ class IpAdmin extends AbstractAdmin
     {
         $form
             ->add('label', TextType::class, [
-                'label' => 'Label',
+                'label' => 'label.label',
                 'required' => false,
             ])
             ->add(
                 'status',
                 ChoiceType::class,
                 [
-                    'label' => 'Etat',
+                    'label' => 'label.status',
                     'choices' => Ip::getStatusChoices(),
                 ]
             );
@@ -39,7 +39,7 @@ class IpAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('label');
+            ->add('label', null, ['label' => 'label.status']);
     }
 
     /**
@@ -48,9 +48,9 @@ class IpAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id')
-            ->add('label')
-            ->add('status')
+            ->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('label', null, ['label' => 'label.label'])
+            ->add('status', null, ['label' => 'label.status'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],

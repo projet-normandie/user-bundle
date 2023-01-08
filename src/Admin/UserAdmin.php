@@ -34,14 +34,14 @@ class UserAdmin extends AbstractAdmin
     {
         $form
             ->add('username', TextType::class, [
-                'label' => 'Username',
+                'label' => 'label.username',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'label.email',
                 'required' => true,
             ])
-            ->add('status')
+            ->add('status', null, ['label' => 'label.status'])
             ->add('groups', ModelAutocompleteType::class, [
                 'property' => 'name',
                 'required' => false,
@@ -50,9 +50,11 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
+                'label' => 'label.enabled'
             ])
             ->add('comment', TextareaType::class, [
                 'required' => false,
+                'label' => 'label.comment'
             ]);
     }
 
@@ -62,11 +64,11 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('username')
-            ->add('email')
-            ->add('status')
-            ->add('enabled')
-            ->add('groups');
+            ->add('username', null, ['label' => 'label.username'])
+            ->add('email', null, ['label' => 'label.email'])
+            ->add('status', null, ['label' => 'label.status'])
+            ->add('enabled', null, ['label' => 'label.enabled'])
+            ->add('groups', null, ['label' => 'label.groups']);
     }
 
     /**
@@ -75,12 +77,12 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id')
-            ->add('username')
-            ->add('email')
-            ->add('status')
-            ->add('groups')
-            ->add('enabled', null, ['editable' => true])
+            ->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('username', null, ['label' => 'label.username'])
+            ->add('email', null, ['label' => 'label.email'])
+            ->add('status', null, ['label' => 'label.status'])
+            ->add('groups', null, ['label' => 'label.groups'])
+            ->add('enabled', null, ['editable' => true, 'label' => 'label.enabled'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -96,30 +98,25 @@ class UserAdmin extends AbstractAdmin
     {
         $show
             ->with('User', ['class' => 'col-md-6'])
-            ->add('id')
-            ->add('username')
-            ->add('email')
-            ->add('enabled')
-            ->add('lastLogin')
-            ->add('status')
-            ->add('locale')
-            ->add('avatar')
-            ->add('nbConnexion')
-            ->add('nbForumMessage')
-            ->add('comment')
+            ->add('id', null, ['label' => 'label.id'])
+            ->add('username', null, ['label' => 'label.username'])
+            ->add('email', null, ['label' => 'label.email'])
+            ->add('enabled', null, ['label' => 'label.enabled'])
+            ->add('lastLogin', null, ['label' => 'label.lastLogin'])
+            ->add('status', null, ['label' => 'label.status'])
+            ->add('locale', null, ['label' => 'label.locale'])
+            ->add('avatar', null, ['label' => 'label.avatar'])
+            ->add('nbConnexion', null, ['label' => 'label.nbConnexion'])
+            ->add('nbForumMessage', null, ['label' => 'label.nbForumMessage'])
+            ->add('comment', null, ['label' => 'label.comment'])
             ->end()
             ->with('Connexion', ['class' => 'col-md-6'])
-            //->add('locked', 'boolean')
-            ->add('salt')
-            ->add('password')
-            //->add('expired', 'boolean')
-            //->add('expires_at', 'datetime')
-            ->add('confirmation_token')
-            ->add('password_requested_at', 'datetime')
-            //->add('credentials_expired', 'boolean')
-            //->add('credentials_expired_at', 'datetime')
+            ->add('salt', null, ['label' => 'label.salt'])
+            ->add('password', null, ['label' => 'label.password'])
+            ->add('confirmation_token', null, ['label' => 'label.confirmation_token'])
+            ->add('password_requested_at', 'datetime', ['label' => 'label.password_requested_at'])
             ->end()
             ->with('IP')
-            ->add('userIp');
+            ->add('userIp', null, ['label' => 'label.userIp']);
     }
 }

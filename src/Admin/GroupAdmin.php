@@ -18,11 +18,11 @@ class GroupAdmin extends AbstractAdmin
     {
         $form
             ->add('name', TextType::class, [
-                'label' => 'Name',
+                'label' => 'label.name',
                 'required' => false,
             ])
             ->add('roles', CollectionType::class, [
-                'label' => 'Roles',
+                'label' => 'mabel.roles',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -35,7 +35,7 @@ class GroupAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('name');
+            ->add('name', null, ['label' => 'label.name']);
     }
 
     /**
@@ -44,9 +44,9 @@ class GroupAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id')
-            ->add('name')
-            ->add('roles')
+            ->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('name', null, ['label' => 'label.name'])
+            ->add('roles', null, ['label' => 'label.roles'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -61,8 +61,8 @@ class GroupAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id')
-            ->add('name')
-            ->add('roles');
+            ->add('id', null, ['label' => 'label.id'])
+            ->add('name', null, ['label' => 'label.name'])
+            ->add('roles', null, ['label' => 'label.roles']);
     }
 }
