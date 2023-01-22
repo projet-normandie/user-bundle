@@ -46,10 +46,30 @@ avatar:
     extension_not_allowed: 'Les format autorisés sont png et jpg'
     success: "L'avatar a bien été chargé"
 
+breadcrumb:
+    link_user_list: 'List des utilisateurs'
 label:
-    user: 'User'
+    avatar: 'Avatar'
+    comment: 'Commentaire'
+    confirmation_token: 'Token de confirmation'
+    enabled: 'Actif ?'
     group: 'Group'
+    id: 'id'
     ip : 'IP'
+    label: 'Label'
+    lastLogin: 'Dernière connexion'
+    locale: 'Langue'
+    name: 'Nom'
+    nbConnexion: 'Nb Connexion'
+    nbForumMessage: 'Nb Forum Message'
+    password: 'Mot de passe'
+    password_requested_at: 'Changement de mot de passe demandé le'
+    roles: 'Roles'
+    salt: 'Salt'
+    status: 'Statut'
+    user: 'Utilsateur'
+    userIp: 'Liste IP'
+    username: 'Pseudo'
 
 ip:
     email:

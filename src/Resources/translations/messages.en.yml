@@ -20,7 +20,7 @@ registration:
             Regards,
             the Team.
 resetting:
-    user_not_found: 'There is no accoutn with this email'
+    user_not_found: 'There is no account with this email'
     request_not_expired: 'A request has already be sent'
     global_message: 'If the account exists, a password reset email has been sent to you.'
     invalid_token: 'Invalid Token'
@@ -44,9 +44,27 @@ avatar:
     success: "Avatar has been successfull uploaded"
 
 label:
-    user: 'User'
+    avatar: 'Avatar'
+    comment: 'Comment'
+    confirmation_token: 'Confirmation Token'
+    enabled: 'Enabled ?'
     group: 'Group'
+    id: 'id'
     ip : 'IP'
+    label: 'Label'
+    lastLogin: 'Last login'
+    locale: 'Language'
+    name: 'Name'
+    nbConnexion: 'Nb Connexion'
+    nbForumMessage: 'Nb Forum Message'
+    password: 'Password'
+    password_requested_at: 'Password requested at'
+    roles: 'Roles'
+    salt: 'Salt'
+    status: 'Status'
+    user: 'User'
+    userIp: 'IP List'
+    username: 'Username'
 
 ip:
     email:
