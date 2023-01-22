@@ -31,5 +31,11 @@
             "*": "dist"
         },
         "sort-packages": true
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.4.*"
+        }
     }
 }
