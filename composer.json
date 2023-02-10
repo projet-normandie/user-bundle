@@ -16,12 +16,14 @@
         "api-platform/core": "^2.7",
         "knplabs/doctrine-behaviors": "~2.0",
         "league/flysystem-bundle": "^3.0",
-        "sonata-project/admin-bundle": "^4.0",
-        "sonata-project/doctrine-orm-admin-bundle": "^4.0",
         "projet-normandie/email-bundle": "dev-master",
         "symfony/dependency-injection": "^5.4",
         "symfony/event-dispatcher": "^5.4",
         "symfony/security-bundle": "^5.4"
+    },
+    "suggest": {
+        "sonata-project/admin-bundle": "To use administration with sonata",
+        "sonata-project/doctrine-orm-admin-bundle": "To use doctrine orm into sonata admin"
     },
     "autoload": {
         "psr-4": { "ProjetNormandie\\UserBundle\\": "src/" }
