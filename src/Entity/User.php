@@ -510,21 +510,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
         return $this->rules_accepted;
     }
 
-
-    /**
-     * @return bool
-     */
-    public function getIsOnline(): bool
-    {
-        $lastLogin = $this->getLastLogin();
-        if (null === $lastLogin)  {
-            return false;
-        }
-        $now = new DateTime();
-        $diff = $now->format('U') - $lastLogin->format('U');
-        return $diff < 300;
-    }
-
     /**
      * @param $groups
      * @return User
