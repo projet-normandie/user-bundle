@@ -262,6 +262,15 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     }
 
     /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @return string
      */
     public function getPlainPassword(): ?string
