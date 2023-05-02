@@ -111,7 +111,6 @@ class UserAdmin extends AbstractAdmin
             ->add('comment', null, ['label' => 'label.comment'])
             ->end()
             ->with('Connexion', ['class' => 'col-md-6'])
-            ->add('salt', null, ['label' => 'label.salt'])
             ->add('password', null, ['label' => 'label.password'])
             ->add('confirmation_token', null, ['label' => 'label.confirmation_token'])
             ->add('password_requested_at', 'datetime', ['label' => 'label.password_requested_at'])

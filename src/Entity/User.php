@@ -83,11 +83,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     protected string $plainPassword = '';
 
     /**
-     * @ORM\Column(name="salt", type="string")
-     */
-    private ?string $salt = null;
-
-    /**
      * @ORM\Column(name="last_login",type="datetime", nullable=true)
      */
     protected ?DateTime $lastLogin = null;
@@ -282,15 +277,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     public function hasRole($role): bool
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     */
-    public function getSalt(): ?string
-    {
-        return null;
     }
 
     /**

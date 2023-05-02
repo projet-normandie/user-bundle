@@ -60,7 +60,6 @@ label:
     password: 'Password'
     password_requested_at: 'Password requested at'
     roles: 'Roles'
-    salt: 'Salt'
     status: 'Status'
     user: 'User'
     userIp: 'IP List'
