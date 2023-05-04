@@ -22,7 +22,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
- * @ORM\EntityListeners({"ProjetNormandie\UserBundle\EventListener\Entity\UserListener"})
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
  * @ApiResource(attributes={"order"={"username": "ASC"}})
