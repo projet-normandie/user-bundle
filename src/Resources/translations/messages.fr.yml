@@ -65,7 +65,6 @@ label:
     password: 'Mot de passe'
     password_requested_at: 'Changement de mot de passe demandé le'
     roles: 'Roles'
-    status: 'Statut'
     user: 'Utilsateur'
     userIp: 'Liste IP'
     username: 'Pseudo'

@@ -41,7 +41,6 @@ class UserAdmin extends AbstractAdmin
                 'label' => 'label.email',
                 'required' => true,
             ])
-            ->add('status', null, ['label' => 'label.status'])
             ->add('groups', ModelAutocompleteType::class, [
                 'property' => 'name',
                 'required' => false,
@@ -66,7 +65,6 @@ class UserAdmin extends AbstractAdmin
         $filter
             ->add('username', null, ['label' => 'label.username'])
             ->add('email', null, ['label' => 'label.email'])
-            ->add('status', null, ['label' => 'label.status'])
             ->add('enabled', null, ['label' => 'label.enabled'])
             ->add('groups', null, ['label' => 'label.groups']);
     }
@@ -80,7 +78,6 @@ class UserAdmin extends AbstractAdmin
             ->addIdentifier('id', null, ['label' => 'label.id'])
             ->add('username', null, ['label' => 'label.username'])
             ->add('email', null, ['label' => 'label.email'])
-            ->add('status', null, ['label' => 'label.status'])
             ->add('groups', null, ['label' => 'label.groups'])
             ->add('enabled', null, ['editable' => true, 'label' => 'label.enabled'])
             ->add('_action', 'actions', [
@@ -103,7 +100,6 @@ class UserAdmin extends AbstractAdmin
             ->add('email', null, ['label' => 'label.email'])
             ->add('enabled', null, ['label' => 'label.enabled'])
             ->add('lastLogin', null, ['label' => 'label.lastLogin'])
-            ->add('status', null, ['label' => 'label.status'])
             ->add('locale', null, ['label' => 'label.locale'])
             ->add('avatar', null, ['label' => 'label.avatar'])
             ->add('nbConnexion', null, ['label' => 'label.nbConnexion'])

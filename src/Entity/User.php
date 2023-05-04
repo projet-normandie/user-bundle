@@ -22,7 +22,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
- * @ORM\EntityListeners({"ProjetNormandie\UserBundle\EventListener\Entity\UserListener"})
  * @DoctrineAssert\UniqueEntity(fields={"email"})
  * @DoctrineAssert\UniqueEntity(fields={"username"})
  * @ApiResource(attributes={"order"={"username": "ASC"}})
@@ -142,13 +141,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      */
     private $userIp;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\UserBundle\Entity\Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idStatus", referencedColumnName="id", nullable=false)
-     * })
-     */
-    private $status;
 
     /**
      * @return int|null
@@ -465,25 +457,6 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
         return $this->userIp;
     }
 
-    /**
-     * Set status
-     * @param Status|object|null $status
-     * @return User
-     */
-    public function setStatus(Status $status = null): User
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
-     * Get status
-     * @return Status
-     */
-    public function getStatus(): Status
-    {
-        return $this->status;
-    }
 
     /**
      * Set rules_accepted
