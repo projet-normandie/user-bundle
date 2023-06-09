@@ -127,14 +127,13 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
     protected bool $rules_accepted = true;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group")
+     * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group", fetch="EAGER")
      * @ORM\JoinTable(name="user_group",
      *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="groupId", referencedColumnName="id")}
      * )
-     * @var Collection
      */
-    protected $groups;
+    protected Collection $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
