@@ -3,6 +3,7 @@
 namespace ProjetNormandie\UserBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -139,6 +140,14 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
      * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
      */
     private $userIp;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
 
     /**
