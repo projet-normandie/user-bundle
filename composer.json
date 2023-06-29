@@ -17,13 +17,19 @@
         "knplabs/doctrine-behaviors": "~2.0",
         "league/flysystem-bundle": "^3.0",
         "projet-normandie/email-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "^4.0",
+        "sonata-project/translation-bundle": "^3.0",
         "symfony/dependency-injection": "^5.4",
         "symfony/event-dispatcher": "^5.4",
         "symfony/security-bundle": "^5.4"
     },
-    "suggest": {
-        "sonata-project/admin-bundle": "To use administration with sonata",
-        "sonata-project/doctrine-orm-admin-bundle": "To use doctrine orm into sonata admin"
+    "require-dev": {
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-doctrine": "^1.3",
+        "phpstan/phpstan-symfony": "^1.3",
+        "squizlabs/php_codesniffer": "^3.7",
+        "symfony/phpunit-bridge": "^6.2"
     },
     "autoload": {
         "psr-4": { "ProjetNormandie\\UserBundle\\": "src/" }
@@ -32,12 +38,25 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "symfony": {
             "allow-contrib": false,
             "require": "5.4.*"
         }
+    },
+    "scripts": {
+        "console": "@php bin/console",
+        "lint:phpstan": "@php vendor/bin/phpstan",
+        "lint:phpcs": "@php vendor/bin/phpcs src/ tests/ -p",
+        "lint:phpcs:fix": "@php vendor/bin/phpcbf src/ tests/ -p",
+        "lint": [
+            "@lint:phpcs",
+            "@lint:phpstan"
+        ]
     }
 }
