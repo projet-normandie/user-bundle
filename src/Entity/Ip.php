@@ -83,10 +83,10 @@ class Ip implements TimestampableInterface
 
     /**
      * Set ip
-     * @param null $label
+     * @param string $label
      * @return $this
      */
-    public function setlabel($label = null): self
+    public function setLabel(string $label): self
     {
         $this->label = $label;
 
