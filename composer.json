@@ -16,6 +16,7 @@
         "api-platform/core": "^2.7",
         "knplabs/doctrine-behaviors": "~2.0",
         "league/flysystem-bundle": "^3.0",
+        "lexik/jwt-authentication-bundle": "^2.19",
         "projet-normandie/email-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
         "sonata-project/translation-bundle": "^3.0",

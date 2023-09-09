@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class LoginListener implements EventSubscriberInterface
 {
     private EntityManagerInterface $em;
+    private IpManager $ipManager;
 
     public function __construct(EntityManagerInterface $em, IpManager $ipManager)
     {
