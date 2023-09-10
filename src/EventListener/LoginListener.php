@@ -2,24 +2,22 @@
 
 namespace ProjetNormandie\UserBundle\EventListener;
 
-use Exception;
 use Lexik\Bundle\JWTAuthenticationBundle\Events as LexikEvents;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use ProjetNormandie\UserBundle\Security\UserProvider;
 use ProjetNormandie\UserBundle\Service\IpManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\SecurityEvents;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Doctrine\ORM\EntityManagerInterface;
 
 class LoginListener implements EventSubscriberInterface
 {
-    private EntityManagerInterface $em;
     private IpManager $ipManager;
 
-    public function __construct(EntityManagerInterface $em, IpManager $ipManager)
+    private UserProvider $userProvider;
+
+    public function __construct(IpManager $ipManager, UserProvider $userProvider)
     {
-        $this->em = $em;
         $this->ipManager = $ipManager;
+        $this->userProvider = $userProvider;
     }
 
     /**
@@ -28,27 +26,10 @@ class LoginListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return array(
-            SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
             LexikEvents::AUTHENTICATION_SUCCESS => 'majIp'
         );
     }
 
-    /**
-     * @param $event
-     * @throws Exception
-     */
-    public function onLogin($event)
-    {
-        $user = null;
-        if ($event instanceof InteractiveLoginEvent) {
-            $user = $event->getAuthenticationToken()->getUser();
-        }
-
-        if ($user !== null) {
-            $user->setLastLogin(new \Datetime());
-            $this->em->flush();
-        }
-    }
 
     /**
      * @param AuthenticationSuccessEvent $event
@@ -56,6 +37,9 @@ class LoginListener implements EventSubscriberInterface
      */
     public function majIp(AuthenticationSuccessEvent $event)
     {
-        $this->ipManager->majUserIp($event->getUser());
+        $this->ipManager->majUserIp(
+            $this->userProvider->loadUserByUsername($event->getUser()->getUsername()
+            )
+        );
     }
 }
