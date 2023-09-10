@@ -36,7 +36,7 @@ class IpManager
                 ->findOneBy(array('ip' => $ip, 'user' => $user));
             if ($userIp == null) {
                 $userIp = new UserIp();
-                $userIp->setUser($user);
+                $userIp->setUser($this->em->getReference('ProjetNormandie\UserBundle\Entity\User', $user->getId()));
                 $userIp->setIp($ip);
                 $this->em->persist($userIp);
             }
