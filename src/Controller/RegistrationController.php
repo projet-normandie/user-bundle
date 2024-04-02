@@ -9,8 +9,9 @@ use ProjetNormandie\UserBundle\Util\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ProjetNormandie\EmailBundle\Service\Mailer;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
@@ -19,7 +20,7 @@ class RegistrationController extends AbstractController
     private ManagerRegistry $doctrine;
     private TokenGenerator $tokenGenerator;
     private TranslatorInterface $translator;
-    private Mailer $mailer;
+    private MailerInterface $mailer;
 
     /**
      * RegistrationController constructor.
@@ -27,14 +28,14 @@ class RegistrationController extends AbstractController
      * @param ManagerRegistry     $doctrine
      * @param TokenGenerator      $tokenGenerator
      * @param TranslatorInterface $translator
-     * @param Mailer              $mailer
+     * @param MailerInterface     $mailer
      */
     public function __construct(
         UserManager $userManager,
         ManagerRegistry $doctrine,
         TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
-        Mailer $mailer
+        MailerInterface $mailer
     ) {
         $this->userManager = $userManager;
         $this->doctrine = $doctrine;
@@ -94,12 +95,13 @@ class RegistrationController extends AbstractController
             ($request->server->get('HTTP_ORIGIN') ?? null)  . '/en/register?token=' . $user->getConfirmationToken()
         );
 
-        $this->mailer->send(
-            sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()),
-            $body,
-            null,
-            $user->getEmail()
-        );
+        $email = (new Email())
+            ->to($user->getEmail())
+            ->subject(sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()))
+            ->text($body)
+            ->html($body);
+
+        $this->mailer->send($email);
 
         return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $email));
     }
