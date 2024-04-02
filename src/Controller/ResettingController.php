@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use ProjetNormandie\EmailBundle\Service\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ResettingController extends AbstractController
 {
     private UserManager $userManager;
     private TokenGenerator $tokenGenerator;
     private TranslatorInterface $translator;
-    private Mailer $mailer;
+    private MailerInterface $mailer;
 
     /**
      * @var int
@@ -29,14 +30,14 @@ class ResettingController extends AbstractController
      * @param UserManager   $userManager
      * @param TokenGenerator          $tokenGenerator
      * @param TranslatorInterface     $translator
-     * @param Mailer                  $mailer
+     * @param MailerInterface         $mailer
      * @param int                     $retryTtl
      */
     public function __construct(
         UserManager $userManager,
         TokenGenerator $tokenGenerator,
         TranslatorInterface $translator,
-        Mailer $mailer,
+        MailerInterface $mailer,
         int $retryTtl = 7200
     ) {
         $this->userManager = $userManager;
@@ -77,12 +78,13 @@ class ResettingController extends AbstractController
             ($request->server->get('HTTP_ORIGIN') ?? null) . '/en/auth/reset?token=' . $user->getConfirmationToken()
         );
 
-        $this->mailer->send(
-            $this->translator->trans('resetting.email.subject'),
-            $body,
-            null,
-            $user->getEmail()
-        );
+        $email = (new Email())
+            ->to($user->getEmail())
+            ->subject($this->translator->trans('resetting.email.subject'))
+            ->text($body)
+            ->html($body);
+
+        $this->mailer->send($email);
 
         $user->setPasswordRequestedAt(new DateTime());
         $this->userManager->updateUser($user);
