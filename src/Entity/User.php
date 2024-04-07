@@ -1,222 +1,194 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\UserBundle\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\OpenApi\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
-use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
-use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use ProjetNormandie\UserBundle\Controller\User\Autocomplete;
+use ProjetNormandie\UserBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Serializer\Filter\GroupFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * User
- *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="ProjetNormandie\UserBundle\Repository\UserRepository")
- * @DoctrineAssert\UniqueEntity(fields={"email"})
- * @DoctrineAssert\UniqueEntity(fields={"username"})
- * @ApiResource(attributes={"order"={"username": "ASC"}})
- * @ApiFilter(DateFilter::class, properties={"lastLogin": DateFilter::EXCLUDE_NULL})
- * @ApiFilter(
- *     GroupFilter::class,
- *     arguments={
- *          "parameterName": "groups",
- *          "overrideDefaultGroups": true,
- *          "whitelist": {"user.read.mini"}
- *     }
- * )
- */
-class User implements UserInterface, TimestampableInterface, SluggableInterface, PasswordAuthenticatedUserInterface
+#[ORM\Table(name:'pnu_user')]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\EntityListeners(["ProjetNormandie\UserBundle\EventListener\Entity\UserListener"])]
+#[DoctrineAssert\UniqueEntity(["email"])]
+#[DoctrineAssert\UniqueEntity(["username"])]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new GetCollection(
+            uriTemplate: '/users/autocomplete',
+            controller: Autocomplete::class,
+            normalizationContext: ['groups' => [
+                'user:read']
+            ],
+            openapi: new Model\Operation(
+                summary: 'Retrieves users by autocompletion',
+                description: 'Retrieves users by autocompletion'
+            ),
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'query',
+                        'in' => 'query',
+                        'type' => 'string',
+                        'required' => true
+                    ]
+                ]
+            ]
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['user:create']],
+            validationContext: ['groups' => ['Default', 'user:create']],
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['user:update']],
+            validationContext: ['groups' => ['Default', 'user:update']],
+        ),
+        new Get(),
+    ],
+    normalizationContext: ['groups' => ['user:read']]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'username' => 'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'username'], arguments: ['orderParameterName' => 'order'])]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    use TimestampableTrait;
-    use SluggableTrait;
+    use TimestampableEntity;
 
-    const ROLE_DEFAULT = 'ROLE_USER';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[Groups(['user:read'])]
+    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, unique=true)
-     */
+
+    #[Groups(['user:read', 'user:create'])]
+    #[ORM\Column(length: 100, unique: true, nullable: false)]
     protected string $username = '';
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[Groups(['user:read', 'user:create'])]
+    #[ORM\Column(length: 180, unique: true, nullable: false)]
     private string $email = '';
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(nullable: false, options: ['default' => false])]
     protected bool $enabled = false;
 
     /**
-     * @ORM\Column(type="array")
+     * @var array<string>
      */
+    #[ORM\Column(type: 'array', nullable: false)]
     private array $roles = [];
 
-    /**
-     * @ORM\Column(name="password", type="string")
-     */
+    #[ORM\Column(length: 255)]
     private ?string $password;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
      */
-    protected string $plainPassword = '';
+    #[Assert\NotBlank(groups: ['user:create'])]
+    #[Groups(['user:create', 'user:update'])]
+    protected ?string $plainPassword = null;
 
-    /**
-     * @ORM\Column(name="last_login",type="datetime", nullable=true)
-     */
+    #[Groups(['user:read'])]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?DateTime $lastLogin = null;
 
-    /**
-     * @ORM\Column(name="confirmation_token",type="string", length=180, nullable=true, unique=true)
-     */
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
     protected ?string $confirmationToken = null;
 
-    /**
-     * @ORM\Column(name="password_requested_at",type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?DateTime $passwordRequestedAt = null;
 
-    /**
-     * @ORM\Column(name="nbConnexion", type="integer", nullable=false)
-     */
+    #[Groups(['user:read'])]
+    #[ORM\Column(nullable: false, options: ['default' => 0])]
     protected int $nbConnexion = 0;
 
-    /**
-     * @ORM\Column(name="nbForumMessage", type="integer", nullable=false)
-     */
+    #[ORM\Column(nullable: false)]
     protected int $nbForumMessage = 0;
 
-    /**
-     * @ORM\Column(name="avatar", type="string", length=100, nullable=false)
-     */
+    #[ORM\Column(length: 255, nullable: false, options: ['default' => 'default.png'])]
     protected string $avatar = 'default.png';
 
-    /**
-     * @ORM\Column(name="comment", type="text", length=100, nullable=true)
-     */
+    #[ORM\Column(length: 1000, nullable: true)]
     protected ?string $comment = null;
 
-    /**
-     * @ORM\Column(name="locale", type="string", length=2, nullable=true)
-     */
+    #[Groups(['user:read', 'user:update'])]
+    #[ORM\Column(length: 2, nullable: false, options: ['default' => 'en'])]
     protected string $locale = 'en';
 
-    /**
-     * @ORM\Column(name="rules_accepted", type="boolean", nullable=false)
-     */
-    protected bool $rules_accepted = true;
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['username'])]
+    protected string $slug;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="ProjetNormandie\UserBundle\Entity\Group", fetch="EAGER")
-     * @ORM\JoinTable(name="user_group",
-     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="groupId", referencedColumnName="id")}
-     * )
-     */
+    #[ORM\JoinTable(name: 'pnu_user_group')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'group_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: Group::class)]
     protected Collection $groups;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ProjetNormandie\UserBundle\Entity\UserIp", mappedBy="user")
-     */
-    private $userIp;
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->groups = new ArrayCollection();
     }
 
-
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param $username
-     * @return User
-     */
-    public function setUsername($username): User
+    public function setUsername($username): void
     {
         $this->username = $username;
-        return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return User
-     */
-    public function setEmail(string $email): User
+    public function setEmail(string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
-    /**
-     * @param $boolean
-     * @return User
-     */
-    public function setEnabled($boolean): User
+    public function setEnabled($boolean): void
     {
         $this->enabled = (bool) $boolean;
-
-        return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return array|string[]
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -231,34 +203,19 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
         return array_values(array_unique($roles));
     }
 
-    /**
-     * @param array $roles
-     * @return User
-     */
-    public function setRoles(array $roles): User
+    public function setRoles(array $roles): void
     {
         $this->roles = $roles;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     * @return User
-     */
-    public function setPassword(string $password): User
+    public function setPassword(string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
 
     /**
@@ -270,46 +227,28 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-
-    /**
-     * @param $role
-     * @return bool
-     */
     public function hasRole($role): bool
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    /**
-     *
-     */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getLastLogin(): ?DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * @param DateTime|null $time
-     * @return User
-     */
-    public function setLastLogin(DateTime $time = null) : User
+    public function setLastLogin(DateTime $time = null): User
     {
         $lastLogin = $this->getLastLogin();
         if (($lastLogin === null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
@@ -319,264 +258,135 @@ class User implements UserInterface, TimestampableInterface, SluggableInterface,
         return $this;
     }
 
-    /**
-     * @param $confirmationToken
-     * @return User
-     */
-    public function setConfirmationToken($confirmationToken): User
+    public function setConfirmationToken($confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
-        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
 
-    /**
-     * @param DateTime|null $date
-     * @return User
-     */
-    public function setPasswordRequestedAt(DateTime $date = null): User
+    public function setPasswordRequestedAt(DateTime $date = null): void
     {
         $this->passwordRequestedAt = $date;
-        return $this;
     }
 
-    /**
-     * Gets the timestamp that the user requested a password reset.
-     * @return null|DateTime
-     */
     public function getPasswordRequestedAt(): ?DateTime
     {
         return $this->passwordRequestedAt;
     }
 
-    /**
-     * @param $ttl
-     * @return bool
-     */
-    public function isPasswordRequestNonExpired($ttl): bool
+    public function isPasswordRequestExpired($ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof DateTime &&
-               $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+               $this->getPasswordRequestedAt()->getTimestamp() + $ttl < time();
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @param string $locale
-     * @return User
-     */
-    public function setLocale(string $locale): User
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
-        return $this;
     }
 
-    /**
-     * @return int
-     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     public function getNbConnexion(): int
     {
         return $this->nbConnexion;
     }
 
-    /**
-     * @param int $nbConnexion
-     * @return User
-     */
-    public function setNbConnexion(int $nbConnexion): User
+    public function setNbConnexion(int $nbConnexion): void
     {
         $this->nbConnexion = $nbConnexion;
-        return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getNbForumMessage(): int
     {
         return $this->nbForumMessage;
     }
 
-    /**
-     * @param int $nbForumMessage
-     * @return User
-     */
-    public function setNbForumMessage(int $nbForumMessage): User
+    public function setNbForumMessage(int $nbForumMessage): void
     {
         $this->nbForumMessage = $nbForumMessage;
-        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAvatar(): string
     {
         return $this->avatar;
     }
 
-    /**
-     * @param string $avatar
-     * @return User
-     */
-    public function setAvatar(string $avatar): User
+    public function setAvatar(string $avatar): void
     {
         $this->avatar = $avatar;
-        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string|null $comment
-     * @return User
-     */
-    public function setComment(string $comment = null) : User
+    public function setComment(string $comment = null): void
     {
         $this->comment = $comment;
-        return $this;
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getUserIp()
-    {
-        return $this->userIp;
-    }
-
-
-    /**
-     * Set rules_accepted
-     * @param bool $rules_accepted
-     * @return User
-     */
-    public function setRulesAccepted(bool $rules_accepted): User
-    {
-        $this->rules_accepted = $rules_accepted;
-        return $this;
-    }
-
-    /**
-     * Get rules_accepted
-     * @return bool
-     */
-    public function getRulesAccepted(): bool
-    {
-        return $this->rules_accepted;
-    }
-
-    /**
-     * @param $groups
-     * @return User
-     */
-    public function setGroups($groups): User
+    public function setGroups($groups): void
     {
         $this->groups = $groups;
-        return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getGroups(): Collection
     {
         return $this->groups;
     }
 
-    /**
-     * @param $password
-     * @return User
-     */
-    public function setPlainPassword($password): User
+    public function setPlainPassword($password): void
     {
         $this->plainPassword = $password;
-        return $this;
     }
 
-    /**
-     * @param $group
-     * @return User
-     */
-    public function addGroup($group): User
+    public function addGroup($group): void
     {
         $this->groups[] = $group;
-        return $this;
     }
 
-     /**
-     * @param Group $group
-     */
-    public function removeGroup(Group $group)
+    public function removeGroup(Group $group): void
     {
         $this->groups->removeElement($group);
     }
 
-
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return sprintf('%s [%d]', $this->getUsername(), $this->getId());
     }
 
-    /**
-     * @param $role
-     * @return User
-     */
-    public function addRole($role): User
+    public function addRole($role): void
     {
         $role = strtoupper($role);
-        if ($role === static::ROLE_DEFAULT) {
-            return $this;
-        }
         if (!in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
-        return $this;
     }
 
-    /**
-     * @param $role
-     * @return User
-     */
-    public function removeRole($role): User
+    public function removeRole($role): void
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
-        return $this;
     }
 
-
-    /**
-     * Returns an array of the fields used to generate the slug.
-     * @return string[]
-     */
-    public function getSluggableFields(): array
+    public function getUserIdentifier(): string
     {
-        return ['username'];
+        return $this->email;
     }
 }

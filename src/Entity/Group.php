@@ -4,27 +4,17 @@ namespace ProjetNormandie\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="groupRole")
- */
+#[ORM\Table(name:'pnu_group')]
+#[ORM\Entity]
 class Group
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(length: 100, unique: true, nullable: false)]
     protected string $name = '';
 
-    /**
-     * @ORM\Column(type="array")
-     */
+    #[ORM\Column(type: 'array')]
     protected array $roles = [];
 
     /**
@@ -54,7 +44,7 @@ class Group
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName(): string
     {

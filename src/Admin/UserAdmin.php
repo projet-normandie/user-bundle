@@ -1,4 +1,5 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -15,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserAdmin extends AbstractAdmin
 {
+    protected $baseRouteName = 'pnu_admin_user';
 
     /**
      * @param RouteCollectionInterface $collection
@@ -110,8 +112,6 @@ class UserAdmin extends AbstractAdmin
             ->add('password', null, ['label' => 'label.password'])
             ->add('confirmation_token', null, ['label' => 'label.confirmation_token'])
             ->add('password_requested_at', 'datetime', ['label' => 'label.password_requested_at'])
-            ->end()
-            ->with('IP')
-            ->add('userIp', null, ['label' => 'label.userIp']);
+            ->end();
     }
 }
