@@ -4,7 +4,6 @@ namespace ProjetNormandie\UserBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\ORM\ORMException;
 
 abstract class DefaultRepository extends ServiceEntityRepository
 {
@@ -16,22 +15,19 @@ abstract class DefaultRepository extends ServiceEntityRepository
         parent::__construct($registry, $entityClass);
     }
 
+
     /**
      * @param $object
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @return void
      */
-    public function save($object)
+    public function save($object): void
     {
         $this->_em->persist($object);
         $this->_em->flush();
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function flush()
+
+    public function flush(): void
     {
         $this->_em->flush();
     }

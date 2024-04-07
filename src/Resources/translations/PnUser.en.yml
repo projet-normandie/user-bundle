@@ -1,0 +1,44 @@
+registration:
+    confirmed: 'Congrats %s, your account is now activated.'
+    email:
+        subject: 'Welcome %s!'
+        message: |
+            Hello %s!
+
+            To finish activating your account - please visit %s
+
+            This link can only be used once to validate your account.
+
+            Regards,
+            the Team.
+resetting:
+    success: 'The password has been reset successfully.'
+    email:
+        subject: 'Reset Password'
+        message: |
+            Hello %s!
+
+            To reset your password - please visit %s
+
+            Regards,
+            the Team.
+avatar:
+    extension_not_allowed: 'Format allowed are png and jpg'
+
+label:
+    avatar: 'Avatar'
+    comment: 'Comment'
+    confirmation_token: 'Confirmation Token'
+    enabled: 'Enabled ?'
+    group: 'Group'
+    id: 'id'
+    label: 'Label'
+    lastLogin: 'Last login'
+    locale: 'Language'
+    name: 'Name'
+    nbConnexion: 'Nb Connexion'
+    nbForumMessage: 'Nb Forum Message'
+    password: 'Password'
+    roles: 'Roles'
+    user: 'User'
+    username: 'Username'

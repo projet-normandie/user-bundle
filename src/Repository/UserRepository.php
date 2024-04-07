@@ -16,7 +16,7 @@ class UserRepository extends DefaultRepository
      * @param $q
      * @return mixed
      */
-    public function autocomplete($q)
+    public function autocomplete($q): mixed
     {
         $query = $this->createQueryBuilder('u');
 

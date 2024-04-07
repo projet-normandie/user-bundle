@@ -4,18 +4,26 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
 >
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="KERNEL_CLASS" value="ProjetNormandie\UserBundle\Tests\Kernel"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <env name="SHELL_VERBOSITY" value="1"/>
 
+        <!-- ###+ symfony/framework-bundle ### -->
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="APP_SECRET" value="84c13af6518079b7da0984d80ed58258"/>
+        <!-- ###- symfony/framework-bundle ### -->
+    </php>
     <testsuites>
         <testsuite name="PN User Bundle Test Suite">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
 </phpunit>
