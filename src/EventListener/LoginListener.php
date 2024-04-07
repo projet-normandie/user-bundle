@@ -4,20 +4,15 @@ namespace ProjetNormandie\UserBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Events as LexikEvents;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
-use ProjetNormandie\UserBundle\Security\UserProvider;
-use ProjetNormandie\UserBundle\Service\IpManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginListener implements EventSubscriberInterface
 {
-    private IpManager $ipManager;
-
-    private UserProvider $userProvider;
-
-    public function __construct(IpManager $ipManager, UserProvider $userProvider)
-    {
-        $this->ipManager = $ipManager;
-        $this->userProvider = $userProvider;
+    public function __construct(
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -26,7 +21,7 @@ class LoginListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return array(
-            LexikEvents::AUTHENTICATION_SUCCESS => 'majIp'
+            LexikEvents::AUTHENTICATION_SUCCESS => 'success'
         );
     }
 
@@ -35,10 +30,14 @@ class LoginListener implements EventSubscriberInterface
      * @param AuthenticationSuccessEvent $event
      * @return void
      */
-    public function majIp(AuthenticationSuccessEvent $event)
+    public function success(AuthenticationSuccessEvent $event): void
     {
-        $this->ipManager->majUserIp(
-            $this->userProvider->loadUserByUsername($event->getUser()->getUsername()
+        $request = Request::createFromGlobals();
+        $this->logger->info(
+            sprintf(
+                '##LOGIN##[IP=%s/username=%s]',
+                $request->getClientIp(),
+                $event->getUser()->getUsername()
             )
         );
     }

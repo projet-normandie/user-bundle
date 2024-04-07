@@ -1,0 +1,17 @@
+services:
+  sonata.admin.user.user:
+    class: ProjetNormandie\UserBundle\Admin\UserAdmin
+    tags:
+      - name: sonata.admin
+        model_class: 'ProjetNormandie\UserBundle\Entity\User'
+        manager_type: orm
+        group: "group.users"
+        label: "label.user"
+  sonata.admin.user.group:
+    class: ProjetNormandie\UserBundle\Admin\GroupAdmin
+    tags:
+      - name: sonata.admin
+        model_class: 'ProjetNormandie\UserBundle\Entity\Group'
+        manager_type: orm
+        group: "group.users"
+        label: "label.group"

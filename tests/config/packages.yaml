@@ -1,0 +1,110 @@
+framework:
+  secret: '%env(APP_SECRET)%'
+  test: true
+  router:
+    utf8: true
+
+
+#api-platform
+api_platform:
+  title: PN User Bundle
+  version: 1.0.0
+  formats:
+    jsonld: ['application/ld+json']
+  docs_formats:
+    jsonld: ['application/ld+json']
+    jsonopenapi: ['application/vnd.openapi+json']
+    html: ['text/html']
+  defaults:
+    stateless: true
+    cache_headers:
+      vary: ['Content-Type', 'Authorization', 'Origin']
+    extra_properties:
+      standard_put: false
+      rfc_7807_compliant_errors: true
+  event_listeners_backward_compatibility_layer: false
+  keep_legacy_inflector: false
+
+#doctrine
+doctrine:
+  dbal:
+    connections:
+      default:
+        driver: pdo_mysql
+        url: 'mysql://symfony:symfony@127.0.0.1:3306/symfony'
+        charset: UTF8MB4
+        server_version: 5.6
+  orm:
+    auto_generate_proxy_classes: true
+    entity_managers:
+      default:
+        connection: default
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+          ProjetNormandieUserBundle:
+            is_bundle: true
+            type: annotation
+            dir: '../src/Entity'
+            prefix: 'ProjetNormandie\UserBundle\Entity'
+            alias: App
+        dql:
+          string_functions:
+            ifnull: DoctrineExtensions\Query\Mysql\IfNull
+          numeric_functions:
+            round: DoctrineExtensions\Query\Mysql\Round
+
+#flysystem
+flysystem:
+  storages:
+    default.storage:
+      adapter: 'local'
+      options:
+        directory: '%kernel.project_dir%/var/storage/default'
+    app.storage:
+      adapter: 'lazy'
+      options:
+        source: default.storage
+
+#security
+security:
+  enable_authenticator_manager: true
+  providers:
+    users_in_memory: { memory: null }
+  firewalls:
+    admin:
+      pattern: /admin(.*)
+      context: user
+    api:
+      pattern: ^/api
+      stateless: true
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      lazy: true
+
+  role_hierarchy:
+    ROLE_ADMIN:
+      - ROLE_USER
+    ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
+  access_control:
+    - { path: ^/api/login, roles: PUBLIC_ACCESS }
+
+twig:
+  strict_variables: true
+  file_name_pattern: '*.twig'
+
+monolog:
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: debug
+      channels: ["!event"]
+    console:
+      type: console
+      process_psr_3_messages: false
+      channels: ["!event", "!doctrine", "!console"]
+

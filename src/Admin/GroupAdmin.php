@@ -1,4 +1,5 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;

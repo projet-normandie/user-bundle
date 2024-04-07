@@ -1,4 +1,5 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\Util;
 
 use Exception;

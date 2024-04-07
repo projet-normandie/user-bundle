@@ -1,4 +1,5 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\Security;
 
 use ProjetNormandie\UserBundle\Entity\User;
@@ -23,18 +24,18 @@ final class UserProvider implements UserProviderInterface
     }
 
     /**
-     * @param string $username
+     * @param string $identifier
      * @return User
      */
-    public function loadUserByUsername(string $username): User
+    public function loadUserByIdentifier(string $identifier): User
     {
-        $user = $this->findUserByUsernameOrEmail($username);
+        $user = $this->findUserByUsernameOrEmail($identifier);
 
         if (!$user) {
             throw new UsernameNotFoundException(
                 sprintf(
                     'User with "%s" email does not exist.',
-                    $username
+                    $identifier
                 )
             );
         }

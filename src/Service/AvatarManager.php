@@ -1,4 +1,5 @@
 <?php
+
 namespace ProjetNormandie\UserBundle\Service;
 
 use League\Flysystem\FilesystemException;
