@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
 <ruleset>
-    <!-- Code MUST follow all rules outlined in PSR-1. -->
     <rule ref="PSR12"/>
 </ruleset>

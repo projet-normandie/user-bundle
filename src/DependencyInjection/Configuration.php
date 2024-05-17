@@ -18,7 +18,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('projet_normandie_user');
-        $rootNode = $treeBuilder->getRootNode();
+
+        $treeBuilder->getRootNode()
+            ->children()
+                ->arrayNode('register')
+                    ->children()
+                        ->scalarNode('uri_confirmation')->defaultValue(null)->end()
+                    ->end()
+                ->end()//register
+            ->end();
         return $treeBuilder;
     }
 }

@@ -10,11 +10,13 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UserListener
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly ParameterBagInterface $params,
         private readonly TranslatorInterface $translator,
         private readonly MailerInterface $mailer
     ) {
@@ -54,14 +56,16 @@ class UserListener
             $user->setPassword($hashedPassword);
         }
     }
-
-    /*public function postPersist(User $user): void
+    public function postPersist(User $user): void
     {
+        $url = sprintf($this->params->get('pn.register.uri_confirmation'), $user->getConfirmationToken());
         $body = sprintf(
             $this->translator->trans('registration.email.message'),
             $user->getUsername(),
-            ($request->server->get('HTTP_ORIGIN') ?? null)  . '/en/register?token=' . $user->getConfirmationToken()
+            $url
         );
+
+        //dd($this->translator->trans('registration.email.message'));
 
         $email = (new Email())
             ->to($user->getEmail())
@@ -70,5 +74,5 @@ class UserListener
             ->html($body);
 
         $this->mailer->send($email);
-    }*/
+    }
 }
