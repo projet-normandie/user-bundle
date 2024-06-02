@@ -24,7 +24,6 @@ resetting:
             the Team.
 avatar:
     extension_not_allowed: 'Format allowed are png and jpg'
-    success: "Avatar has been successfull uploaded"
 
 label:
     avatar: 'Avatar'

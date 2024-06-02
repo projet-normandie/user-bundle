@@ -31,7 +31,7 @@ class Confirm extends AbstractController
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            throw new BadRequestException($this->translator->trans('registration.token_invalid'));
+            throw new BadRequestException($this->translator->trans('registration.token_invalid', [], 'PnUser'));
         }
 
         $user->setEnabled(true);

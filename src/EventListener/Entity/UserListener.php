@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace ProjetNormandie\UserBundle\EventListener\Entity;
 
+use JetBrains\PhpStorm\NoReturn;
 use ProjetNormandie\UserBundle\Entity\User;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use ProjetNormandie\UserBundle\Util\TokenGenerator;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,12 +21,14 @@ class UserListener
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly ParameterBagInterface $params,
         private readonly TranslatorInterface $translator,
-        private readonly MailerInterface $mailer
+        private readonly MailerInterface $mailer,
+        private readonly TokenGenerator $tokenGenerator
     ) {
     }
 
     /**
      * @param User $user
+     * @throws \Exception
      */
     public function prePersist(User $user): void
     {
@@ -39,6 +44,8 @@ class UserListener
             $plaintextPassword
         );
         $user->setPassword($hashedPassword);
+
+        $user->setConfirmationToken($this->tokenGenerator->generateToken());
     }
 
     /**
@@ -56,20 +63,24 @@ class UserListener
             $user->setPassword($hashedPassword);
         }
     }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function postPersist(User $user): void
     {
         $url = sprintf($this->params->get('pn.register.uri_confirmation'), $user->getConfirmationToken());
         $body = sprintf(
-            $this->translator->trans('registration.email.message'),
+            $this->translator->trans('registration.email.message', [], 'PnUser'),
             $user->getUsername(),
             $url
         );
 
-        //dd($this->translator->trans('registration.email.message'));
-
         $email = (new Email())
             ->to($user->getEmail())
-            ->subject(sprintf($this->translator->trans('registration.email.subject'), $user->getUsername()))
+            ->subject(
+                sprintf($this->translator->trans('registration.email.subject', [], 'PnUser'), $user->getUsername())
+            )
             ->text($body)
             ->html($body);
 

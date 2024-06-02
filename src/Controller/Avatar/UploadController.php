@@ -45,7 +45,7 @@ class UploadController extends AbstractController
         if (!in_array($mimeType, $this->avatarManager->getAllowedMimeType())) {
             return new JsonResponse(
                 [
-                    'message' => $this->translator->trans('avatar.extension_not_allowed'),
+                    'message' => $this->translator->trans('avatar.extension_not_allowed', [], 'PnUser'),
                 ],
                 400
             );
@@ -60,8 +60,6 @@ class UploadController extends AbstractController
         $user->setAvatar($filename);
         $this->em->flush();
 
-        return new JsonResponse([
-            'message' => $this->translator->trans('avatar.success'),
-        ], 200);
+        return new JsonResponse(['success' => true]);
     }
 }

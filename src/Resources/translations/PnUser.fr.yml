@@ -36,10 +36,10 @@ resetting:
 
 avatar:
     extension_not_allowed: 'Les format autorisés sont png et jpg'
-    success: "L'avatar a bien été chargé"
 
 breadcrumb:
     link_user_list: 'List des utilisateurs'
+
 label:
     avatar: 'Avatar'
     comment: 'Commentaire'

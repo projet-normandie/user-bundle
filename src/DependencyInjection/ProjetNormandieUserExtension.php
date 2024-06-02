@@ -31,5 +31,7 @@ class ProjetNormandieUserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.yml');
         $loader->load('admin.yml');
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../../translations'));
     }
 }

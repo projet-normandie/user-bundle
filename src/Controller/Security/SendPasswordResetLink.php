@@ -43,14 +43,14 @@ class SendPasswordResetLink extends AbstractController
         if ($user && (null === $user->getPasswordRequestedAt() || $user->isPasswordRequestExpired($this->retryTtl))) {
             $user->setConfirmationToken($this->tokenGenerator->generateToken());
             $body = sprintf(
-                $this->translator->trans('resetting.email.message'),
+                $this->translator->trans('resetting.email.message', [], 'PnUser'),
                 $user->getUsername(),
                 ($request->server->get('HTTP_ORIGIN') ?? null) . '/en/auth/reset?token=' . $user->getConfirmationToken()
             );
 
             $email = (new Email())
                 ->to($user->getEmail())
-                ->subject($this->translator->trans('resetting.email.subject'))
+                ->subject($this->translator->trans('resetting.email.subject', [], 'PnUser'))
                 ->text($body)
                 ->html($body);
 
