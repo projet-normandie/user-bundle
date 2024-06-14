@@ -103,7 +103,7 @@ class RegistrationController extends AbstractController
 
         $this->mailer->send($email);
 
-        return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $email));
+        return $this->getResponse(true, sprintf($this->translator->trans('registration.check_email'), $data['email']));
     }
 
 
