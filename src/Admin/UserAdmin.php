@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserAdmin extends AbstractAdmin
 {
+    protected $baseRouteName = 'pnu_admin_user';
+
     /**
      * @param RouteCollectionInterface $collection
      */
