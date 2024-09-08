@@ -134,7 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 2, nullable: false, options: ['default' => 'en'])]
     protected string $locale = 'en';
 
-    #[ORM\Column(length: 128, unique: true)]
+    #[ORM\Column(length: 128)]
     #[Gedmo\Slug(fields: ['username'])]
     protected string $slug;
 
