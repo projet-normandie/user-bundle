@@ -1,5 +1,6 @@
 registration:
     confirmed: 'Félicitations %s votre compte est maintenant activé.'
+    invalid_token: 'Token invalide'
     email:
         subject: 'Bienvenue %s !'
         message: |
@@ -13,17 +14,7 @@ registration:
             L'équipe
 
 resetting:
-    user_not_found: 'Aucun compte avec cette adresse email'
-    request_not_expired: 'Une demande est déjà en cours'
-    global_message: 'Si le compte existe, un e-mail de réinitialisation du mot de passe vous a été envoyé'
     invalid_token: 'Token invalide'
-    check_email: |
-        Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
-        Remarque : Vous ne pouvez demander un nouveau mot de passe que toutes les %s heures.
-
-        Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.
-
-    success: 'Le mot de passe a été réinitialisé avec succès.'
     email:
         subject: 'Réinitialisation de votre mot de passe'
         message: |

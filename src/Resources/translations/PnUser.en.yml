@@ -1,5 +1,6 @@
 registration:
     confirmed: 'Congrats %s, your account is now activated.'
+    invalid_token: 'Invalid token'
     email:
         subject: 'Welcome %s!'
         message: |
@@ -13,6 +14,7 @@ registration:
             the Team.
 resetting:
     success: 'The password has been reset successfully.'
+    invalid_token: 'Invalid token'
     email:
         subject: 'Reset Password'
         message: |

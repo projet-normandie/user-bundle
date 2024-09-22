@@ -104,7 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Plain password. Used for model validation. Must not be persisted.
      */
     #[Assert\NotBlank(groups: ['user:create'])]
-    #[Groups(['user:create', 'user:update'])]
+    #[Groups(['user:create'])]
     protected ?string $plainPassword = null;
 
     #[Groups(['user:read'])]

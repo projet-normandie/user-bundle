@@ -1,6 +1,6 @@
 <?php
 
-namespace ProjetNormandie\UserBundle\Controller\Register;
+namespace ProjetNormandie\UserBundle\Controller\Security;
 
 use ProjetNormandie\UserBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Confirm extends AbstractController
+class ConfirmRegistration extends AbstractController
 {
     public function __construct(
         private readonly UserManager $userManager,
@@ -23,7 +23,7 @@ class Confirm extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function confirm(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];

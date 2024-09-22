@@ -5,6 +5,7 @@ namespace ProjetNormandie\UserBundle\ApiResource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
+use ProjetNormandie\UserBundle\Controller\Security\ConfirmRegistration;
 use ProjetNormandie\UserBundle\Controller\Security\ConfirmPassword;
 use ProjetNormandie\UserBundle\Controller\Security\SendPasswordResetLink;
 
@@ -60,6 +61,51 @@ use ProjetNormandie\UserBundle\Controller\Security\SendPasswordResetLink;
             openapi: new Model\Operation(
                 summary: 'Confirm password',
                 description: 'Confirm password from token',
+                requestBody: new Model\RequestBody(
+                    content: new \ArrayObject([
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'token' => ['type' => 'string'],
+                                    'password' => ['type' => 'string']
+                                ]
+                            ],
+                            'example' => [
+                                'token' => 'token',
+                                'password' => 'password'
+                            ]
+                        ]
+                    ])
+                ),
+                responses: [
+                    '200' => new Model\Response(
+                        description: 'Operation is successful ?',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'success' => ['type' => 'boolean']
+                                    ]
+                                ],
+                                'example' => [
+                                    'success' => true
+                                ]
+                            ]
+                        ])
+                    )
+                ]
+            )
+        ),
+        new Post(
+            description: 'Confirm registration',
+            name: 'confirm-registration',
+            uriTemplate: '/security/confirm-registration',
+            controller: ConfirmRegistration::class,
+            openapi: new Model\Operation(
+                summary: 'Confirm registration',
+                description: 'Confirm registration from token',
                 requestBody: new Model\RequestBody(
                     content: new \ArrayObject([
                         'application/json' => [
