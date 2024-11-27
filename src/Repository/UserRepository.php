@@ -23,7 +23,7 @@ class UserRepository extends DefaultRepository
         $query
             ->where('u.username LIKE :q')
             ->setParameter('q', '%' . $q . '%')
-            ->andWhere('u.enabled = 1')
+            //->andWhere('u.enabled = 1')
             ->orderBy('u.username', 'ASC');
 
         return $query->getQuery()->getResult();
