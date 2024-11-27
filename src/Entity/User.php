@@ -237,7 +237,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
