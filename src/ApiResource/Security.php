@@ -55,7 +55,7 @@ use ProjetNormandie\UserBundle\Controller\Security\SendPasswordResetLink;
         ),
         new Post(
             description: 'Password reset',
-            name: 'send-reset-link',
+            name: 'confirm-password',
             uriTemplate: '/security/confirm-password',
             controller: ConfirmPassword::class,
             openapi: new Model\Operation(

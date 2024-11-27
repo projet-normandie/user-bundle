@@ -45,7 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 summary: 'Retrieves users by autocompletion',
                 description: 'Retrieves users by autocompletion'
             ),
-            openapiContext: [
+            /*openapiContext: [
                 'parameters' => [
                     [
                         'name' => 'query',
@@ -54,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                         'required' => true
                     ]
                 ]
-            ]
+            ]*/
         ),
         new Post(
             denormalizationContext: ['groups' => ['user:create']],
@@ -248,14 +248,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastLogin;
     }
 
-    public function setLastLogin(DateTime $time = null): User
+    public function setLastLogin(DateTime $time = null): void
     {
         $lastLogin = $this->getLastLogin();
         if (($lastLogin === null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
             ++$this->nbConnexion;
         }
         $this->lastLogin = $time;
-        return $this;
     }
 
     public function setConfirmationToken($confirmationToken): void
