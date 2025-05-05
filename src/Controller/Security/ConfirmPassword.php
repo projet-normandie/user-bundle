@@ -2,7 +2,6 @@
 
 namespace ProjetNormandie\UserBundle\Controller\Security;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use ProjetNormandie\UserBundle\Entity\User;
@@ -28,7 +27,7 @@ class ConfirmPassword extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];
-        $password = $data['password'];
+        $plainPassword = $data['plainPassword'];
 
         $user = $this->em->getRepository(User::class)->findOneBy(['confirmationToken' => $token]);
 
@@ -36,17 +35,7 @@ class ConfirmPassword extends AbstractController
             throw new BadRequestException();
         }
 
-        $passwordRequestedAt = $user->getPasswordRequestedAt();
-        $now = new DateTime();
-
-        $interval = $now->diff($passwordRequestedAt);
-        $hours = intval($interval->format('%d')) * 24 + intval($interval->format('%h'));
-
-        if ($hours > 24) {
-            throw new BadRequestException();
-        }
-
-        $user->setPlainPassword($password);
+        $user->setPlainPassword($plainPassword);
         $user->setConfirmationToken(null);
 
         $this->em->flush();
