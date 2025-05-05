@@ -38,23 +38,27 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(
             uriTemplate: '/users/autocomplete',
             controller: Autocomplete::class,
+            openapi: new Model\Operation(
+                responses: [
+                    '200' => new Model\Response(description: 'Users retrieved successfully')
+                ],
+                summary: 'Retrieves users by autocompletion',
+                description: 'Retrieves users by autocompletion',
+                parameters: [
+                    new Model\Parameter(
+                        name: 'query',
+                        in: 'query',
+                        required: true,
+                        schema: [
+                            'type' => 'string'
+                        ]
+                    )
+                ],
+                security: [],
+            ),
             normalizationContext: ['groups' => [
                 'user:read']
             ],
-            openapi: new Model\Operation(
-                summary: 'Retrieves users by autocompletion',
-                description: 'Retrieves users by autocompletion'
-            ),
-            /*openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'query',
-                        'in' => 'query',
-                        'type' => 'string',
-                        'required' => true
-                    ]
-                ]
-            ]*/
         ),
         new Post(
             denormalizationContext: ['groups' => ['user:create']],
@@ -121,8 +125,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: false, options: ['default' => 0])]
     protected int $nbConnexion = 0;
 
-    #[ORM\Column(nullable: false)]
-    protected int $nbForumMessage = 0;
+    /**
+     * Extra data for extensions and additional bundles.
+     * @var array<string, mixed>
+     */
+    #[Groups(['user:read'])]
+    #[ORM\Column(type: 'json', nullable: true)]
+    protected array $extraData = [];
 
     #[ORM\Column(length: 255, nullable: false, options: ['default' => 'default.png'])]
     protected string $avatar = 'default.png';
@@ -267,7 +276,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->confirmationToken;
     }
 
-    public function setPasswordRequestedAt(DateTime $date = null): void
+    public function setPasswordRequestedAt(?DateTime $date = null): void
     {
         $this->passwordRequestedAt = $date;
     }
@@ -308,14 +317,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->nbConnexion = $nbConnexion;
     }
 
-    public function getNbForumMessage(): int
+    /**
+     * Get extra data by key or all extra data if no key provided.
+     *
+     * @param string|null $key The key to retrieve
+     * @return mixed The value or all extraData if no key provided
+     */
+    public function getExtraData(?string $key = null): mixed
     {
-        return $this->nbForumMessage;
+        if ($key === null) {
+            return $this->extraData;
+        }
+
+        return $this->extraData[$key] ?? null;
     }
 
-    public function setNbForumMessage(int $nbForumMessage): void
+    /**
+     * Set extra data with a given key.
+     *
+     * @param string $key The key to set
+     * @param mixed $value The value to set
+     */
+    public function setExtraData(string $key, mixed $value): void
     {
-        $this->nbForumMessage = $nbForumMessage;
+        $this->extraData[$key] = $value;
+    }
+
+    /**
+     * Check if extra data with given key exists.
+     *
+     * @param string $key The key to check
+     * @return bool True if the key exists
+     */
+    public function hasExtraData(string $key): bool
+    {
+        return array_key_exists($key, $this->extraData);
+    }
+
+    /**
+     * Remove extra data with given key.
+     *
+     * @param string $key The key to remove
+     */
+    public function removeExtraData(string $key): void
+    {
+        if ($this->hasExtraData($key)) {
+            unset($this->extraData[$key]);
+        }
     }
 
     public function getAvatar(): string
@@ -333,7 +381,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->comment;
     }
 
-    public function setComment(string $comment = null): void
+    public function setComment(?string $comment = null): void
     {
         $this->comment = $comment;
     }
