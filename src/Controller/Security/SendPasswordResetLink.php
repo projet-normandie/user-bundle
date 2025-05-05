@@ -37,9 +37,9 @@ class SendPasswordResetLink extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $username = $data['username'];
+        $email = $data['email'];
 
-        $user = $this->userManager->findUserByUsernameOrEmail($username);
+        $user = $this->userManager->findUserByUsernameOrEmail($email);
         if ($user && (null === $user->getPasswordRequestedAt() || $user->isPasswordRequestExpired($this->retryTtl))) {
             $user->setConfirmationToken($this->tokenGenerator->generateToken());
             $body = sprintf(
