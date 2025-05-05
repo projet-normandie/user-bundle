@@ -248,7 +248,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastLogin;
     }
 
-    public function setLastLogin(DateTime $time = null): void
+    public function setLastLogin(?DateTime $time = null): void
     {
         $lastLogin = $this->getLastLogin();
         if (($lastLogin === null) || ($lastLogin->format('Y-m-d') != $time->format('Y-m-d'))) {
