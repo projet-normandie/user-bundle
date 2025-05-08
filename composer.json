@@ -16,7 +16,7 @@
         "api-platform/doctrine-orm": "^4.0",
         "api-platform/symfony": "^4.0",
         "doctrine/annotations": "^2.0",
-        "doctrine/orm": "^2.19",
+        "doctrine/orm": "^3.3",
         "gedmo/doctrine-extensions": "*",
         "gesdinet/jwt-refresh-token-bundle": "^1.3",
         "league/flysystem-bundle": "^3.0",
