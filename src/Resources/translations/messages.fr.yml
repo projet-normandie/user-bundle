@@ -28,25 +28,38 @@ resetting:
 avatar:
     extension_not_allowed: 'Les format autorisés sont png et jpg'
 
-breadcrumb:
-    link_user_list: 'List des utilisateurs'
-
 label:
     avatar: 'Avatar'
     comment: 'Commentaire'
-    confirmation_token: 'Token de confirmation'
+    confirmationToken: 'Token de confirmation'
+    email: 'Email'
     enabled: 'Actif ?'
-    group: 'Group'
+    extraData: 'Extra data'
+    group: 'Groupe'
+    groups: 'Groupes'
     id: 'id'
     label: 'Label'
     lastLogin: 'Dernière connexion'
     locale: 'Langue'
     name: 'Nom'
     nbConnexion: 'Nb Connexion'
-    nbForumMessage: 'Nb Forum Message'
     password: 'Mot de passe'
+    passwordRequestedAt: 'Password requested at'
     roles: 'Roles'
     user: 'Utilsateur'
     username: 'Pseudo'
 
+breadcrumb:
+    link_user_list: 'Liste des utilisateurs'
+    link_group_list: 'Liste des groupes'
 
+form:
+    group_label_user: 'Utilisateur'
+    group_label_group: 'Groupe'
+
+list:
+    label__action: 'Action'
+
+show:
+    group_user: 'Utilisateur'
+    group_connexion: 'Connection'

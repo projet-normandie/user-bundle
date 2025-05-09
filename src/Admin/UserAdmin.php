@@ -44,6 +44,7 @@ class UserAdmin extends AbstractAdmin
                 'required' => true,
             ])
             ->add('groups', ModelAutocompleteType::class, [
+                'label' => 'label.groups',
                 'property' => 'name',
                 'required' => false,
                 'multiple' => true,
@@ -101,17 +102,17 @@ class UserAdmin extends AbstractAdmin
             ->add('username', null, ['label' => 'label.username'])
             ->add('email', null, ['label' => 'label.email'])
             ->add('enabled', null, ['label' => 'label.enabled'])
-            ->add('lastLogin', null, ['label' => 'label.lastLogin'])
             ->add('locale', null, ['label' => 'label.locale'])
             ->add('avatar', null, ['label' => 'label.avatar'])
             ->add('nbConnexion', null, ['label' => 'label.nbConnexion'])
-            ->add('nbForumMessage', null, ['label' => 'label.nbForumMessage'])
+            ->add('extraData', null, ['label' => 'label.extraData'])
             ->add('comment', null, ['label' => 'label.comment'])
             ->end()
             ->with('Connexion', ['class' => 'col-md-6'])
+            ->add('lastLogin', null, ['label' => 'label.lastLogin'])
             ->add('password', null, ['label' => 'label.password'])
-            ->add('confirmation_token', null, ['label' => 'label.confirmation_token'])
-            ->add('password_requested_at', 'datetime', ['label' => 'label.password_requested_at'])
+            ->add('confirmationToken', null, ['label' => 'label.confirmationToken'])
+            ->add('passwordRequestedAt', 'datetime', ['label' => 'label.passwordRequestedAt'])
             ->end();
     }
 }
