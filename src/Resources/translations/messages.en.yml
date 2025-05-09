@@ -30,17 +30,35 @@ avatar:
 label:
     avatar: 'Avatar'
     comment: 'Comment'
-    confirmation_token: 'Confirmation Token'
+    confirmationToken: 'Confirmation Token'
+    email: 'Email'
     enabled: 'Enabled ?'
+    extraData: 'Extra data'
     group: 'Group'
+    groups: 'Groups'
     id: 'id'
     label: 'Label'
     lastLogin: 'Last login'
     locale: 'Language'
     name: 'Name'
     nbConnexion: 'Nb Connexion'
-    nbForumMessage: 'Nb Forum Message'
     password: 'Password'
+    passwordRequestedAt: 'Password requested at'
     roles: 'Roles'
     user: 'User'
     username: 'Username'
+
+breadcrumb:
+    link_user_list: 'User list'
+    link_group_list: 'Group list'
+
+form:
+    group_label_user: 'User'
+    group_label_group: 'Group'
+
+list:
+    label__action: 'Action'
+
+show:
+    group_user: 'User'
+    group_connexion: 'Connexion'
