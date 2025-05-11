@@ -92,8 +92,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email = '';
 
 
-    #[ORM\Column(nullable: false, options: ['default' => false])]
-    protected bool $enabled = false;
+    #[ORM\Column(nullable: false, options: ['default' => true])]
+    protected bool $enabled = true;
 
     /**
      * @var array<string>

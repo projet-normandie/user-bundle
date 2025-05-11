@@ -7,7 +7,12 @@ services:
     resource: '../src/*'
     exclude: '../src/{Admin,Entity,DependencyInjection,Migrations,Tests,Kernel.php}'
 
-  app.event.entity.user:
+  pnu.event.entity.user:
     class: ProjetNormandie\UserBundle\EventListener\Entity\UserListener
     tags:
       - { name: doctrine.orm.entity_listener }
+
+  pnu.event.authentication_success_listener:
+    class: ProjetNormandie\UserBundle\EventListener\AuthenticationSuccessListener
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
