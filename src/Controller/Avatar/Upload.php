@@ -33,7 +33,7 @@ class Upload extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
-        $file = $data['file'];
+        $file = $data['imageData'];
         $fp1 = fopen($file, 'r');
         $meta = stream_get_meta_data($fp1);
         $mimeType = $meta['mediatype'];
