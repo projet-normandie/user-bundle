@@ -102,7 +102,7 @@ class UserAdmin extends AbstractAdmin
             ->add('username', null, ['label' => 'label.username'])
             ->add('email', null, ['label' => 'label.email'])
             ->add('enabled', null, ['label' => 'label.enabled'])
-            ->add('locale', null, ['label' => 'label.locale'])
+            ->add('language', null, ['label' => 'label.language'])
             ->add('avatar', null, ['label' => 'label.avatar'])
             ->add('nbConnexion', null, ['label' => 'label.nbConnexion'])
             ->add('extraData', null, ['label' => 'label.extraData'])

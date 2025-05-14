@@ -83,11 +83,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected ?int $id = null;
 
 
-    #[Groups(['user:read', 'user:create'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     #[ORM\Column(length: 100, unique: true, nullable: false)]
     protected string $username = '';
 
-    #[Groups(['user:read', 'user:create'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     #[ORM\Column(length: 180, unique: true, nullable: false)]
     private string $email = '';
 
@@ -141,7 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Groups(['user:read', 'user:update'])]
     #[ORM\Column(length: 2, nullable: false, options: ['default' => 'en'])]
-    protected string $locale = 'en';
+    protected string $language = 'en';
 
     #[ORM\Column(length: 128)]
     #[Gedmo\Slug(fields: ['username'])]
@@ -292,14 +292,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                $this->getPasswordRequestedAt()->getTimestamp() + $ttl < time();
     }
 
-    public function getLocale(): string
+    public function getLanguage(): string
     {
-        return $this->locale;
+        return $this->language;
     }
 
-    public function setLocale(string $locale): void
+    public function setLanguage(string $language): void
     {
-        $this->locale = $locale;
+        $this->language = $language;
     }
 
     public function getSlug(): string

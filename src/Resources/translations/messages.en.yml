@@ -39,7 +39,7 @@ label:
     id: 'id'
     label: 'Label'
     lastLogin: 'Last login'
-    locale: 'Language'
+    language: 'Language'
     name: 'Name'
     nbConnexion: 'Nb Connexion'
     password: 'Password'
