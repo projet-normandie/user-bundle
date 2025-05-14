@@ -40,7 +40,7 @@ label:
     id: 'id'
     label: 'Label'
     lastLogin: 'Dernière connexion'
-    locale: 'Langue'
+    language: 'Langue'
     name: 'Nom'
     nbConnexion: 'Nb Connexion'
     password: 'Mot de passe'
