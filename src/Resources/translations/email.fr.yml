@@ -1,0 +1,41 @@
+# translations/email.fr.yaml
+email_change:
+  subject: 'Changement d''adresse email'
+  notification_old_email: |
+    Bonjour %username%,
+    
+    Nous vous informons que votre adresse email a été changée.
+    
+    Ancienne adresse: %old_email%
+    Nouvelle adresse: %new_email%
+    
+    Si vous n'avez pas demandé ce changement, veuillez contacter immédiatement notre support.
+    
+    Cordialement,
+    L'équipe
+  notification_new_email: |
+    Bonjour %username%,
+    
+    Bienvenue sur votre nouvelle adresse email !
+    
+    Votre compte a été mis à jour avec cette nouvelle adresse email.
+    
+    Ancienne adresse: %old_email%
+    Nouvelle adresse: %new_email%
+    
+    Cordialement,
+    L'équipe
+
+password_change:
+  subject: 'Changement de mot de passe'
+  notification: |
+    Bonjour %username%,
+    
+    Nous vous informons que le mot de passe de votre compte a été modifié le %date%.
+    
+    Si vous n'avez pas effectué cette modification, veuillez contacter immédiatement notre support car votre compte pourrait être compromis.
+    
+    Par mesure de sécurité, nous vous conseillons de vérifier que toutes vos informations personnelles sont toujours à jour.
+    
+    Cordialement,
+    L'équipe
