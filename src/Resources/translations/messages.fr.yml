@@ -1,18 +1,3 @@
-registration:
-    confirmed: 'Félicitations %s votre compte est maintenant activé.'
-    invalid_token: 'Token invalide'
-    email:
-        subject: 'Bienvenue %s !'
-        message: |
-            Bonjour %s!
-
-            Pour valider votre compte utilisateur, merci de vous rendre sur %s
-
-            Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.
-
-            Cordialement,
-            L'équipe
-
 resetting:
     invalid_token: 'Token invalide'
     email:
