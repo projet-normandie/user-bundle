@@ -2,10 +2,11 @@
 
 namespace ProjetNormandie\UserBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use ProjetNormandie\UserBundle\Entity\User;
 
-class UserRepository extends DefaultRepository
+class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -27,5 +28,21 @@ class UserRepository extends DefaultRepository
             ->orderBy('u.username', 'ASC');
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param $object
+     * @return void
+     */
+    public function save($object): void
+    {
+        $this->_em->persist($object);
+        $this->_em->flush();
+    }
+
+
+    public function flush(): void
+    {
+        $this->_em->flush();
     }
 }

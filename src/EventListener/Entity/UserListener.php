@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace ProjetNormandie\UserBundle\EventListener\Entity;
 
-use JetBrains\PhpStorm\NoReturn;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Exception;
 use ProjetNormandie\UserBundle\Entity\User;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use ProjetNormandie\UserBundle\Event\EmailChangedEvent;
+use ProjetNormandie\UserBundle\Event\PasswordChangedEvent;
 use ProjetNormandie\UserBundle\Util\TokenGenerator;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UserListener
 {
+    private array $emailChangeData = [];
+    private array $passwordChangeData = [];
+
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly ParameterBagInterface $params,
-        private readonly TranslatorInterface $translator,
-        private readonly MailerInterface $mailer,
-        private readonly TokenGenerator $tokenGenerator
+        private readonly TokenGenerator $tokenGenerator,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 
     /**
      * @param User $user
-     * @throws \Exception
+     * @throws Exception
      */
     public function prePersist(User $user): void
     {
@@ -49,41 +49,53 @@ class UserListener
     }
 
     /**
-     * @param User               $user
+     * @param User $user
      * @param PreUpdateEventArgs $event
      */
     public function preUpdate(User $user, PreUpdateEventArgs $event): void
     {
-        $plaintextPassword = $user->getPlainPassword();
-        if ($plaintextPassword !== null) {
+        if ($event->hasChangedField('email')) {
+            $oldEmail = $event->getOldValue('email');
+            $newEmail = $event->getNewValue('email');
+
+            $this->emailChangeData[$user->getId()] = [
+                'oldEmail' => $oldEmail,
+                'newEmail' => $newEmail
+            ];
+        }
+
+        $plainPassword = $user->getPlainPassword();
+        if ($plainPassword !== null) {
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
-                $plaintextPassword
+                $plainPassword
             );
             $user->setPassword($hashedPassword);
+
+            $this->passwordChangeData[$user->getId()] = true;
         }
     }
 
     /**
-     * @throws TransportExceptionInterface
+     * @param User $user
+     * @param PostUpdateEventArgs $event
      */
-    public function postPersist(User $user): void
+    public function postUpdate(User $user, PostUpdateEventArgs $event): void
     {
-        $url = sprintf($this->params->get('pn.register.uri_confirmation'), $user->getConfirmationToken());
-        $body = sprintf(
-            $this->translator->trans('registration.email.message', [], 'PnUser'),
-            $user->getUsername(),
-            $url
-        );
+        if (isset($this->emailChangeData[$user->getId()])) {
+            $data = $this->emailChangeData[$user->getId()];
 
-        $email = (new Email())
-            ->to($user->getEmail())
-            ->subject(
-                sprintf($this->translator->trans('registration.email.subject', [], 'PnUser'), $user->getUsername())
-            )
-            ->text($body)
-            ->html($body);
+            $emailChangedEvent = new EmailChangedEvent($user, $data['oldEmail'], $data['newEmail']);
+            $this->eventDispatcher->dispatch($emailChangedEvent);
 
-        $this->mailer->send($email);
+            unset($this->emailChangeData[$user->getId()]);
+        }
+
+        if (isset($this->passwordChangeData[$user->getId()])) {
+            $passwordChangedEvent = new PasswordChangedEvent($user);
+            $this->eventDispatcher->dispatch($passwordChangedEvent);
+
+            unset($this->passwordChangeData[$user->getId()]);
+        }
     }
 }

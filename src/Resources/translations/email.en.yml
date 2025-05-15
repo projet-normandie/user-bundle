@@ -1,0 +1,41 @@
+# translations/email.en.yaml
+email_change:
+  subject: 'Email Address Change'
+  notification_old_email: |
+    Hello %username%,
+    
+    We want to inform you that your email address has been changed.
+    
+    Old email: %old_email%
+    New email: %new_email%
+    
+    If you did not request this change, please contact our support team immediately.
+    
+    Best regards,
+    The Team
+  notification_new_email: |
+    Hello %username%,
+    
+    Welcome to your new email address!
+    
+    Your account has been updated with this new email address.
+    
+    Old email: %old_email%
+    New email: %new_email%
+    
+    Best regards,
+    The Team
+
+password_change:
+  subject: 'Password Change'
+  notification: |
+    Hello %username%,
+    
+    We're informing you that your account password was changed on %date%.
+    
+    If you did not make this change, please contact our support team immediately as your account may have been compromised.
+    
+    As a security measure, we recommend you verify that all your personal information is still up to date.
+    
+    Best regards,
+    The Team
