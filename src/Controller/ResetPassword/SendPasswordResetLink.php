@@ -1,6 +1,6 @@
 <?php
 
-namespace ProjetNormandie\UserBundle\Controller\Security;
+namespace ProjetNormandie\UserBundle\Controller\ResetPassword;
 
 use DateTime;
 use Exception;
@@ -38,19 +38,23 @@ class SendPasswordResetLink extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $email = $data['email'];
+        $callBackUrl = $data['callBackUrl'];
 
         $user = $this->userManager->findUserByUsernameOrEmail($email);
         if ($user && (null === $user->getPasswordRequestedAt() || $user->isPasswordRequestExpired($this->retryTtl))) {
             $user->setConfirmationToken($this->tokenGenerator->generateToken());
             $body = sprintf(
-                $this->translator->trans('resetting.email.message', [], 'PnUser'),
+                $this->translator->trans('password_reset.message', [], 'email', $user->getLanguage()),
                 $user->getUsername(),
-                ($request->server->get('HTTP_ORIGIN') ?? null) . '/en/auth/reset?token=' . $user->getConfirmationToken()
+                ($request->server->get('HTTP_ORIGIN') ?? null) .
+                str_replace('[token]', $user->getConfirmationToken(), $callBackUrl)
             );
+
+            ;
 
             $email = (new Email())
                 ->to($user->getEmail())
-                ->subject($this->translator->trans('resetting.email.subject', [], 'PnUser'))
+                ->subject($this->translator->trans('password_reset.subject', [], 'email', $user->getLanguage()))
                 ->text($body)
                 ->html($body);
 

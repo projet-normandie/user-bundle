@@ -39,3 +39,14 @@ password_change:
     
     Cordialement,
     L'équipe
+    
+
+password_reset:
+  subject: 'Réinitialisation de votre mot de passe'
+  message: |
+    Bonjour %s !
+    
+    Pour réinitialiser votre mot de passe, merci de vous rendre sur %s
+    
+    Cordialement,
+    L'équipe
