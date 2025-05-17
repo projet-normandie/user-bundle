@@ -1,3 +1,7 @@
+change_password:
+    current_password_invalid: 'Le mot de passe actuel est invalide'
+    success: 'Mot de passe changé avec succès'
+
 resetting:
     invalid_token: 'Token invalide'
     email:

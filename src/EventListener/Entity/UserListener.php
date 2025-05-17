@@ -17,7 +17,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserListener
 {
     private array $emailChangeData = [];
-    private array $passwordChangeData = [];
 
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -63,17 +62,6 @@ class UserListener
                 'newEmail' => $newEmail
             ];
         }
-
-        $plainPassword = $user->getPlainPassword();
-        if ($plainPassword !== null) {
-            $hashedPassword = $this->passwordHasher->hashPassword(
-                $user,
-                $plainPassword
-            );
-            $user->setPassword($hashedPassword);
-
-            $this->passwordChangeData[$user->getId()] = true;
-        }
     }
 
     /**
@@ -89,13 +77,6 @@ class UserListener
             $this->eventDispatcher->dispatch($emailChangedEvent);
 
             unset($this->emailChangeData[$user->getId()]);
-        }
-
-        if (isset($this->passwordChangeData[$user->getId()])) {
-            $passwordChangedEvent = new PasswordChangedEvent($user);
-            $this->eventDispatcher->dispatch($passwordChangedEvent);
-
-            unset($this->passwordChangeData[$user->getId()]);
         }
     }
 }
