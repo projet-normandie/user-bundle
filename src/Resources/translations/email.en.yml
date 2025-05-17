@@ -39,3 +39,14 @@ password_change:
     
     Best regards,
     The Team
+    
+
+password_reset:
+  subject: 'Reset Password'
+  message: |
+    Hello %s!
+    
+    To reset your password - please visit %s
+    
+    Regards,
+    the Team.

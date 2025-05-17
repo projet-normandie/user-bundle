@@ -1,6 +1,6 @@
 <?php
 
-namespace ProjetNormandie\UserBundle\Controller\Security;
+namespace ProjetNormandie\UserBundle\Controller\ResetPassword;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;

@@ -2,18 +2,6 @@ change_password:
     current_password_invalid: 'Le mot de passe actuel est invalide'
     success: 'Mot de passe changé avec succès'
 
-resetting:
-    invalid_token: 'Token invalide'
-    email:
-        subject: 'Réinitialisation de votre mot de passe'
-        message: |
-          Bonjour %s !
-
-          Pour réinitialiser votre mot de passe, merci de vous rendre sur %s
-
-          Cordialement,
-          L'équipe
-
 avatar:
     extension_not_allowed: 'Les format autorisés sont png et jpg'
 

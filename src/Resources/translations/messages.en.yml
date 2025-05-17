@@ -2,18 +2,7 @@ change_password:
     current_password_invalid: 'The current password is invalid'
     success: 'Password changed successfully'
 
-resetting:
-    success: 'The password has been reset successfully.'
-    invalid_token: 'Invalid token'
-    email:
-        subject: 'Reset Password'
-        message: |
-            Hello %s!
 
-            To reset your password - please visit %s
-
-            Regards,
-            the Team.
 avatar:
     extension_not_allowed: 'Format allowed are png and jpg'
 
