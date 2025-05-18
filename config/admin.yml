@@ -7,6 +7,7 @@ services:
         manager_type: orm
         group: "group.users"
         label: "label.user"
+        label_translator_strategy: "sonata.admin.label.strategy.underscore"
   sonata.admin.user.group:
     class: ProjetNormandie\UserBundle\Admin\GroupAdmin
     tags:
@@ -15,3 +16,15 @@ services:
         manager_type: orm
         group: "group.users"
         label: "label.group"
+        label_translator_strategy: "sonata.admin.label.strategy.underscore"
+  sonata.admin.user.security_event:
+    class: ProjetNormandie\UserBundle\Admin\SecurityEventAdmin
+    tags:
+      - name: sonata.admin
+        model_class: 'ProjetNormandie\UserBundle\Entity\SecurityEvent'
+        manager_type: orm
+        group: "group.users"
+        label: "Security Events"
+        label_translator_strategy: "sonata.admin.label.strategy.underscore"
+    calls:
+      - [ setTemplate, [ 'show', '@@ProjetNormandieUser/Admin/security_event_show.html.twig' ] ]

@@ -1,0 +1,13 @@
+{# templates/Admin/security_event_type.html.twig #}
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+    {% set eventObj = object.eventTypeObject %}
+    {% set badgeClass = eventObj.cssClass %}
+    {% set icon = eventObj.icon %}
+    {% set label = eventObj.label %}
+
+    <span class="badge {{ badgeClass }}">
+        <i class="fas {{ icon }} mr-1"></i> {{ label }}
+    </span>
+{% endblock %}

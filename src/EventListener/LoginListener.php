@@ -5,14 +5,15 @@ namespace ProjetNormandie\UserBundle\EventListener;
 use Lexik\Bundle\JWTAuthenticationBundle\Events as LexikEvents;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use ProjetNormandie\UserBundle\Entity\User;
-use Psr\Log\LoggerInterface;
+use ProjetNormandie\UserBundle\Security\Event\SecurityEventTypeEnum;
+use ProjetNormandie\UserBundle\Security\SecurityHistoryManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class LoginListener implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger
+        private readonly SecurityHistoryManager $securityHistoryManager,
     ) {
     }
 
@@ -36,12 +37,6 @@ class LoginListener implements EventSubscriberInterface
         $request = Request::createFromGlobals();
         /** @var User $user */
         $user = $event->getUser();
-        $this->logger->info(
-            sprintf(
-                '##LOGIN##[IP=%s/username=%s]',
-                $request->getClientIp(),
-                $user->getUsername()
-            )
-        );
+        $this->securityHistoryManager->recordEvent($user, SecurityEventTypeEnum::LOGIN_SUCCESS);
     }
 }

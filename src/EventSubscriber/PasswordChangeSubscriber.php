@@ -2,6 +2,11 @@
 
 namespace ProjetNormandie\UserBundle\EventSubscriber;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
+use ProjetNormandie\UserBundle\Entity\RefreshToken;
+use ProjetNormandie\UserBundle\Security\Event\SecurityEventTypeEnum;
+use ProjetNormandie\UserBundle\Security\SecurityHistoryManager;
 use Psr\Log\LoggerInterface;
 use ProjetNormandie\UserBundle\Event\PasswordChangedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,8 +20,11 @@ class PasswordChangeSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer,
+        private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
+        private readonly SecurityHistoryManager $securityHistoryManager,
+        private readonly RefreshTokenManagerInterface $refreshTokenManager,
     ) {
     }
 
@@ -110,6 +118,39 @@ class PasswordChangeSubscriber implements EventSubscriberInterface
         $this->logger->debug('Applying security measures after password change', [
             'user_id' => $user->getId(),
             'username' => $user->getUsername()
+        ]);
+
+        // Revoke all refresh tokens for JWT authentication
+        $username = $user->getUsername();
+
+        $tokens = $this->entityManager->getRepository(RefreshToken::class)
+            ->createQueryBuilder('t')
+            ->where('t.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($tokens as $token) {
+            $this->refreshTokenManager->delete($token);
+        }
+
+        $this->logger->info('Revoked all JWT refresh tokens after password change', [
+            'user_id' => $user->getId(),
+            'token_count' => count($tokens)
+        ]);
+
+
+        // Record password change in security history
+        $this->securityHistoryManager->recordEvent(
+            $user,
+            SecurityEventTypeEnum::PASSWORD_CHANGE,
+            [
+                'timestamp' => new \DateTime(),
+            ]
+        );
+
+        $this->logger->info('Recorded password change in security history', [
+            'user_id' => $user->getId()
         ]);
     }
 }
