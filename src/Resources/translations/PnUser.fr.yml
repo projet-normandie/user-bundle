@@ -1,0 +1,129 @@
+security_event:
+    label: Événements de sécurité
+    list:
+        id: ID
+        user: Utilisateur
+        event_type: Type d'événement
+        ip_address: Adresse IP
+        date_time: Date/Heure
+    filter:
+        id: ID
+        user: Utilisateur
+        event_type: Type d'événement
+        ip_address: Adresse IP
+        user_agent: Agent utilisateur
+        date_time: Date/Heure
+    show:
+        event_information: Informations sur l'événement
+        user_information: Informations sur l'utilisateur
+        event_data: Données de l'événement
+        ip_information: Informations sur l'adresse IP
+        loading_ip_info: Chargement des informations IP...
+        ip_info_not_available: Informations IP non disponibles pour les adresses locales ou inconnues
+        error_fetching_ip: Erreur lors de la récupération des informations IP
+        check_ip_reputation: Vérifier la réputation de l'IP
+        no_additional_data: Aucune donnée supplémentaire
+        event_data_title: Données de l'événement
+        property: Propriété
+        value: Valeur
+
+security_event_type:
+    password_change: Mot de passe modifié
+    password_reset_request: Demande de réinitialisation du mot de passe
+    password_reset_complete: Réinitialisation du mot de passe terminée
+    email_change: Email modifié
+    email_verify: Email vérifié
+    login_success: Connexion réussie
+    login_failure: Échec de connexion
+    logout: Déconnexion
+    account_locked: Compte verrouillé
+    registration: Inscription
+    account_activate: Compte activé
+    account_deactivate: Compte désactivé
+    profile_update: Profil mis à jour
+    admin_login: Connexion admin
+    role_change: Rôle modifié
+    user_impersonate: Utilisateur usurpé
+    suspicious_activity: Activité suspecte
+    brute_force_attempt: Tentative de force brute
+    api_key_created: Clé API créée
+    api_key_revoked: Clé API révoquée
+    two_factor_enabled: Authentification à deux facteurs activée
+    two_factor_disabled: Authentification à deux facteurs désactivée
+
+breadcrumb:
+    link_security_event_list: 'Liste des événements de sécurité'
+    link_user_list: 'Liste des utilisateurs'
+    link_group_list: 'Liste des groupes'
+
+show:
+    group_security_event_show_event_information: 'Informations sur l''événement'
+    group_security_event_show_user_information: 'Informations sur l''utilisateur'
+    group_security_event_show_event_data: 'Données de l''événement'
+    group_group_show_group: 'Groupe'
+    group_user: 'Utilisateur'
+    group_connexion: 'Connection'
+
+change_password:
+    current_password_invalid: 'Le mot de passe actuel est invalide'
+    success: 'Mot de passe changé avec succès'
+
+avatar_upload:
+    extension_not_allowed: 'Les format autorisés sont png et jpg'
+
+
+user:
+    label: Utilisateur
+    list:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groupes
+        enabled: Actif ?
+    form:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groupes
+        enabled: Actif ?
+        comment: Commentaire
+    filter:
+        username: Username
+        email: Email
+        groups: Groupes
+        enabled: Actif ?
+    show:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groupes
+        enabled: Actif ?
+        comment: Commentaire
+        language: Langue
+        avatar: Avatar
+        nb_connexion: Nombre de connexion
+        extra_data: Extra Data
+        last_login: Denière connexion
+        password: Mot de passe
+        confirmation_token: Token
+        password_requested_at: Demande de mot de passe le
+
+group:
+    label: Groupe
+    list:
+        id: ID
+        name: Nom
+        roles: Rôles
+    form:
+        name: Nom
+        roles: Rôles
+    filter:
+        name: Nom
+    show:
+        id: ID
+        name: Nom
+        roles: Rôles
+
+list:
+    label__action: 'Action'
+

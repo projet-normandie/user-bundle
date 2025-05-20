@@ -80,8 +80,7 @@ enum SecurityEventTypeEnum: string implements SecurityEventTypeInterface
             self::API_KEY_CREATED => 'API Key Created',
             self::API_KEY_REVOKED => 'API Key Revoked',
             self::TWO_FACTOR_ENABLED => 'Two-Factor Authentication Enabled',
-            self::TWO_FACTOR_DISABLED => 'Two-Factor Authentication Disabled',
-            default => ucwords(str_replace('_', ' ', $this->value))
+            self::TWO_FACTOR_DISABLED => 'Two-Factor Authentication Disabled'
         };
     }
 
@@ -128,8 +127,6 @@ enum SecurityEventTypeEnum: string implements SecurityEventTypeInterface
 
             self::TWO_FACTOR_ENABLED,
             self::TWO_FACTOR_DISABLED => 'fa-shield-alt',
-
-            default => 'fa-info-circle'
         };
     }
 

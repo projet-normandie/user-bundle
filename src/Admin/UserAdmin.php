@@ -36,15 +36,15 @@ class UserAdmin extends AbstractAdmin
     {
         $form
             ->add('username', TextType::class, [
-                'label' => 'label.username',
+                'label' => 'user.form.username',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'label.email',
+                'label' => 'user.form.email',
                 'required' => true,
             ])
             ->add('groups', ModelAutocompleteType::class, [
-                'label' => 'label.groups',
+                'label' => 'user.form.groups',
                 'property' => 'name',
                 'required' => false,
                 'multiple' => true,
@@ -52,11 +52,11 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
-                'label' => 'label.enabled'
+                'label' => 'user.form.enabled'
             ])
             ->add('comment', TextareaType::class, [
                 'required' => false,
-                'label' => 'label.comment'
+                'label' => 'user.form.comment'
             ]);
     }
 
@@ -66,10 +66,10 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('username', null, ['label' => 'label.username'])
-            ->add('email', null, ['label' => 'label.email'])
-            ->add('enabled', null, ['label' => 'label.enabled'])
-            ->add('groups', null, ['label' => 'label.groups']);
+            ->add('username', null, ['label' => 'user.filter.username'])
+            ->add('email', null, ['label' => 'user.filter.email'])
+            ->add('enabled', null, ['label' => 'user.filter.enabled'])
+            ->add('groups', null, ['label' => 'user.filter.groups']);
     }
 
     /**
@@ -78,11 +78,11 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id', null, ['label' => 'label.id'])
-            ->add('username', null, ['label' => 'label.username'])
-            ->add('email', null, ['label' => 'label.email'])
-            ->add('groups', null, ['label' => 'label.groups'])
-            ->add('enabled', null, ['editable' => true, 'label' => 'label.enabled'])
+            ->addIdentifier('id', null, ['label' => 'user.list.id'])
+            ->add('username', null, ['label' => 'user.list.username'])
+            ->add('email', null, ['label' => 'user.list.email'])
+            ->add('groups', null, ['label' => 'user.list.groups'])
+            ->add('enabled', null, ['editable' => true, 'label' => 'user.list.enabled'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -98,21 +98,21 @@ class UserAdmin extends AbstractAdmin
     {
         $show
             ->with('User', ['class' => 'col-md-6'])
-            ->add('id', null, ['label' => 'label.id'])
-            ->add('username', null, ['label' => 'label.username'])
-            ->add('email', null, ['label' => 'label.email'])
-            ->add('enabled', null, ['label' => 'label.enabled'])
-            ->add('language', null, ['label' => 'label.language'])
-            ->add('avatar', null, ['label' => 'label.avatar'])
-            ->add('nbConnexion', null, ['label' => 'label.nbConnexion'])
-            ->add('extraData', null, ['label' => 'label.extraData'])
-            ->add('comment', null, ['label' => 'label.comment'])
+            ->add('id', null, ['label' => 'user.show.id'])
+            ->add('username', null, ['label' => 'user.show.username'])
+            ->add('email', null, ['label' => 'user.show.email'])
+            ->add('enabled', null, ['label' => 'user.show.enabled'])
+            ->add('language', null, ['label' => 'user.show.language'])
+            ->add('avatar', null, ['label' => 'user.show.avatar'])
+            ->add('nbConnexion', null, ['label' => 'user.show.nb_connexion'])
+            ->add('extraData', null, ['label' => 'user.show.extra_data'])
+            ->add('comment', null, ['label' => 'user.show.comment'])
             ->end()
             ->with('Connexion', ['class' => 'col-md-6'])
-            ->add('lastLogin', null, ['label' => 'label.lastLogin'])
-            ->add('password', null, ['label' => 'label.password'])
-            ->add('confirmationToken', null, ['label' => 'label.confirmationToken'])
-            ->add('passwordRequestedAt', 'datetime', ['label' => 'label.passwordRequestedAt'])
+            ->add('lastLogin', null, ['label' => 'user.show.last_login'])
+            ->add('password', null, ['label' => 'user.show.password'])
+            ->add('confirmationToken', null, ['label' => 'user.show.confirmation_token'])
+            ->add('passwordRequestedAt', 'datetime', ['label' => 'user.show.password_requested_at'])
             ->end();
     }
 }
