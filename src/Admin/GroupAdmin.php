@@ -21,11 +21,11 @@ class GroupAdmin extends AbstractAdmin
     {
         $form
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'group.form.name',
                 'required' => false,
             ])
             ->add('roles', CollectionType::class, [
-                'label' => 'mabel.roles',
+                'label' => 'group.form.roles',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -38,7 +38,7 @@ class GroupAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('name', null, ['label' => 'label.name']);
+            ->add('name', null, ['label' => 'group.filter.name']);
     }
 
     /**
@@ -47,9 +47,9 @@ class GroupAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id', null, ['label' => 'label.id'])
-            ->add('name', null, ['label' => 'label.name'])
-            ->add('roles', null, ['label' => 'label.roles'])
+            ->addIdentifier('id', null, ['label' => 'group.list.id'])
+            ->add('name', null, ['label' => 'group.list.name'])
+            ->add('roles', null, ['label' => 'group.list.roles'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -64,8 +64,10 @@ class GroupAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id', null, ['label' => 'label.id'])
-            ->add('name', null, ['label' => 'label.name'])
-            ->add('roles', null, ['label' => 'label.roles']);
+            ->with('group_show_group', ['class' => 'col-md-12'])
+            ->add('id', null, ['label' => 'group.show.id'])
+            ->add('name', null, ['label' => 'group.show.name'])
+            ->add('roles', null, ['label' => 'group.show.roles'])
+            ->end();
     }
 }

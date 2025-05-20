@@ -38,7 +38,12 @@ class ChangePassword extends AbstractController
         if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
             return new JsonResponse(
                 [
-                    'message' => $this->translator->trans('change_password.current_password_invalid'),
+                    'message' => $this->translator->trans(
+                        'change_password.current_password_invalid',
+                        [],
+                        'PnUser',
+                        $user->getLanguage()
+                    ),
                 ],
                 Response::HTTP_BAD_REQUEST
             );

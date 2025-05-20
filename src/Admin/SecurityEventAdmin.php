@@ -2,6 +2,7 @@
 
 namespace ProjetNormandie\UserBundle\Admin;
 
+use ProjetNormandie\UserBundle\Security\Event\SecurityEventTypeEnum;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -24,7 +25,7 @@ class SecurityEventAdmin extends AbstractAdmin
     /**
      * Configure route collection
      */
-    protected function configureRouteCollection(RouteCollectionInterface $collection): void
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->remove('create')
@@ -38,18 +39,18 @@ class SecurityEventAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('id', null, ['label' => 'ID'])
+            ->addIdentifier('id', null, ['label' => 'security_event.list.id'])
             ->add('user', null, [
-                'label' => 'User',
+                'label' => 'security_event.list.user',
                 'admin_code' => 'sonata.admin.user.user'
             ])
             ->add('eventType', null, [
-                'label' => 'Event Type',
+                'label' => 'security_event.list.event_type',
                 'template' => '@ProjetNormandieUser/Admin/security_event_type.html.twig'
             ])
-            ->add('ipAddress', null, ['label' => 'IP Address'])
+            ->add('ipAddress', null, ['label' => 'security_event.list.ip_address'])
             ->add('createdAt', 'datetime', [
-                'label' => 'Date/Time',
+                'label' => 'security_event.list.date_time',
                 'format' => 'd/m/Y H:i:s'
             ])
             ->add('_action', 'actions', [
@@ -65,9 +66,9 @@ class SecurityEventAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('id', null, ['label' => 'ID'])
+            ->add('id', null, ['label' => 'security_event.filter.id'])
             ->add('user', null, [
-                'label' => 'User',
+                'label' => 'security_event.filter.user',
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => [
                     'property' => 'username',
@@ -85,27 +86,20 @@ class SecurityEventAdmin extends AbstractAdmin
                 ],
             ])
             ->add('eventType', StringFilter::class, [
-                'label' => 'Event Type',
+                'label' => 'security_event.filter.event_type',
                 'field_type' => ChoiceType::class,
                 'field_options' => [
-                    'choices' => [
-                        'Password Changed' => 'password_change',
-                        'Email Changed' => 'email_change',
-                        'Login Success' => 'login_success',
-                        'Login Failure' => 'login_failure',
-                        'Account Locked' => 'account_locked',
-                        'Registration' => 'registration',
-                        'Password Reset' => 'password_reset',
-                    ],
+                    'choices' => SecurityEventTypeEnum::getOptionsForForm(),
                     'required' => false,
                     'multiple' => false,
                     'expanded' => false,
+                    'translation_domain' => 'messages',
                 ],
             ])
-            ->add('ipAddress', null, ['label' => 'IP Address'])
-            ->add('userAgent', null, ['label' => 'User Agent'])
+            ->add('ipAddress', null, ['label' => 'security_event.filter.ip_address'])
+            ->add('userAgent', null, ['label' => 'security_event.filter.user_agent'])
             ->add('createdAt', DateTimeFilter::class, [
-                'label' => 'Date/Time',
+                'label' => 'security_event.filter.date_time',
                 'field_type' => DateTimePickerType::class,
                 'field_options' => [
                     'format' => 'yyyy-MM-dd HH:mm:ss',
@@ -119,28 +113,28 @@ class SecurityEventAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->with('Event Information', ['class' => 'col-md-6'])
-            ->add('id', null, ['label' => 'ID'])
+            ->with('security_event_show_event_information', ['class' => 'col-md-6'])
+            ->add('id', null, ['label' => 'security_event.list.id'])
             ->add('eventType', null, [
-                'label' => 'Event Type',
+                'label' => 'security_event.list.event_type',
                 'template' => '@ProjetNormandieUser/Admin/security_event_type.html.twig'
             ])
             ->add('createdAt', 'datetime', [
-                'label' => 'Date/Time',
+                'label' => 'security_event.list.date_time',
                 'format' => 'd/m/Y H:i:s'
             ])
             ->end()
-            ->with('User Information', ['class' => 'col-md-6'])
+            ->with('security_event_show_user_information', ['class' => 'col-md-6'])
             ->add('user', null, [
-                'label' => 'User',
+                'label' => 'security_event.list.user',
                 'admin_code' => 'sonata.admin.user.user'
             ])
-            ->add('ipAddress', null, ['label' => 'IP Address'])
-            ->add('userAgent', null, ['label' => 'User Agent'])
+            ->add('ipAddress', null, ['label' => 'security_event.list.ip_address'])
+            ->add('userAgent', null, ['label' => 'security_event.filter.user_agent'])
             ->end()
-            ->with('Event Data', ['class' => 'col-md-12'])
+            ->with('security_event_show_event_data', ['class' => 'col-md-12'])
             ->add('eventData', null, [
-                'label' => 'Event Data',
+                'label' => 'security_event.show.event_data',
                 'template' => '@ProjetNormandieUser/Admin/security_event_data.html.twig'
             ])
             ->end();
