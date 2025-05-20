@@ -1,0 +1,130 @@
+security_event:
+    label: Security Events
+    list:
+        id: ID
+        user: User
+        event_type: Event Type
+        ip_address: IP Address
+        date_time: Date/Time
+    filter:
+        id: ID
+        user: User
+        event_type: Event Type
+        ip_address: IP Address
+        user_agent: User Agent
+        date_time: Date/Time
+    show:
+        event_information: Event Information
+        user_information: User Information
+        event_data: Event Data
+        ip_information: IP Address Information
+        loading_ip_info: Loading IP information...
+        ip_info_not_available: IP information not available for local or unknown IPs
+        error_fetching_ip: Error fetching IP information
+        check_ip_reputation: Check IP Reputation
+        no_additional_data: No additional data
+        event_data_title: Event Data
+        property: Property
+        value: Value
+
+security_event_type:
+    password_change: Password Changed
+    password_reset_request: Password Reset Requested
+    password_reset_complete: Password Reset Completed
+    email_change: Email Changed
+    email_verify: Email Verified
+    login_success: Login Success
+    login_failure: Login Failure
+    logout: Logout
+    account_locked: Account Locked
+    registration: Registration
+    account_activate: Account Activated
+    account_deactivate: Account Deactivated
+    profile_update: Profile Updated
+    admin_login: Admin Login
+    role_change: Role Changed
+    user_impersonate: User Impersonated
+    suspicious_activity: Suspicious Activity
+    brute_force_attempt: Brute Force Attempt
+    api_key_created: API Key Created
+    api_key_revoked: API Key Revoked
+    two_factor_enabled: Two-Factor Authentication Enabled
+    two_factor_disabled: Two-Factor Authentication Disabled
+
+
+
+breadcrumb:
+    link_security_event_list: 'Security Events List'
+    link_user_list: 'User list'
+    link_group_list: 'Group list'
+
+show:
+    group_security_event_show_event_information: 'Event Information'
+    group_security_event_show_user_information: 'User Information'
+    group_security_event_show_event_data: 'Event Data'
+    group_group_show_group: 'Group'
+    group_user_show_user: 'User'
+    group_user_show_connexion: 'Connexion'
+
+change_password:
+    current_password_invalid: 'The current password is invalid'
+    success: 'Password changed successfully'
+
+avatar_upload:
+    extension_not_allowed: 'Format allowed are png and jpg'
+
+user:
+    label: User
+    list:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groups
+        enabled: Enabled?
+    form:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groups
+        enabled: Enabled?
+        comment: Comment
+    filter:
+        username: Username
+        email: Email
+        groups: Groups
+        enabled: Enabled?
+    show:
+        id: ID
+        username: Username
+        email: Email
+        groups: Groups
+        enabled: Enabled?
+        comment: Comment
+        language: Language
+        avatar: Avatar
+        nb_connexion: Number of connections
+        extra_data: Extra Data
+        last_login: Last login
+        password: Password
+        confirmation_token: Token
+        password_requested_at: Password requested on
+
+group:
+    label: Group
+    list:
+        id: ID
+        name: Name
+        roles: Roles
+    form:
+        name: Name
+        roles: Roles
+    filter:
+        name: Name
+    show:
+        id: ID
+        name: Name
+        roles: Roles
+
+list:
+    label__action: 'Action'
+

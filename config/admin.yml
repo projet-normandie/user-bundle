@@ -6,8 +6,10 @@ services:
         model_class: 'ProjetNormandie\UserBundle\Entity\User'
         manager_type: orm
         group: "group.users"
-        label: "label.user"
+        label: "user.label"
         label_translator_strategy: "sonata.admin.label.strategy.underscore"
+    calls:
+      - [ setTranslationDomain, [ 'PnUser' ] ]
   sonata.admin.user.group:
     class: ProjetNormandie\UserBundle\Admin\GroupAdmin
     tags:
@@ -15,8 +17,10 @@ services:
         model_class: 'ProjetNormandie\UserBundle\Entity\Group'
         manager_type: orm
         group: "group.users"
-        label: "label.group"
+        label: "group.label"
         label_translator_strategy: "sonata.admin.label.strategy.underscore"
+    calls:
+      - [ setTranslationDomain, [ 'PnUser' ] ]
   sonata.admin.user.security_event:
     class: ProjetNormandie\UserBundle\Admin\SecurityEventAdmin
     tags:
@@ -24,7 +28,8 @@ services:
         model_class: 'ProjetNormandie\UserBundle\Entity\SecurityEvent'
         manager_type: orm
         group: "group.users"
-        label: "Security Events"
+        label: "security_event.label"
         label_translator_strategy: "sonata.admin.label.strategy.underscore"
     calls:
       - [ setTemplate, [ 'show', '@@ProjetNormandieUser/Admin/security_event_show.html.twig' ] ]
+      - [ setTranslationDomain, [ 'PnUser' ] ]
